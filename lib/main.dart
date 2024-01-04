@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squeak/auth/authentications.dart';
+import 'package:squeak/controller/authentications.dart';
 import 'package:squeak/components/color.dart';
 import 'package:squeak/view/homescreen.dart';
 import 'package:squeak/view/purchase.dart';

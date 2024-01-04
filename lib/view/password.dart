@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:squeak/auth/authentications.dart';
+import 'package:squeak/controller/authentications.dart';
 import 'package:squeak/components/color.dart';
 import 'package:squeak/components/custom.dart';
-
 
 class PasswordScreen extends StatefulWidget {
   final String userEmail;
@@ -23,8 +22,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
   String? validateNewPassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your password';
-    }
-    else if (value.length<=4){
+    } else if (value.length <= 4) {
       return "Passsword Must greater than or equal to 4 ";
     }
     return null;
@@ -33,8 +31,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
   String? validateReEnterPassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your password';
-    }
-    else if (value.length<=4){
+    } else if (value.length <= 4) {
       return "Passsword Must greater than or equal to 4 ";
     }
     return null;
@@ -61,7 +58,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: Column(
               children: [
-               CustomContainer(),
+                CustomContainer(),
                 SizedBox(height: Get.height * 0.075),
                 Text(
                   "New Password",
@@ -76,9 +73,19 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   key: _formKey5,
                   child: Column(
                     children: [
-                      CustomTextField(hinttext: "Enter New Password", controller: _newPasswordController, validator: validateNewPassword,showSuffixIcon: true,),
+                      CustomTextField(
+                        hinttext: "Enter New Password",
+                        controller: _newPasswordController,
+                        validator: validateNewPassword,
+                        showSuffixIcon: true,
+                      ),
                       SizedBox(height: Get.height * 0.016),
-                      CustomTextField(hinttext: "Re-Enter Password", controller:_reEnterPasswordController, validator: validateReEnterPassword,showSuffixIcon: true,)
+                      CustomTextField(
+                        hinttext: "Re-Enter Password",
+                        controller: _reEnterPasswordController,
+                        validator: validateReEnterPassword,
+                        showSuffixIcon: true,
+                      )
                     ],
                   ),
                 ),
@@ -87,9 +94,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 GestureDetector(
                   onTap: () {
                     if (_formKey5.currentState?.validate() ?? false) {
-                      if (_newPasswordController.text == _reEnterPasswordController.text) {
-
-                        AuthController().updatePassword(widget.userEmail, _newPasswordController.text);
+                      if (_newPasswordController.text ==
+                          _reEnterPasswordController.text) {
+                        AuthController().updatePassword(
+                            widget.userEmail, _newPasswordController.text);
                       } else {
                         // Passwords don't match, show an error message or handle accordingly
                         Get.snackbar(
@@ -126,5 +134,4 @@ class _PasswordScreenState extends State<PasswordScreen> {
       ),
     );
   }
-
 }

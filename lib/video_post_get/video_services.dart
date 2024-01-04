@@ -10,8 +10,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
-
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -83,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     try {
       Response? response = await chunkedUploader.upload(
-       fileName: fileName,
+        fileName: fileName,
 
         fileKey: "file",
         method: "POST",
@@ -183,16 +181,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: link != ''
           ? FloatingActionButton(
-        onPressed: () {
-          _launchUrl(link);
-        },
-        child: const Icon(Icons.remove_red_eye_rounded),
-      )
+              onPressed: () {
+                _launchUrl(link);
+              },
+              child: const Icon(Icons.remove_red_eye_rounded),
+            )
           : null,
     );
   }
-
-
 
   _launchUrl(url) async {
     if (!await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication))
