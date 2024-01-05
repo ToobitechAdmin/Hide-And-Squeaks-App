@@ -113,7 +113,7 @@ class AudioController extends GetxController {
   }
 
   late AudioPlayer _audioPlayer;
-  RxBool isLoading = true.obs;
+  RxBool isAudioLoading = true.obs;
 
   // Add an observable to track the current playing index
   RxInt currentPlayingIndex = (-1).obs;
