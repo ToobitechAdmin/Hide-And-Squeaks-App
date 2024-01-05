@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-
-
-class ApiUrl{
-
-  static String base="https://digimaestros.com/dev/";
-  static String SignInURL="${base}Hide-Squeaks/api/login";
-  static String registerURL="${base}Hide-Squeaks/api/register";
-  static String ForgotURL="${base}Hide-Squeaks/api/request-otp";
-  static String OtpURL="${base}Hide-Squeaks/api/verify-otp";
-  static String passwordURL="${base}Hide-Squeaks/api/reset-password";
-  static String postProfileURL="http://localhost:8000/api/profile-upload";
-  static String GetProfileURL="http://localhost:8000/api/profile";
+class AppUrl {
+  static String audioPath =
+      'https://digimaestros.com/dev/Hide-Squeaks/storage/';
+  static String base = "https://digimaestros.com/dev/Hide-Squeaks/api/";
+  static String SignInURL = "${base}login";
+  static String getAudio = "${base}audio";
+  static String postMyLibrary = "${base}add-my-library";
+  static String registerURL = "${base}register";
+  static String ForgotURL = "${base}request-otp";
+  static String OtpURL = "${base}verify-otp";
+  static String passwordURL = "${base}reset-password";
+  static String postProfileURL = "http://localhost:8000/api/profile-upload";
+  static String GetProfileURL = "http://localhost:8000/api/profile";
 }

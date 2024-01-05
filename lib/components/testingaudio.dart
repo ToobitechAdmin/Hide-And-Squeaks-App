@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:squeak/components/color.dart';
+import 'package:squeak/components/app_assets.dart';
+
+import 'colors.dart';
 
 class AudioPlayerApp extends StatefulWidget {
   @override
@@ -67,7 +69,7 @@ class _AudioPlayerAppState extends State<AudioPlayerApp> {
                   value: position.inSeconds.toDouble() /
                       (_audioPlayer.duration?.inSeconds.toDouble() ?? 1),
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    Customitems.maincolor,
+                    AppColors.primaryColor,
                   ),
                 );
               },
@@ -80,10 +82,8 @@ class _AudioPlayerAppState extends State<AudioPlayerApp> {
   }
 
   String _printDuration(Duration duration) {
-    final minutes =
-    duration.inMinutes.remainder(60).toString().padLeft(2, '0');
-    final seconds =
-    duration.inSeconds.remainder(60).toString().padLeft(2, '0');
+    final minutes = duration.inMinutes.remainder(60).toString().padLeft(2, '0');
+    final seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
     return '$minutes:$seconds';
   }
 

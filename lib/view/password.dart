@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:squeak/controller/authentications.dart';
-import 'package:squeak/components/color.dart';
+import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
+
+import '../components/colors.dart';
 
 class PasswordScreen extends StatefulWidget {
   final String userEmail;
@@ -45,10 +47,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
         width: Get.width * 1,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(Customitems.backgroundimage1),
+            image: AssetImage(AppAssets.backgroundimage1),
             fit: BoxFit.fill,
             colorFilter: ColorFilter.mode(
-              Customitems.filterclr,
+              AppColors.filterclr,
               BlendMode.srcOver,
             ),
           ),
@@ -65,7 +67,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w800,
                     fontSize: 35,
-                    color: Customitems.whitecolor,
+                    color: AppColors.whitecolor,
                   ),
                 ),
                 SizedBox(height: Get.height * 0.09),
@@ -104,8 +106,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           'Password Mismatch',
                           'New Password and Re-entered Password do not match',
                           snackPosition: SnackPosition.TOP,
-                          backgroundColor: Customitems.errorclr,
-                          colorText: Customitems.whitecolor,
+                          backgroundColor: AppColors.errorclr,
+                          colorText: AppColors.whitecolor,
                         );
                       }
                     }
@@ -113,14 +115,14 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   child: Container(
                     height: Get.height * 0.067,
                     width: Get.width * 0.9,
-                    color: Customitems.maincolor,
+                    color: AppColors.primaryColor,
                     child: Center(
                       child: Text(
                         "Sign In",
                         style: GoogleFonts.dmSans(
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
-                          color: Customitems.whitecolor,
+                          color: AppColors.whitecolor,
                         ),
                       ),
                     ),

@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:squeak/Local%20Storage/global_variable.dart';
-import 'package:squeak/components/color.dart';
+import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
 import 'package:gradient_slider/gradient_slider.dart';
-import 'package:squeak/view/signin.dart';
+import 'package:squeak/view/login_screen.dart';
+
+import '../components/colors.dart';
+import '../components/custom_playbutton.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,45 +23,42 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height: Get.height*1,
-        width: Get.width*1,
+        height: Get.height * 1,
+        width: Get.width * 1,
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(Customitems.backgroundmain)
-              ,fit:BoxFit.fill)
-        ),
+            image: DecorationImage(
+                image: AssetImage(AppAssets.backgroundmain), fit: BoxFit.fill)),
         child: SingleChildScrollView(
           child: Column(
             children: [
-
               Customhead(),
-              SizedBox(height: Get.height*0.025),
+              SizedBox(height: Get.height * 0.025),
 
-             Container(
-               height: Get.height*0.34,
-               width: Get.width*0.85,
-
-               decoration: BoxDecoration(
-
-                 image: DecorationImage(image: AssetImage(Customitems.dog),fit: BoxFit.fill)
-               ),
-               child: Center(
-                 child: Padding(
-                   padding: EdgeInsets.only(top: 15.25,left: 1.7),
-                   child: CircleAvatar(
-                     radius: 119.99,
-                     backgroundColor: Colors.transparent,
-                   ),
-                 ),
-               ),
-
-             ),
-              SizedBox(height: Get.height*0.022),
-              Text("Volume",style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w700,
-                fontSize: 26,
-                color: Customitems.whitecolor
-              ),),
-              SizedBox(height: Get.height*0.009),
+              Container(
+                height: Get.height * 0.34,
+                width: Get.width * 0.85,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(AppAssets.dog), fit: BoxFit.fill)),
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 15.25, left: 1.7),
+                    child: CircleAvatar(
+                      radius: 119.99,
+                      backgroundColor: Colors.transparent,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: Get.height * 0.022),
+              Text(
+                "Volume",
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 26,
+                    color: AppColors.whitecolor),
+              ),
+              SizedBox(height: Get.height * 0.009),
               // ...
 
               Stack(
@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: Get.height * 0.021,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(Customitems.slider),
+                        image: AssetImage(AppAssets.slider),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -96,25 +96,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
 
+              SizedBox(
+                height: Get.height * 0.022,
+              ),
+              CustonPlayButton(
+                playTap: () {},
+                previousTap: () {},
+                nextTap: () {},
+              ),
+              SizedBox(height: Get.height * 0.02),
 
-              SizedBox(height: Get.height*0.022,),
-              CustomPlay(),
-              SizedBox(height: Get.height*0.02),
-
-             GestureDetector(
-               onTap: (){
-                appStorage.erase();
-                Get.off(SigninScreen());
-               },
-                 child: CustomButton(fieldname: "Sign Out"))
-
-
+              GestureDetector(
+                  onTap: () {
+                    appStorage.erase();
+                    Get.off(LoginScreen());
+                  },
+                  child: CustomButton(fieldname: "Sign Out"))
             ],
           ),
         ),
-
       ),
-
     );
   }
 }

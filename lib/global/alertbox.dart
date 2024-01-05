@@ -1,13 +1,12 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squeak/components/color.dart';
+import '../components/colors.dart';
 
-showDialogue(){
+showDialogue() {
   Get.dialog(
     Center(
-      child: CircularProgressIndicator(color: Customitems.maincolor),
+      child: CircularProgressIndicator(color: AppColors.primaryColor),
     ),
     barrierDismissible: false,
-  );}
+  );
+}
