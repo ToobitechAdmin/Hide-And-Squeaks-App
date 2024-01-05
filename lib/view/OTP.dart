@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:squeak/auth/authentications.dart';
+import 'package:squeak/controller/authentications.dart';
 import 'package:squeak/components/color.dart';
 import 'package:squeak/components/custom.dart';
 

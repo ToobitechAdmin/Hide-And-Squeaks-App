@@ -6,8 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:squeak/auth/authentications.dart';
 import 'package:squeak/components/color.dart';
 import 'package:squeak/components/custom.dart';
-import 'package:squeak/view/signin.dart';
 
+import 'package:squeak/view/signin.dart';
 
 
 
@@ -92,7 +92,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
                   GestureDetector(
                     onTap: (){
                        if (_formKey3.currentState?.validate() ?? false) {
-                      AuthController().requestOTP(_emailController.text);
+                      AuthController().requestOTP(_emailController.toString());
                       }
                     },
                     child: Container(

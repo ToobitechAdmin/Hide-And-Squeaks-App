@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:squeak/auth/authentications.dart';
+import 'package:squeak/controller/authentications.dart';
 import 'package:squeak/components/color.dart';
 import 'package:squeak/components/custom.dart';
-
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -16,11 +15,10 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
 
-  TextEditingController _firstNameController=TextEditingController();
-  TextEditingController _lastNameController=TextEditingController();
-  TextEditingController _emailController=TextEditingController();
-  TextEditingController _signUpPasswordController=TextEditingController();
-
+  TextEditingController _firstNameController = TextEditingController();
+  TextEditingController _lastNameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _signUpPasswordController = TextEditingController();
 
   String? validateFirstName(String? value) {
     if (value == null || value.isEmpty) {
@@ -37,6 +35,7 @@ class _SignupScreenState extends State<SignupScreen> {
     // You can add more complex password validation logic here if needed
     return null; // Return null if the input is valid
   }
+
   final _emailValidator = RegExp(
     r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
   );
@@ -48,11 +47,11 @@ class _SignupScreenState extends State<SignupScreen> {
     }
     return null;
   }
+
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your password';
-    }
-    else if (value.length<=4){
+    } else if (value.length <= 4) {
       return "Passsword Must greater than or equal to 4 ";
     }
     return null;
@@ -112,10 +111,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     onTap: (){
     if (_formKey2.currentState?.validate() ?? false) {
           AuthController().registerUser(
-              _firstNameController.text,
-              _lastNameController.text,
-              _emailController.text,
-              _signUpPasswordController.text,
+              _firstNameController.toString(),
+              _lastNameController.toString(),
+              _emailController.toString(),
+              _signUpPasswordController.toString(),
            );
               }
 
@@ -126,34 +125,30 @@ class _SignupScreenState extends State<SignupScreen> {
                   Text("Sign In With",style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
-                      color: Customitems.maincolor
-                  )),
-                  SizedBox(height: Get.height*0.012),
-                  Container(
-                    height: Get.height*0.06,
-                    width: Get.width*0.5,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CustomAuth(assetpath: Customitems.facebook, onTap: (){}),
-                        SizedBox(width: Get.width*0.045,),
-                        CustomAuth(assetpath: Customitems.apple, onTap: (){}),
-                        SizedBox(width: Get.width*0.05,),
-                        CustomAuth(assetpath: Customitems.google, onTap: (){})
-
-                      ],
+                      color: Customitems.maincolor)),
+              SizedBox(height: Get.height * 0.012),
+              Container(
+                height: Get.height * 0.06,
+                width: Get.width * 0.5,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomAuth(assetpath: Customitems.facebook, onTap: () {}),
+                    SizedBox(
+                      width: Get.width * 0.045,
                     ),
-                  )
-
-                ],
-              ),
-            ),
+                    CustomAuth(assetpath: Customitems.apple, onTap: () {}),
+                    SizedBox(
+                      width: Get.width * 0.05,
+                    ),
+                    CustomAuth(assetpath: Customitems.google, onTap: () {})
+                  ],
+                ),
+              )
+            ],
           ),
-        )
-
-
-    );
+        ),
+      ),
+    ));
   }
 }
-
-

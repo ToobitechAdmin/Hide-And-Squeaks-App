@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squeak/auth/authentications.dart';
+import 'package:squeak/controller/authentications.dart';
 import 'package:squeak/components/color.dart';
 import 'package:squeak/components/custom.dart';
 import 'package:squeak/view/forgotScreen.dart';
 import 'package:squeak/view/signup.dart';
-
-
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
@@ -21,7 +19,8 @@ class _SigninScreenState extends State<SigninScreen> {
   TextEditingController _emailController = TextEditingController();
 
 
-
+  bool _isShowPassword=false;
+  bool isChecked = false;
   final _emailValidator = RegExp(
     r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
   );
@@ -33,55 +32,63 @@ class _SigninScreenState extends State<SigninScreen> {
     }
     return null;
   }
+
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your password';
-    }
-    else if (value.length<=4){
+    } else if (value.length <= 4) {
       return "Passsword Must greater than or equal to 4 ";
     }
     return null;
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: Get.height*1,
-        width: Get.width*1,
-        decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(Customitems.backgroundimage1),
-          fit: BoxFit.fill,
-            colorFilter: ColorFilter.mode(
-              Customitems.filterclr ,// Adjust opacity as needed
-              BlendMode.srcOver,
-            ),
-          )
+        body: Container(
+      height: Get.height * 1,
+      width: Get.width * 1,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+        image: AssetImage(Customitems.backgroundimage1),
+        fit: BoxFit.fill,
+        colorFilter: ColorFilter.mode(
+          Customitems.filterclr, // Adjust opacity as needed
+          BlendMode.srcOver,
         ),
-        child: Padding(
-          padding: EdgeInsets.only(left: 20,right: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-
-               CustomContainer(),
-                SizedBox(height: Get.height*0.075),
-                Text("Sign In",style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 35,
-                  color: Customitems.whitecolor
-                ),),
-                SizedBox(height: Get.height*0.09),
-
+      )),
+      child: Padding(
+        padding: EdgeInsets.only(left: 20, right: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              CustomContainer(),
+              SizedBox(height: Get.height * 0.075),
+              Text(
+                "Sign In",
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 35,
+                    color: Customitems.whitecolor),
+              ),
+              SizedBox(height: Get.height * 0.09),
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
-                    CustomTextField(hinttext: "Enter Email", controller: _emailController, validator: _validateEmail,showSuffixIcon: false,),
-                    SizedBox(height: Get.height*0.016),
-                   CustomTextField(hinttext:"Enter Password", controller: _passwordController,validator: validatePassword,showSuffixIcon: true,)
+                    CustomTextField(
+                      hinttext: "Enter Email",
+                      controller: _emailController,
+                      validator: _validateEmail,
+                      showSuffixIcon: false,
+                    ),
+                    SizedBox(height: Get.height * 0.016),
+                    CustomTextField(
+                      hinttext: "Enter Password",
+                      controller: _passwordController,
+                      validator: validatePassword,
+                      showSuffixIcon: true,
+                    )
                   ],
                 ),
               ),
@@ -94,7 +101,33 @@ class _SigninScreenState extends State<SigninScreen> {
                       Row(
                         children: [
 
-                          
+                          Container(
+                            height: Get.height * 0.03,
+                            width: Get.width * 0.062,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Customitems.whitecolor,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  isChecked = !isChecked;
+                                });
+                              },
+                              child: Center(
+                                child: isChecked
+                                    ? Icon(
+                                  Icons.check,
+                                  color: Customitems.whitecolor, // Set checkmark color to transparent
+                                )
+                                    : SizedBox.shrink(), // Empty space when not checked
+                              ),
+                            ),
+                          ),
                           Padding(
                             padding: EdgeInsets.only(left: 10),
                             child: Text("Remember me",style: TextStyle(
@@ -122,7 +155,7 @@ class _SigninScreenState extends State<SigninScreen> {
                 GestureDetector(
                   onTap: () {
                     if (_formKey.currentState?.validate() ?? false) {
-                      AuthController().signInUser(_emailController.text, _passwordController.text);
+                      AuthController().signInUser(_emailController.toString(), _passwordController.toString());
                     }
                   },
                   child: CustomButton(fieldname: "Sign In"),
@@ -147,44 +180,36 @@ class _SigninScreenState extends State<SigninScreen> {
                           Text("Sign up",style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: Customitems.maincolor
-                          ),)
-                        ],
-                      ),
+                              color: Customitems.maincolor),
+                        )
+                      ],
                     ),
                   ),
                 ),
-                SizedBox(height: Get.height*0.015),
-               Container(
-                 height: Get.height*0.06,
-                 width: Get.width*0.5,
-                 child: Row(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                    CustomAuth(assetpath: Customitems.facebook, onTap: (){}),
-                     SizedBox(width: Get.width*0.045,),
-                     CustomAuth(assetpath: Customitems.apple, onTap: (){}),
-                     SizedBox(width: Get.width*0.05,),
-                     CustomAuth(assetpath: Customitems.google, onTap: (){})
-
-                   ],
-                 ),
-               )
-
-
-
-              ],
-            ),
+              ),
+              SizedBox(height: Get.height * 0.015),
+              Container(
+                height: Get.height * 0.06,
+                width: Get.width * 0.5,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomAuth(assetpath: Customitems.facebook, onTap: () {}),
+                    SizedBox(
+                      width: Get.width * 0.045,
+                    ),
+                    CustomAuth(assetpath: Customitems.apple, onTap: () {}),
+                    SizedBox(
+                      width: Get.width * 0.05,
+                    ),
+                    CustomAuth(assetpath: Customitems.google, onTap: () {})
+                  ],
+                ),
+              )
+            ],
           ),
         ),
-      )
-
-
-    );
+      ),
+    ));
   }
 }
-
-
-
-
-
