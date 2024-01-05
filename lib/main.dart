@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squeak/view/homescreen.dart';
-import 'package:squeak/view/purchase.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:squeak/components/snakbar.dart';
+import 'view/splash_screen.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -13,11 +15,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      theme: ThemeData(textTheme: TextTheme()
-          // Other theme configurations...
-          ),
+      scaffoldMessengerKey: snackbarKey,
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: SplashScreen(),
     );
   }
 }
