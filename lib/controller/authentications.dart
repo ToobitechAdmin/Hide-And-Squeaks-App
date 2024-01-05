@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:squeak/App_URL/apiurl.dart';
 import 'package:squeak/Local%20Storage/global_variable.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/components/showdialogue.dart';
+import 'package:squeak/components/snakbar.dart';
+
 import 'package:squeak/global/alertbox.dart';
 import 'package:squeak/view/OTP.dart';
 import 'package:squeak/view/homescreen.dart';
@@ -55,13 +56,14 @@ class AuthController extends GetxController {
         if (responseData['success'] == false) {
           print("Response: ${responseData["message"]}");
 
-          Get.snackbar(
-            'Sign In Failed',
-            "${responseData['message']}",
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: AppColors.errorclr,
-            colorText: AppColors.whitecolor,
-          );
+          // Get.snackbar(
+          //   'Sign In Failed',
+          //   "${responseData['message']}",
+          //   snackPosition: SnackPosition.TOP,
+          //   backgroundColor: AppColors.errorclr,
+          //   colorText: AppColors.whitecolor,
+          // );
+          
         } else {
           Get.snackbar(
             'Sign In Failed',
