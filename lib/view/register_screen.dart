@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:squeak/controller/authentications.dart';
-import 'package:squeak/components/color.dart';
+import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+import '../components/colors.dart';
+
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
 
   TextEditingController _firstNameController = TextEditingController();
@@ -65,10 +67,10 @@ class _SignupScreenState extends State<SignupScreen> {
       width: Get.width * 1,
       decoration: BoxDecoration(
           image: DecorationImage(
-        image: AssetImage(Customitems.backgroundimage1),
+        image: AssetImage(AppAssets.backgroundimage1),
         fit: BoxFit.fill,
         colorFilter: ColorFilter.mode(
-          Customitems.filterclr, // Adjust opacity as needed
+          AppColors.filterclr, // Adjust opacity as needed
           BlendMode.srcOver,
         ),
       )),
@@ -84,7 +86,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 35,
-                    color: Customitems.whitecolor),
+                    color: AppColors.whitecolor),
               ),
               SizedBox(height: Get.height * 0.060),
               Form(
@@ -125,10 +127,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 onTap: () {
                   if (_formKey2.currentState?.validate() ?? false) {
                     AuthController().registerUser(
-                      _firstNameController.toString(),
-                      _lastNameController.toString(),
-                      _emailController.toString(),
-                      _signUpPasswordController.toString(),
+                      _firstNameController.text,
+                      _lastNameController.text,
+                      _emailController.text,
+                      _signUpPasswordController.text,
                     );
                   }
                 },
@@ -139,7 +141,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
-                      color: Customitems.maincolor)),
+                      color: AppColors.primaryColor)),
               SizedBox(height: Get.height * 0.012),
               Container(
                 height: Get.height * 0.06,
@@ -147,15 +149,15 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomAuth(assetpath: Customitems.facebook, onTap: () {}),
+                    CustomAuth(assetpath: AppAssets.facebook, onTap: () {}),
                     SizedBox(
                       width: Get.width * 0.045,
                     ),
-                    CustomAuth(assetpath: Customitems.apple, onTap: () {}),
+                    CustomAuth(assetpath: AppAssets.apple, onTap: () {}),
                     SizedBox(
                       width: Get.width * 0.05,
                     ),
-                    CustomAuth(assetpath: Customitems.google, onTap: () {})
+                    CustomAuth(assetpath: AppAssets.google, onTap: () {})
                   ],
                 ),
               )
