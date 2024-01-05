@@ -112,10 +112,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     onTap: (){
     if (_formKey2.currentState?.validate() ?? false) {
           AuthController().registerUser(
-              _firstNameController.toString(),
-              _lastNameController.toString(),
-              _emailController.toString(),
-              _signUpPasswordController.toString(),
+              _firstNameController.text,
+              _lastNameController.text,
+              _emailController.text,
+              _signUpPasswordController.text,
            );
               }
 

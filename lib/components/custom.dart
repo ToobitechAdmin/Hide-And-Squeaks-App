@@ -351,7 +351,7 @@ class CustomTextField extends StatefulWidget {
   final String hinttext;
   final TextEditingController controller;
   final String? Function(String?)? validator;
-  final bool showSuffixIcon;// New parameter to control the visibility of suffix icon
+  final bool showSuffixIcon;
 
 
   CustomTextField({

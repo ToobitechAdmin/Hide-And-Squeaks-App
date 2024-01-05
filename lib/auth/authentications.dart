@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:squeak/App_URL/apiurl.dart';
 import 'package:squeak/Local%20Storage/global_variable.dart';
 import 'package:squeak/components/color.dart';
-import 'package:squeak/components/showdialogue.dart';
 import 'package:squeak/global/alertbox.dart';
 import 'package:squeak/view/OTP.dart';
 import 'package:squeak/view/homescreen.dart';
@@ -15,32 +14,33 @@ import 'package:squeak/view/signin.dart';
 
 
 
+
+
 class AuthController extends GetxController {
 
 
 
 
-
-Future<void> signInUser(
+signInUser(
    String emailController,
-   String passwordController,
+   String passwordController
 ) async {
-
+  print('Toekn...');
+print(emailController);
  showDialogue();
 
-  Map<String, dynamic> data = {
-    "email": emailController,
-    "password": passwordController,
-  };
+
 
   try {
     final response = await http.post(
       Uri.parse(ApiUrl.SignInURL),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(data),
+     
+      body:{
+    "email": emailController,
+    "password": passwordController,
+  },
     );
+    print(emailController);
     Get.back();
 
     if (response.statusCode == 200) {
@@ -48,11 +48,15 @@ Future<void> signInUser(
 
       if (responseData['success'] == true) {
         print(responseData["data"]);
-       appStorage.write("userToken", responseData["token"]);
+        appStorage.write("userToken", responseData["data"]["token"]);
+        print('object Token');
+        print(userToken);
+        print('--------------');
+        print( responseData["data"]["token"]);
         print("Response: ${response.body}");
 
 
-
+      
         Get.off(HomeScreen());
 
 
@@ -67,7 +71,7 @@ Future<void> signInUser(
       final Map<String, dynamic> responseData = json.decode(response.body);
       print("Sign In error: ${response.statusCode}");
       print("Response: ${response.body}");
-      print(responseData["token"]);
+  
       if (responseData['success'] == false) {
         print("Response: ${responseData["message"]}");
 
@@ -102,7 +106,7 @@ Future<void> signInUser(
 
 
 //SignUp/Registration
-Future<void> registerUser(
+registerUser(
    String firstNameController,
    String lastNameController,
   String emailController,
@@ -118,7 +122,6 @@ Future<void> registerUser(
     "email": emailController,
     "password": PasswordController,
   };
-
 
   try {
 
@@ -142,7 +145,7 @@ Future<void> registerUser(
 
 
         // Navigate to the home screen
-        Get.offAll(HomeScreen());
+        Get.offAll(SigninScreen());
 
         // You might want to store user data, handle tokens, etc.
       } else {
@@ -180,7 +183,7 @@ Future<void> registerUser(
 //OTP Request Sent
 String receivedOtp = ""; // Declare receivedOtp as a global variable
 
-Future<void> requestOTP(String email) async {
+requestOTP(String email) async {
   showDialogue();
 
   Map<String, dynamic> data = {
@@ -265,10 +268,10 @@ void verifyOtpAndNavigate(List<TextEditingController> otpControllers, String rec
 
     if (response.statusCode == 200) {
       print("${response.body}");
-      // The API should return a success message or handle errors appropriately
+      
       print('OTP verification successful');
 
-      // Navigate to the next screen (e.g., PasswordScreen) and pass userEmail as an argument
+
       Get.off(() => PasswordScreen(userEmail: userEmail));
     } else {
       final Map<String, dynamic> responseData = json.decode(response.body);

@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import 'package:squeak/auth/authentications.dart';
 import 'package:squeak/components/color.dart';
 import 'package:squeak/components/custom.dart';
-import 'package:squeak/view/forgot.dart';
-
+import 'package:squeak/view/forgotScreen.dart';
 import 'package:squeak/view/signup.dart';
 
 
@@ -22,8 +21,7 @@ class _SigninScreenState extends State<SigninScreen> {
   TextEditingController _emailController = TextEditingController();
 
 
-  bool _isShowPassword=false;
-  bool isChecked = false;
+
   final _emailValidator = RegExp(
     r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
   );
@@ -96,33 +94,7 @@ class _SigninScreenState extends State<SigninScreen> {
                       Row(
                         children: [
 
-                          Container(
-                            height: Get.height * 0.03,
-                            width: Get.width * 0.062,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Customitems.whitecolor,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  isChecked = !isChecked;
-                                });
-                              },
-                              child: Center(
-                                child: isChecked
-                                    ? Icon(
-                                  Icons.check,
-                                  color: Customitems.whitecolor, // Set checkmark color to transparent
-                                )
-                                    : SizedBox.shrink(), // Empty space when not checked
-                              ),
-                            ),
-                          ),
+                          
                           Padding(
                             padding: EdgeInsets.only(left: 10),
                             child: Text("Remember me",style: TextStyle(
@@ -150,7 +122,7 @@ class _SigninScreenState extends State<SigninScreen> {
                 GestureDetector(
                   onTap: () {
                     if (_formKey.currentState?.validate() ?? false) {
-                      AuthController().signInUser(_emailController.toString(), _passwordController.toString());
+                      AuthController().signInUser(_emailController.text, _passwordController.text);
                     }
                   },
                   child: CustomButton(fieldname: "Sign In"),
