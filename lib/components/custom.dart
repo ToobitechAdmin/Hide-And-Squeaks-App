@@ -7,8 +7,6 @@ import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/view/purchase.dart';
 import 'package:squeak/view/menu.dart';
 import 'package:squeak/dumy Models/dumymodel2.dart';
-import '../view/blue_screen.dart';
-import '../view/library.dart';
 import 'colors.dart';
 
 class Customhead extends StatelessWidget {

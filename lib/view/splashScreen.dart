@@ -3,11 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/Local%20Storage/global_variable.dart';
-import 'package:squeak/components/color.dart';
+import 'package:squeak/components/colors.dart';
 import 'package:squeak/components/custom.dart';
 import 'package:squeak/view/homescreen.dart';
-import 'package:squeak/view/signin.dart';
-
+import 'package:squeak/view/login_screen.dart';
 
 
 
@@ -38,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
     
     }
     else{
-      return Get.to(SigninScreen());
+      return Get.to(LoginScreen());
     }
   }
 
@@ -50,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
         CustomContainer(),
-        Center(child: CircularProgressIndicator(color: Customitems.maincolor,))
+        Center(child: CircularProgressIndicator(color: AppColors.primaryColor,))
         
         
         
