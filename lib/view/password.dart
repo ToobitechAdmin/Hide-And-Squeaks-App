@@ -50,7 +50,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
             image: AssetImage(AppAssets.backgroundimage1),
             fit: BoxFit.fill,
             colorFilter: ColorFilter.mode(
-              AppColors.filterclr,
+              AppColors.filtercolor,
               BlendMode.srcOver,
             ),
           ),
@@ -106,7 +106,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           'Password Mismatch',
                           'New Password and Re-entered Password do not match',
                           snackPosition: SnackPosition.TOP,
-                          backgroundColor: AppColors.errorclr,
+                          backgroundColor: AppColors.errorcolor,
                           colorText: AppColors.whitecolor,
                         );
                       }

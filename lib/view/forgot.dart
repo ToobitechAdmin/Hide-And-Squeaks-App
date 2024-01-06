@@ -43,7 +43,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
         image: AssetImage(AppAssets.backgroundimage1),
         fit: BoxFit.fill,
         colorFilter: ColorFilter.mode(
-          AppColors.filterclr, // Adjust opacity as needed
+          AppColors.filtercolor, // Adjust opacity as needed
           BlendMode.srcOver,
         ),
       )),

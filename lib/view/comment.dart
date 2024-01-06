@@ -99,7 +99,7 @@ class _CommentScreenState extends State<CommentScreen> {
                         ),
                         Icon(
                           Icons.favorite_outlined,
-                          color: AppColors.favouriteclr,
+                          color: AppColors.favouritecolor,
                           size: 30,
                         )
                       ],
@@ -203,7 +203,7 @@ class _CommentScreenState extends State<CommentScreen> {
                                           ),
                                           Icon(
                                             Icons.favorite,
-                                            color: AppColors.favouriteclr,
+                                            color: AppColors.favouritecolor,
                                             size: 20,
                                           )
                                         ],
@@ -317,7 +317,7 @@ class _CommentScreenState extends State<CommentScreen> {
                                                 ),
                                                 Icon(
                                                   Icons.favorite,
-                                                  color: AppColors.favouriteclr,
+                                                  color: AppColors.favouritecolor,
                                                   size: 15,
                                                 )
                                               ],

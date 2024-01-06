@@ -9,6 +9,6 @@ class AppUrl {
   static String ForgotURL = "${base}request-otp";
   static String OtpURL = "${base}verify-otp";
   static String passwordURL = "${base}reset-password";
-  static String postProfileURL = "http://localhost:8000/api/profile-upload";
-  static String GetProfileURL = "http://localhost:8000/api/profile";
+  static String postProfileURL = "${base}profile-upload";
+  static String GetProfileURL = "${base}profile";
 }

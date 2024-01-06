@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
         image: AssetImage(AppAssets.backgroundimage1),
         fit: BoxFit.fill,
         colorFilter: ColorFilter.mode(
-          AppColors.filterclr, // Adjust opacity as needed
+          AppColors.filtercolor, // Adjust opacity as needed
           BlendMode.srcOver,
         ),
       )),
@@ -100,47 +100,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    // Row(
-                    //   children: [
-                    //     Container(
-                    //       height: Get.height * 0.03,
-                    //       width: Get.width * 0.062,
-                    //       decoration: BoxDecoration(
-                    //         border: Border.all(
-                    //           color: Customitems.whitecolor,
-                    //           width: 1,
-                    //         ),
-                    //         borderRadius: BorderRadius.circular(3),
-                    //       ),
-                    //       child: InkWell(
-                    //         onTap: () {
-                    //           setState(() {
-                    //             isChecked = !isChecked;
-                    //           });
-                    //         },
-                    //         child: Center(
-                    //           child: isChecked
-                    //               ? Icon(
-                    //                   Icons.check,
-                    //                   color: Customitems
-                    //                       .whitecolor, // Set checkmark color to transparent
-                    //                 )
-                    //               : SizedBox
-                    //                   .shrink(), // Empty space when not checked
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     // Padding(
-                    //     //   padding: EdgeInsets.only(left: 10),
-                    //     //   child: Text(
-                    //     //     "Remember me",
-                    //     //     style: TextStyle(
-                    //     //         fontSize: 12, color: Customitems.whitecolor),
-                    //     //   ),
-                    //     // )
-                    //   ],
-                    // ),
-
                     GestureDetector(
                       onTap: () {
                         Get.to(ForgotScreen());

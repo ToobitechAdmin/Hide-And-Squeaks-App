@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../view/library.dart';
 import 'app_assets.dart';
 import 'colors.dart';
+import 'package:app_settings/app_settings.dart';
 
 class CustonPlayButton extends StatelessWidget {
   VoidCallback? playTap;
@@ -13,6 +14,10 @@ class CustonPlayButton extends StatelessWidget {
       {required this.playTap,
       required this.previousTap,
       required this.nextTap});
+
+  // void _openBluetoothSettings() {
+  //   AppSettings.openAppSettings(type: AppSettingsType.bluetooth);
+  // }
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
@@ -26,7 +31,8 @@ class CustonPlayButton extends StatelessWidget {
             child: GestureDetector(
                 onTap: () {
                   print("Bluetooth button pressed");
-                  // Get.to(BluetoothAudioPlayerScreen());
+
+                  AppSettings.openAppSettings(type: AppSettingsType.bluetooth);
                 },
                 child: Icon(
                   Icons.bluetooth_rounded,

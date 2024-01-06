@@ -144,7 +144,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                                     ),
                                     Icon(
                                       Icons.favorite,
-                                      color: AppColors.favouriteclr,
+                                      color: AppColors.favouritecolor,
                                     ),
                                   ],
                                 ),
@@ -236,7 +236,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                                     ),
                                     Icon(
                                       Icons.favorite,
-                                      color: AppColors.favouriteclr,
+                                      color: AppColors.favouritecolor,
                                     ),
                                   ],
                                 ),

@@ -21,9 +21,6 @@ class AuthController extends GetxController {
     try {
       final response = await http.post(
         Uri.parse(AppUrl.SignInURL),
-        // headers: {
-        //   'Content-Type': 'application/json',
-        // },
         body: {
           "email": emailController,
           "password": passwordController,
@@ -63,15 +60,19 @@ class AuthController extends GetxController {
           //   backgroundColor: AppColors.errorclr,
           //   colorText: AppColors.whitecolor,
           // );
-          
+          showInSnackBar("${responseData["message"]}",
+              color: AppColors.errorcolor);
         } else {
-          Get.snackbar(
-            'Sign In Failed',
-            "Error: ${response.statusCode}  ${response.body}",
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: AppColors.errorclr,
-            colorText: AppColors.whitecolor,
-          );
+          // Get.snackbar(
+          //   'Sign In Failed',
+          //   "Error: ${response.statusCode}  ${response.body}",
+          //   snackPosition: SnackPosition.TOP,
+          //   backgroundColor: AppColors.errorclr,
+          //   colorText: AppColors.whitecolor,
+          // );
+
+          showInSnackBar("${responseData["message"]}",
+              color: AppColors.errorcolor);
         }
       }
     } catch (error) {
@@ -122,13 +123,9 @@ class AuthController extends GetxController {
 
         print("Sign Up error: ${response.statusCode}");
         print("Response: ${response.body}");
-        Get.snackbar(
-          'User Registration Failed',
-          "Error ${response.statusCode} ${responseData['message']}",
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: AppColors.errorclr,
-          colorText: AppColors.whitecolor,
-        );
+        showInSnackBar(
+            "Error ${response.statusCode} ${responseData['message']}",
+            color: AppColors.errorcolor);
         // Error in sign in
       }
     } catch (error) {
@@ -177,13 +174,9 @@ class AuthController extends GetxController {
         final Map<String, dynamic> responseData = json.decode(response.body);
         print("OTP request error: ${response.statusCode}");
         print("Response: ${response.body}");
-        Get.snackbar(
-          'Email Not Registered',
-          "Error  ${response.statusCode}  ${responseData['message']}",
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: AppColors.errorclr,
-          colorText: AppColors.whitecolor,
-        );
+        showInSnackBar(
+            "Error ${response.statusCode} ${responseData['message']}",
+            color: AppColors.errorcolor);
       }
     } catch (error) {
       print("Error: $error");
@@ -194,13 +187,15 @@ class AuthController extends GetxController {
       String receivedOtp, String userEmail) async {
     if (otpControllers.any((controller) => controller.text.isEmpty)) {
       // Show an error message or handle the case where the OTP field is empty
-      Get.snackbar(
-        'Error',
-        'Please fill in all OTP fields',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Please fill in all OTP fields',
+      //   snackPosition: SnackPosition.TOP,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
+
+      showInSnackBar("Error:Please Fill all OTP Fields");
       return;
     }
 
@@ -227,13 +222,16 @@ class AuthController extends GetxController {
         final Map<String, dynamic> responseData = json.decode(response.body);
         print("${response.body}");
         print('Failed to verify OTP: ${response.statusCode}');
-        Get.snackbar(
-          'OTP Error',
-          "Error ${response.statusCode} ${responseData['message']}",
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: AppColors.errorclr,
-          colorText: AppColors.whitecolor,
-        );
+        // Get.snackbar(
+        //   'OTP Error',
+        //   "Error ${response.statusCode} ${responseData['message']}",
+        //   snackPosition: SnackPosition.TOP,
+        //   backgroundColor: AppColors.errorclr,
+        //   colorText: AppColors.whitecolor,
+        // );
+        showInSnackBar(
+            "Error ${response.statusCode} ${responseData['message']}",
+            color: AppColors.errorcolor);
         // Handle the error accordingly
       }
     } catch (error) {
@@ -255,13 +253,8 @@ class AuthController extends GetxController {
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         print('Password update successful');
-        Get.snackbar(
-          'Password Updated Successfully',
-          " ",
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
+        showInSnackBar("Password Updated Successfully",
+            color: AppColors.greencolor);
         // Navigate to the next screen or handle success accordingly
         Get.off(() => HomeScreen());
       } else {
