@@ -44,8 +44,8 @@ dependencies:
   chunked_uploader: ^1.1.0
   percent_indicator: ^4.0.1
   url_launcher: ^6.2.2
-  # audioplayers: ^5.2.1
-  just_audio: ^0.9.36
+  audioplayers: ^5.2.1
+  # just_audio: ^0.9.36
   get_storage: ^2.1.1
   snackbar: ^1.0.2
   image_picker: ^1.0.5
@@ -74,7 +74,6 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
-    - assets/icons/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

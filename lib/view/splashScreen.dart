@@ -8,8 +8,6 @@ import 'package:squeak/components/custom.dart';
 import 'package:squeak/view/homescreen.dart';
 import 'package:squeak/view/login_screen.dart';
 
-
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -18,43 +16,36 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-
-
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds:3),() {
+    Timer(Duration(seconds: 3), () {
       signedIN();
-      
-    });}
- signedIN(){
-  print("checking token");
-  print(appStorage.read("userToken"));
+    });
+  }
 
-    if(appStorage.read("userToken") != null){
+  signedIN() {
+    print("checking token");
+    print(appStorage.read("userToken"));
+
+    if (appStorage.read("userToken") != null) {
       return Get.to(HomeScreen());
-    
-    }
-    else{
+    } else {
       return Get.to(LoginScreen());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Colors.black,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         CustomContainer(),
-        Center(child: CircularProgressIndicator(color: AppColors.primaryColor,))
-        
-        
-        
+        Center(
+            child: CircularProgressIndicator(
+          color: AppColors.primaryColor,
+        ))
       ]),
-
     );
   }
 }

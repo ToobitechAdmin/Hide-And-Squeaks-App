@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/components/custom.dart';
-import 'package:squeak/view/dollar.dart';
-import 'package:squeak/view/audioplayscreen.dart';
 import 'package:squeak/view/menu.dart';
+import 'package:squeak/view/audio_play_screen.dart';
 import 'package:squeak/view/purchase.dart';
-
 import '../components/colors.dart';
 import '../components/custom_playbutton.dart';
 
@@ -77,6 +74,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
               ),
               SizedBox(height: Get.height * 0.02),
               CustonPlayButton(
+                playIcon: Icon(Icons.play_arrow_rounded,
+                    size: 42, color: AppColors.buttoncolor),
                 playTap: () {},
                 previousTap: () {},
                 nextTap: () {},
@@ -93,8 +92,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     ),
                   ),
                   child: Align(
-                      alignment: Alignment.topCenter,
-                      child: AudioPlayerScreen()),
+                      alignment: Alignment.topCenter, child: AudioPlayScreen()),
                 ),
               ),
             ],

@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
-import 'package:squeak/view/library.dart';
 import 'package:squeak/view/appstore.dart';
 import 'package:squeak/view/profile.dart';
 import 'package:squeak/view/setting.dart';
 import 'package:squeak/view/socialfeed.dart';
 import 'package:squeak/view/text.dart';
 import 'package:squeak/view/upload.dart';
-
 import '../components/colors.dart';
+import 'audio_play_screen.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -20,7 +19,6 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +51,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       children: [
                         GestureDetector(
                             onTap: () {
-                              Get.to(LibraryScreen());
+                              Get.to(AudioPlayScreen());
                             },
                             child: CustomSettings(
                                 library: "Sound\nLibrary",
