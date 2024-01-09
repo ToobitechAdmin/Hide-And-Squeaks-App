@@ -2,6 +2,7 @@ class AppUrl {
   static String audioPath =
       'https://digimaestros.com/dev/Hide-Squeaks/storage/';
   static String base = "https://digimaestros.com/dev/Hide-Squeaks/api/";
+  static String imageUrl = "https://digimaestros.com/dev/Hide-Squeaks/";
   static String SignInURL = "${base}login";
   static String getAudio = "${base}audio";
   static String postMyLibrary = "${base}add-my-library";
