@@ -5,7 +5,7 @@ import '../components/app_assets.dart';
 import '../components/colors.dart';
 import '../components/custom_playbutton.dart';
 import '../controller/audio_controller.dart';
-import '../dumy Models/audio_model.dart';
+import '../models/audio_model.dart';
 
 class AudioPlayScreen extends StatefulWidget {
   const AudioPlayScreen({super.key});

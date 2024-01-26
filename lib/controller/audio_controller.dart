@@ -1,15 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:squeak/dumy%20Models/audio_model.dart';
 import '../App_URL/apiurl.dart';
 import '../Local Storage/global_variable.dart';
 import '../components/snakbar.dart';
 import '../global/alertbox.dart';
+import '../models/audio_model.dart';
 
 class AudioController extends GetxController {
   List<AudioModel> audioSoundList = [];
