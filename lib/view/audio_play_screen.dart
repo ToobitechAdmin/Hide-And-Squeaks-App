@@ -4,6 +4,7 @@ import '../App_URL/apiurl.dart';
 import '../components/app_assets.dart';
 import '../components/colors.dart';
 import '../components/custom_playbutton.dart';
+import '../components/snakbar.dart';
 import '../controller/audio_controller.dart';
 import '../models/audio_model.dart';
 
@@ -20,14 +21,6 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
   late List<bool> isPlayingList;
   final RxInt currentAudioIndex = 0.obs;
   bool isCurrent = false;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    controller.getAudioData();
-    controller.getMylibraryData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,22 +99,51 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                 '${AppUrl.audioPath + controller.audioUrlsList[0]}');
                           }
                         },
-                        previousTap: () {},
+                        previousTap: () {
+                          if (controller.audioUrlsList.isNotEmpty) {
+                            if (currentAudioIndex.value > 0) {
+                              // If there is a previous audio URL in the list, play it
+                              print('Previous One');
+                              currentAudioIndex.value--;
+                              controller.playAudio(
+                                '${AppUrl.audioPath + controller.audioUrlsList[currentAudioIndex.value]}',
+                              );
+                            } else {
+                              print('Previous Two');
+                              // If we're at the beginning of the list, loop to the end
+                              currentAudioIndex.value =
+                                  controller.audioUrlsList.length - 1;
+                              controller.playAudio(
+                                '${AppUrl.audioPath + controller.audioUrlsList[currentAudioIndex.value]}',
+                              );
+                            }
+                          } else {
+                            showInSnackBar('Audio not available',
+                                color: Colors.red);
+                          }
+                        },
                         nextTap: () {
-                          // if (currentAudioIndex.value <
-                          //     controller.audioUrlsList.length - 1) {
-                          //   print('objectNext');
-                          //   // If there is a next audio URL in the list, play it
-                          //   currentAudioIndex.value++;
-                          //   controller.playAudio(
-                          //       '${AppUrl.audioPath + controller.audioUrlsList[currentAudioIndex.value]}');
-                          // } else {
-                          //   print('objectNextNot');
-                          //   // If we're at the end of the list, loop back to the beginning
-                          //   currentAudioIndex.value = 0;
-                          //   controller.playAudio(
-                          //       '${AppUrl.audioPath + controller.audioUrlsList[0]}');
-                          // }
+                          if (controller.audioUrlsList.isNotEmpty) {
+                            if (currentAudioIndex.value <
+                                controller.audioUrlsList.length - 1) {
+                              print('Next One');
+                              // If there is a next audio URL in the list, play it
+                              currentAudioIndex.value++;
+                              controller.playAudio(
+                                '${AppUrl.audioPath + controller.audioUrlsList[currentAudioIndex.value]}',
+                              );
+                            } else {
+                              print('Next Two');
+                              // If we're at the end of the list, loop back to the beginning
+                              currentAudioIndex.value = 0;
+                              controller.playAudio(
+                                '${AppUrl.audioPath + controller.audioUrlsList[0]}',
+                              );
+                            }
+                          } else {
+                            showInSnackBar('audio not available',
+                                color: Colors.red);
+                          }
                         },
                       )),
                   Expanded(
@@ -208,8 +230,11 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                             )
                                           : controller.getMyLibraryList.isEmpty
                                               ? const Center(
-                                                  child:
-                                                      Text('List is Empty..'),
+                                                  child: Text(
+                                                    'List is Empty..',
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
                                                 )
                                               : ListView.builder(
                                                   scrollDirection:
@@ -323,8 +348,11 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                             )
                                           : controller.audioSoundList.isEmpty
                                               ? const Center(
-                                                  child:
-                                                      Text('List is Empty..'),
+                                                  child: Text(
+                                                    'List is Empty..',
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
                                                 )
                                               : ListView.builder(
                                                   scrollDirection:

@@ -29,10 +29,17 @@ class _SplashScreenState extends State<SplashScreen> {
     print(appStorage.read("userToken"));
 
     if (appStorage.read("userToken") != null) {
-      return Get.to(HomeScreen());
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+          (route) => false);
     } else {
-      return Get.to(LoginScreen());
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+          (route) => false);
 
+      // return Get.to(LoginScreen());
     }
   }
 

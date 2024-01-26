@@ -39,8 +39,8 @@ class AuthController extends GetxController {
           print(userToken);
           print(appStorage.read('userToken'));
           print("Response: ${response.body}");
-
-          Get.offAll(HomeScreen());
+          Get.to(HomeScreen());
+          // Get.to(HomeScreen());
         } else {
           print(responseData['message']);
           print("Sign In failed: ${responseData['message']}");
@@ -92,7 +92,7 @@ class AuthController extends GetxController {
           print("SignUp In successful");
           print("Response: ${response.body}");
           // Navigate to the home screen
-          Get.offAll(LoginScreen());
+          Get.to(LoginScreen());
         } else {
           print("Sign Up failed: ${responseData['message']}");
         }
@@ -118,20 +118,15 @@ class AuthController extends GetxController {
     print(email);
     showDialogue();
 
-  
-      
-    
-
     try {
-      final response = await http.post(
-        Uri.parse(AppUrl.ForgotURL),
-        // headers: {
-        //   'Accept': 'application/json',
-        // },
-        body: {"email": email,}
-      );
+      final response = await http.post(Uri.parse(AppUrl.ForgotURL),
+          // headers: {
+          //   'Accept': 'application/json',
+          // },
+          body: {
+            "email": email,
+          });
       Get.back();
-     
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
@@ -164,8 +159,6 @@ class AuthController extends GetxController {
   void verifyOtpAndNavigate(List<TextEditingController> otpControllers,
       String receivedOtp, String userEmail) async {
     if (otpControllers.any((controller) => controller.text.isEmpty)) {
-      
-
       showInSnackBar("Error:Please Fill all OTP Fields");
       return;
     }
@@ -184,24 +177,21 @@ class AuthController extends GetxController {
 
       if (response.statusCode == 200) {
         print("${response.body}");
-       
+
         print('OTP verification successful');
 
-        
         Get.off(() => PasswordScreen(userEmail: userEmail));
       } else {
         final Map<String, dynamic> responseData = json.decode(response.body);
         print("${response.body}");
         print('Failed to verify OTP: ${response.statusCode}');
-        
+
         showInSnackBar(
             "Error ${response.statusCode} ${responseData['message']}",
             color: AppColors.errorcolor);
-       
       }
     } catch (error) {
       print('Error verifying OTP: $error');
-   
     }
   }
 
@@ -226,11 +216,9 @@ class AuthController extends GetxController {
         final Map<String, dynamic> responseData = json.decode(response.body);
         print(
             'Failed to update password: ${response.statusCode} ${responseData["message"]}');
-       
       }
     } catch (error) {
       print('Error updating password: $error');
-     
     }
   }
 }
