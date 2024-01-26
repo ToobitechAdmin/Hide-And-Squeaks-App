@@ -6,7 +6,9 @@ class AppUrl {
   static String videoURL ="https://digimaestros.com/dev/Hide-Squeaks/";
   static String SignInURL = "${base}login";
   static String getAudio = "${base}audio";
+  static String getMyLibrary = "${base}my-library";
   static String postMyLibrary = "${base}add-my-library";
+  static String deleteMyLibrary = "${base}del-from-library";
   static String registerURL = "${base}register";
   static String ForgotURL = "${base}request-otp";
   static String OtpURL = "${base}verify-otp";

@@ -100,6 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: Get.height * 0.022,
               ),
               CustonPlayButton(
+                playIcon: Icon(Icons.play_arrow_rounded,
+                    size: 42, color: AppColors.buttoncolor),
                 playTap: () {},
                 previousTap: () {},
                 nextTap: () {},

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../view/library.dart';
+import 'package:squeak/view/audio_play_screen.dart';
 import 'app_assets.dart';
 import 'colors.dart';
 import 'package:app_settings/app_settings.dart';
@@ -10,9 +9,11 @@ class CustonPlayButton extends StatelessWidget {
   VoidCallback? playTap;
   VoidCallback? nextTap;
   VoidCallback? previousTap;
+  Icon playIcon;
   CustonPlayButton(
       {required this.playTap,
       required this.previousTap,
+      required this.playIcon,
       required this.nextTap});
 
   // void _openBluetoothSettings() {
@@ -56,10 +57,12 @@ class CustonPlayButton extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 63, top: 2.5),
-                  child: GestureDetector(
-                      onTap: playTap,
-                      child: Icon(Icons.play_arrow_rounded,
-                          size: 42, color: AppColors.buttoncolor)),
+                  child: GestureDetector(onTap: playTap, child: playIcon
+                      // Icon(
+                      //     indexPlaying ? Icons.pause : Icons.play_arrow_rounded,
+                      //     size: 42,
+                      //     color: AppColors.buttoncolor)
+                      ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 58),
@@ -75,7 +78,7 @@ class CustonPlayButton extends StatelessWidget {
             padding: EdgeInsets.only(top: 61, left: 1),
             child: GestureDetector(
                 onTap: () {
-                  Get.to(LibraryScreen());
+                  Get.to(AudioPlayScreen());
                 },
                 child: Icon(
                   Icons.format_list_bulleted,
