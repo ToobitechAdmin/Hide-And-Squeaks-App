@@ -3,6 +3,7 @@ class AppUrl {
       'https://digimaestros.com/dev/Hide-Squeaks/storage/';
   static String base = "https://digimaestros.com/dev/Hide-Squeaks/api/";
   static String imageUrl = "https://digimaestros.com/dev/Hide-Squeaks/";
+  static String videoURL ="https://digimaestros.com/dev/Hide-Squeaks/";
   static String SignInURL = "${base}login";
   static String getAudio = "${base}audio";
   static String postMyLibrary = "${base}add-my-library";
@@ -12,4 +13,19 @@ class AppUrl {
   static String passwordURL = "${base}reset-password";
   static String postProfileURL = "${base}profile-upload";
   static String GetProfileURL = "${base}profile";
+  static String PostVideoURL="${base}videos-upload";
+  static String GetVideoURL="${base}videos";
+  static String viewVideoURL="${base}view-video";
+  static String addViewUrl="${base}add-view";
+  static String commentUrl="${base}upload-comment";
+  static String likeUrl="${base}upload-like";
+  static String treatUrl="${base}list-treats";
+  static String videoDelUrl="${base}video-del";
+  static String balanceUrl="${base}my-balance";
+
+  
+ 
+  
+  
+
 }

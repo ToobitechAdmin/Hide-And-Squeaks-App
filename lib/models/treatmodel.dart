@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+
+
 
 class TreatModel {
-  String treats;
-  String price;
+  int? treats;
+  int? price;
+  int? id;
 
 
 
@@ -13,8 +14,10 @@ class TreatModel {
 
   // Constructor
   TreatModel({
-    required this.treats,
-    required this.price,
+    this.treats,
+    this.price,
+    this.id
+
 
 
 
@@ -24,6 +27,8 @@ class TreatModel {
     return TreatModel(
         treats: json['treats'],
         price: json['price'],
+        id:json["id"],
+
 
 
 
@@ -35,6 +40,7 @@ class TreatModel {
     return {
       'treats': treats,
       'price': price,
+      "id":id
 
 
 

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
-import 'package:squeak/view/library.dart';
 
 class TextScreen extends StatefulWidget {
   const TextScreen({super.key});

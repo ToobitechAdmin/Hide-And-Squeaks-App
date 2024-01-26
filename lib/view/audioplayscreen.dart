@@ -3,9 +3,7 @@ import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:squeak/App_URL/apiurl.dart';
 import 'package:squeak/controller/audio_controller.dart';
-import 'package:squeak/dumy%20Models/audio_model.dart';
-import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/components/custom.dart';
+import 'package:squeak/models/audio_model.dart';
 
 import '../components/colors.dart';
 
@@ -93,135 +91,111 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
           controller: _tabController,
           children: [
             Obx(
-              () => SizedBox(
-                width: Get.width * 0.8,
-                child: controller.isLoading.value
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.primaryColor,
-                        ),
-                      )
-                    : controller.audioSoundList.isEmpty
-                        ? const Center(
-                            child: Text('List is Empty..'),
-                          )
-                        : ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            itemCount: controller.audioSoundList.length,
-                            itemBuilder: (Context, index) {
-                              AudioModel item =
-                                  controller.audioSoundList[index];
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 13, right: 13),
-                                child: Container(
-                                    height: Get.height * 0.047,
-                                    width: Get.width * 0.8,
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
+              () => controller.isLoading.value
+                  ? CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                    )
+                  : controller.audioSoundList.isEmpty
+                      ? const Center(
+                          child: Text('List is Empty..'),
+                        )
+                      : ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: controller.audioSoundList.length,
+                          itemBuilder: (Context, index) {
+                            AudioModel item = controller.audioSoundList[index];
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 13, right: 13),
+                              child: Container(
+                                  height: Get.height * 0.047,
+                                  width: Get.width * 0.8,
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color: AppColors.whitecolor,
+                                              width: 2))),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      GestureDetector(
+                                        child: Icon(
+                                          _audioPlayer.playing &&
+                                                  _currentPlayingIndex == index
+                                              ? Icons.pause
+                                              : Icons.play_arrow,
+                                          color: Colors.white,
+                                        ),
+                                        onTap: () async {
+                                          await _audioPlayer.setUrl(
+                                              '${AppUrl.audioPath + item.filePath}');
+
+                                          if (_audioPlayer.playing &&
+                                              _currentPlayingIndex == index) {
+                                            _audioPlayer.pause();
+                                          } else {
+                                            _audioPlayer.play();
+                                          }
+
+                                          setState(() {
+                                            _currentPlayingIndex = index;
+                                          });
+                                        },
+                                      ),
+                                      
+
+                                      Text(
+                                        item.title,
+                                        style: TextStyle(
+                                            color: AppColors.whitecolor,
+                                            fontWeight: FontWeight.w800),
+                                      ),
+                                      Text(
+                                        item.time,
+                                        style: TextStyle(
+                                            color: AppColors.whitecolor,
+                                            fontWeight: FontWeight.w800),
+                                      ),
+                                      Text(
+                                        "${item.count} treats",
+                                        style: TextStyle(
+                                            color: AppColors.primaryColor,
+                                            fontWeight: FontWeight.w800),
+                                      ),
+                                      item.type == 'free'
+                                          ? GestureDetector(
+                                              onTap: () {
+                                                controller
+                                                    .postMyLibrary(item.id);
+                                              },
+                                              child: Icon(
+                                                Icons.cloud_download_outlined,
                                                 color: AppColors.whitecolor,
-                                                width: 2))),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        GestureDetector(
-                                          child: Icon(
-                                            _audioPlayer.playing &&
-                                                    _currentPlayingIndex ==
-                                                        index
-                                                ? Icons.pause
-                                                : Icons.play_arrow,
-                                            color: Colors.white,
-                                          ),
-                                          onTap: () async {
-                                            await _audioPlayer.setUrl(
-                                                '${AppUrl.audioPath + item.filePath}');
-
-                                            if (_audioPlayer.playing &&
-                                                _currentPlayingIndex == index) {
-                                              _audioPlayer.pause();
-                                            } else {
-                                              _audioPlayer.play();
-                                            }
-
-                                            setState(() {
-                                              _currentPlayingIndex = index;
-                                            });
-                                          },
-                                        ),
-                                        // GestureDetector(
-                                        //   child: Icon(
-                                        //     _audioPlayer.playing
-                                        //         ? Icons.pause
-                                        //         : Icons.play_arrow,
-                                        //     color: Colors.white,
-                                        //   ),
-                                        //   onTap: () async {
-                                        //     await _audioPlayer.setUrl(_audioUrl);
-                                        //     if (_audioPlayer.playing) {
-                                        //       _audioPlayer.pause();
-                                        //     } else {
-                                        //       _audioPlayer.play();
-                                        //     }
-                                        //     setState(() {}); // Trigger a rebuild
-                                        //   },
-                                        // ),
-
-                                        Text(
-                                          item.title,
-                                          style: TextStyle(
-                                              color: AppColors.whitecolor,
-                                              fontWeight: FontWeight.w800),
-                                        ),
-                                        Text(
-                                          item.time,
-                                          style: TextStyle(
-                                              color: AppColors.whitecolor,
-                                              fontWeight: FontWeight.w800),
-                                        ),
-                                        Text(
-                                          "${item.count} treats",
-                                          style: TextStyle(
-                                              color: AppColors.primaryColor,
-                                              fontWeight: FontWeight.w800),
-                                        ),
-                                        item.type == 'free'
-                                            ? GestureDetector(
-                                                onTap: () {
-                                                  controller
-                                                      .postMyLibrary(item.id);
-                                                },
-                                                child: Icon(
-                                                  Icons.cloud_download_outlined,
-                                                  color: AppColors.whitecolor,
-                                                  size: 30,
-                                                ),
-                                              )
-                                            : Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 5),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15),
-                                                    color: Colors.red),
-                                                child: const Text(
-                                                  'buy',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.normal),
-                                                ),
-                                              )
-                                      ],
-                                    )),
-                              );
-                            }),
-              ),
+                                                size: 30,
+                                              ),
+                                            )
+                                          : Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 5),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  color: Colors.red),
+                                              child: const Text(
+                                                'buy',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.normal),
+                                              ),
+                                            )
+                                    ],
+                                  )),
+                            );
+                          }),
             ),
             Container(
               height: Get.height * 0.25,

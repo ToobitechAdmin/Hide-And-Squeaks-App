@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/components/custom.dart';
-import 'package:squeak/view/dollar.dart';
 import 'package:squeak/view/audioplayscreen.dart';
 import 'package:squeak/view/menu.dart';
 import 'package:squeak/view/purchase.dart';

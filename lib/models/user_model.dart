@@ -3,16 +3,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class userModel{
-  String? id;
-  String petName;
-  String petBreed;
-  String profile;
+  int? id;
+  String? petName;
+  String? petBreed;
+  String? profile;
+  int? balanace;
 
   userModel({
     this.id,
-    required this.petName,
-    required this.petBreed,
-    required this.profile});
+    this.petName,
+    this.petBreed,
+    this.profile,
+    this.balanace
+    });
 
     factory userModel.fromJson(Map<String, dynamic> json) {
     return userModel(
@@ -20,6 +23,7 @@ class userModel{
       petName: json['pet_name'] ,
       petBreed: json['pet_breed'],
       profile: json['profile'],
+      balanace: json["balance"]
       
     );
   }
@@ -30,6 +34,7 @@ class userModel{
       'pet_name': petName,
       'pet_breed': petBreed,
       'profile': profile,
+      "balance":balanace
       
     };
   }

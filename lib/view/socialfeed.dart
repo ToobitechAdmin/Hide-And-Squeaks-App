@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
-import 'package:squeak/components/socialtabs.dart';
+import 'package:squeak/view/socialtabs.dart';
 
 import '../components/colors.dart';
 

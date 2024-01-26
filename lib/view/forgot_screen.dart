@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:squeak/components/colors.dart';
-import 'package:squeak/controller/authentications.dart';
+import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
 
@@ -17,7 +17,8 @@ class ForgotScreen extends StatefulWidget {
 }
 
 class _ForgotScreenState extends State<ForgotScreen> {
-  TextEditingController _emailController = TextEditingController();
+  AuthController controller=Get.put(AuthController());
+  TextEditingController emailController = TextEditingController();
 
   final GlobalKey<FormState> _formKey3 = GlobalKey<FormState>();
   final _emailValidator = RegExp(
@@ -68,7 +69,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
                   key: _formKey3,
                   child: CustomTextField(
                     hinttext: "Enter Your Email",
-                    controller: _emailController,
+                    controller: emailController,
                     validator: _validateEmail,
                     showSuffixIcon: false,
                   )),
@@ -93,7 +94,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
               GestureDetector(
                 onTap: () {
                   if (_formKey3.currentState?.validate() ?? false) {
-                    AuthController().requestOTP(_emailController.toString());
+                    controller.requestOTP(emailController.value.text);
                   }
                 },
                 child: Container(

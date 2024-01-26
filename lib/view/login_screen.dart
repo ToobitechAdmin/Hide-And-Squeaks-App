@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squeak/controller/authentications.dart';
+import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
-import 'package:squeak/view/forgot.dart';
+
+import 'package:squeak/view/forgot_screen.dart';
 
 import 'package:squeak/view/register_screen.dart';
 
@@ -20,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  AuthController controller = Get.put(AuthController());
 
   bool isChecked = false;
 
@@ -117,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
               GestureDetector(
                 onTap: () {
                   if (_formKey.currentState?.validate() ?? false) {
-                    AuthController().signInUser(
+                    controller.signInUser(
                         emailController.text, passwordController.text);
                   }
                 },

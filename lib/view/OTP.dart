@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:squeak/controller/authentications.dart';
+import '../controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
 
@@ -20,6 +20,9 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
+  AuthController controller = Get.put(AuthController());
+  List<FocusNode> focusNodes = List.generate(4, (index) => FocusNode());
+
   List<TextEditingController> otpControllers =
       List.generate(4, (index) => TextEditingController());
   final GlobalKey<FormState> _formKey4 = GlobalKey<FormState>();
@@ -29,6 +32,15 @@ class _OtpScreenState extends State<OtpScreen> {
     }
     return null;
   }
+  void dispose() {
+  for (var controller in otpControllers) {
+    controller.dispose();
+  }
+  for (var focusNode in focusNodes) {
+    focusNode.dispose();
+  }
+  super.dispose();
+}
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +53,7 @@ class _OtpScreenState extends State<OtpScreen> {
           image: AssetImage(AppAssets.backgroundimage1),
           fit: BoxFit.fill,
           colorFilter: ColorFilter.mode(
-            AppColors.filtercolor, // Adjust opacity as needed
+            AppColors.filtercolor, 
             BlendMode.srcOver,
           ),
         )),
@@ -73,6 +85,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           child: TextFormField(
                             validator: validateOTP,
                             controller: otpControllers[index],
+                            focusNode: focusNodes[index],
                             maxLength: 1,
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
@@ -103,6 +116,18 @@ class _OtpScreenState extends State<OtpScreen> {
                               constraints: BoxConstraints.tightFor(
                                   width: Get.width * 0.15),
                             ),
+                            onChanged: (value) {
+                              if (value.length == 1) {
+                              
+                                if (index < 3) {
+                                  FocusScope.of(context)
+                                      .requestFocus(focusNodes[index + 1]);
+                                } else {
+                                  
+                                  FocusScope.of(context).unfocus();
+                                }
+                              }
+                            },
                           ),
                         ),
                       ),
@@ -112,10 +137,9 @@ class _OtpScreenState extends State<OtpScreen> {
                 SizedBox(height: Get.height * 0.13),
                 GestureDetector(
                   onTap: () {
-                    AuthController().verifyOtpAndNavigate(
+                    controller.verifyOtpAndNavigate(
                         otpControllers, widget.receivedOtp, widget.userEmail);
-                  }, // Pass receivedOtp as an argument
-
+                  },
                   child: Container(
                     height: Get.height * 0.067,
                     width: Get.width * 0.87,

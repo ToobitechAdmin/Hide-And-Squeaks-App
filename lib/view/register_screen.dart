@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:squeak/controller/authentications.dart';
+import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
 
@@ -15,6 +14,9 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+   AuthController controller=Get.put(AuthController());
+
+
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
 
   TextEditingController _firstNameController = TextEditingController();
@@ -126,7 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               GestureDetector(
                 onTap: () {
                   if (_formKey2.currentState?.validate() ?? false) {
-                    AuthController().registerUser(
+                    controller.registerUser(
                       _firstNameController.text,
                       _lastNameController.text,
                       _emailController.text,

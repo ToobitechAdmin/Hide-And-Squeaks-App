@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squeak/dumy Models/dumymodel3.dart';
-import 'package:squeak/dumy Models/dumymodel4.dart';
-import 'package:squeak/dumy Models/dumymodel5.dart';
 import 'package:squeak/components/app_assets.dart';
+import 'package:squeak/models/dumymodel5.dart';
 import 'package:squeak/view/purchase.dart';
 import 'package:squeak/view/menu.dart';
-import 'package:squeak/dumy Models/dumymodel2.dart';
 import 'colors.dart';
 
 class Customhead extends StatelessWidget {
@@ -279,70 +276,70 @@ class CustomBar extends StatelessWidget {
   }
 }
 
-final List<CommentModel> share = [
-  CommentModel(
-      username: "Syed Omer",
-      time: "20 Days ago",
-      comment: "Lorem Ipsum is a dumy text",
-      img: "assets/images/profile1.jpg"),
-  CommentModel(
-      username: "Syed Omer",
-      time: "20 Days ago",
-      comment: "Lorem Ipsum is a dumy text",
-      img: "assets/images/profile1.jpg"),
-  CommentModel(
-      username: "Syed Omer",
-      time: "20 Days ago",
-      comment: "Lorem Ipsum is a dumy text",
-      img: "assets/images/profile1.jpg"),
-  CommentModel(
-      username: "Syed Omer",
-      time: "20 Days ago",
-      comment: "Lorem Ipsum is a dumy text",
-      img: "assets/images/profile1.jpg"),
-  CommentModel(
-      username: "Syed Omer",
-      time: "20 Days ago",
-      comment: "Lorem Ipsum is a dumy text",
-      img: "assets/images/profile1.jpg"),
-  CommentModel(
-      username: "Syed Omer",
-      time: "20 Days ago",
-      comment: "Lorem Ipsum is a dumy text",
-      img: "assets/images/profile1.jpg"),
-  CommentModel(
-      username: "Syed Omer",
-      time: "20 Days ago",
-      comment: "Lorem Ipsum is a dumy text",
-      img: "assets/images/profile1.jpg"),
-];
-final List<TreatModel> dollar = [
-  TreatModel(treats: "100", price: "\$20"),
-  TreatModel(treats: "200", price: "\$20"),
-  TreatModel(treats: "300", price: "\$20"),
-  TreatModel(treats: "400", price: "\$20"),
-  TreatModel(treats: "500", price: "\$20"),
-  TreatModel(treats: "600", price: "\$20"),
-  TreatModel(treats: "100", price: "\$20"),
-  TreatModel(treats: "200", price: "\$20"),
-  TreatModel(treats: "300", price: "\$20"),
-  TreatModel(treats: "400", price: "\$20"),
-  TreatModel(treats: "500", price: "\$20"),
-  TreatModel(treats: "600", price: "\$20"),
-];
+// final List<CommentModel> share = [
+//   CommentModel(
+//       username: "Syed Omer",
+//       time: "20 Days ago",
+//       comment: "Lorem Ipsum is a dumy text",
+//       img: "assets/images/profile1.jpg"),
+//   CommentModel(
+//       username: "Syed Omer",
+//       time: "20 Days ago",
+//       comment: "Lorem Ipsum is a dumy text",
+//       img: "assets/images/profile1.jpg"),
+//   CommentModel(
+//       username: "Syed Omer",
+//       time: "20 Days ago",
+//       comment: "Lorem Ipsum is a dumy text",
+//       img: "assets/images/profile1.jpg"),
+//   CommentModel(
+//       username: "Syed Omer",
+//       time: "20 Days ago",
+//       comment: "Lorem Ipsum is a dumy text",
+//       img: "assets/images/profile1.jpg"),
+//   CommentModel(
+//       username: "Syed Omer",
+//       time: "20 Days ago",
+//       comment: "Lorem Ipsum is a dumy text",
+//       img: "assets/images/profile1.jpg"),
+//   CommentModel(
+//       username: "Syed Omer",
+//       time: "20 Days ago",
+//       comment: "Lorem Ipsum is a dumy text",
+//       img: "assets/images/profile1.jpg"),
+//   CommentModel(
+//       username: "Syed Omer",
+//       time: "20 Days ago",
+//       comment: "Lorem Ipsum is a dumy text",
+//       img: "assets/images/profile1.jpg"),
+// ];
+// final List<TreatModel> dollar = [
+//   TreatModel(treats: "100", price: "\$20"),
+//   TreatModel(treats: "200", price: "\$20"),
+//   TreatModel(treats: "300", price: "\$20"),
+//   TreatModel(treats: "400", price: "\$20"),
+//   TreatModel(treats: "500", price: "\$20"),
+//   TreatModel(treats: "600", price: "\$20"),
+//   TreatModel(treats: "100", price: "\$20"),
+//   TreatModel(treats: "200", price: "\$20"),
+//   TreatModel(treats: "300", price: "\$20"),
+//   TreatModel(treats: "400", price: "\$20"),
+//   TreatModel(treats: "500", price: "\$20"),
+//   TreatModel(treats: "600", price: "\$20"),
+// ];
 
-final List<GridModel1> grid1 = [
-  GridModel1(
-      img: AppAssets.gridimg, title: "First dog", comment: "1", favourite: "5"),
-  GridModel1(
-      img: AppAssets.gridimg, title: "First dog", comment: "1", favourite: "5"),
-  GridModel1(
-      img: AppAssets.gridimg, title: "First dog", comment: "1", favourite: "5"),
-  GridModel1(
-      img: AppAssets.gridimg, title: "First dog", comment: "1", favourite: "5"),
-  GridModel1(
-      img: AppAssets.gridimg, title: "First dog", comment: "1", favourite: "5"),
-];
+// final List<GridModel1> grid1 = [
+//   GridModel1(
+//       img: AppAssets.gridimg, title: "First dog", comment: "1", favourite: "5"),
+//   GridModel1(
+//       img: AppAssets.gridimg, title: "First dog", comment: "1", favourite: "5"),
+//   GridModel1(
+//       img: AppAssets.gridimg, title: "First dog", comment: "1", favourite: "5"),
+//   GridModel1(
+//       img: AppAssets.gridimg, title: "First dog", comment: "1", favourite: "5"),
+//   GridModel1(
+//       img: AppAssets.gridimg, title: "First dog", comment: "1", favourite: "5"),
+// ];
 
 final List<AppModel> app = [
   AppModel(img: AppAssets.appitem2, title: "Setgipping", price: "\$20"),

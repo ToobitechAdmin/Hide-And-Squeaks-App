@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:squeak/dumy Models/dumymodel3.dart';
+import 'package:squeak/controller/treat_Controller.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/custom.dart';
 import 'package:squeak/view/treat.dart';
 
 import '../components/colors.dart';
+import '../models/treatmodel.dart';
 
 class PurchaseScreen extends StatefulWidget {
   const PurchaseScreen({super.key});
@@ -15,6 +16,15 @@ class PurchaseScreen extends StatefulWidget {
 }
 
 class _PurchaseScreenState extends State<PurchaseScreen> {
+  treatController controller = Get.put(treatController());
+  @override
+  void initState() {
+    super.initState();
+    
+
+    controller.fetchTreats();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +36,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
           image: AssetImage(AppAssets.backgroundimage1),
           fit: BoxFit.fill,
           colorFilter: ColorFilter.mode(
-            AppColors.filtercolor, // Adjust opacity as needed
+            AppColors.filtercolor, 
             BlendMode.srcOver,
           ),
         )),
@@ -39,9 +49,9 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                 width: Get.width * 0.82,
                 color: Colors.transparent,
                 child: ListView.builder(
-                    itemCount: dollar.length,
+                    itemCount: controller.treatList.length,
                     itemBuilder: (context, int index) {
-                      TreatModel treat = dollar[index];
+                      TreatModel treat = controller.treatList[index];
                       return Padding(
                         padding: EdgeInsets.only(bottom: 40),
                         child: Container(
@@ -71,7 +81,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                                       child: Row(
                                         children: [
                                           Text(
-                                            treat.treats,
+                                            treat.treats.toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 20,
@@ -91,8 +101,8 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                                         ],
                                       ),
                                     ),
-                                    Text(
-                                      treat.price,
+                                     Text(
+                                      treat.price.toString(),
                                       style: TextStyle(
                                           fontWeight: FontWeight.w900,
                                           fontSize: 20,

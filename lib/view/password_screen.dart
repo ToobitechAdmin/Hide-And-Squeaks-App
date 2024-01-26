@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:squeak/controller/authentications.dart';
+import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
 
@@ -17,6 +17,7 @@ class PasswordScreen extends StatefulWidget {
 }
 
 class _PasswordScreenState extends State<PasswordScreen> {
+  AuthController controller = Get.put(AuthController());
   final GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
   TextEditingController _newPasswordController = TextEditingController();
   TextEditingController _reEnterPasswordController = TextEditingController();
@@ -98,10 +99,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     if (_formKey5.currentState?.validate() ?? false) {
                       if (_newPasswordController.text ==
                           _reEnterPasswordController.text) {
-                        AuthController().updatePassword(
+                        controller.updatePassword(
                             widget.userEmail, _newPasswordController.text);
                       } else {
-                        // Passwords don't match, show an error message or handle accordingly
+                      
                         Get.snackbar(
                           'Password Mismatch',
                           'New Password and Re-entered Password do not match',

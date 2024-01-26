@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:squeak/dumy Models/dumymodel5.dart';
+import 'package:squeak/models/dumymodel5.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/custom.dart';
