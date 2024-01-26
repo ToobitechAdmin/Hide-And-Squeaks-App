@@ -6,7 +6,6 @@ import 'package:squeak/components/snakbar.dart';
 import 'package:squeak/controller/video_controller.dart';
 import 'package:squeak/models/video_model.dart';
 
-
 import '../components/colors.dart';
 
 class UploadScreen extends StatefulWidget {
@@ -62,18 +61,20 @@ class _UploadScreenState extends State<UploadScreen> {
                 children: [
                   Stack(
                     children: [
-                      Obx(()=> Container(
-                        height: Get.height * 0.45,
-                        width: Get.width * 1,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                         image: DecorationImage(image:controller.imagethumbnail.value !=
-                                              null
-                                          ? Image.file(controller.imagethumbnail.value!)
-                                              .image:AssetImage(AppAssets.back2),fit: BoxFit.cover)
-                         
-                          ),
-                      ),
+                      Obx(
+                        () => Container(
+                          height: Get.height * 0.45,
+                          width: Get.width * 1,
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              image: DecorationImage(
+                                  image: controller.imagethumbnail.value != null
+                                      ? Image.file(
+                                              controller.imagethumbnail.value!)
+                                          .image
+                                      : AssetImage(AppAssets.back2),
+                                  fit: BoxFit.cover)),
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 40),
@@ -183,8 +184,7 @@ class _UploadScreenState extends State<UploadScreen> {
                           onTap: () {
                             print("pick image");
 
-                          controller.pickThumb();
-                           
+                            controller.pickThumb();
                           },
                           child: Container(
                             color: Colors.transparent,
@@ -293,21 +293,31 @@ class _UploadScreenState extends State<UploadScreen> {
                                 color: AppColors.errorcolor);
                             return;
                           }
+                         
 
-                          if (_videokey.currentState?.validate() ?? false) {
+                         
+                            if (privacyOption == null) {
+                              return showInSnackBar("Select Upload Type",color: AppColors.errorcolor);
+                              
+                            }
+                           else{
+
+                           if (_videokey.currentState?.validate() ?? false) {
                             var model = VideoModel(
                                 title: _titleController.text,
                                 description: _descriptionController.text,
                                 videotype: privacyOption,
-                                thumbnail: controller.imagethumbnail.value.toString(),
-                               
+                                thumbnail:
+                                    controller.imagethumbnail.value.toString(),
                                 file_path:
                                     controller.selectedVideo.value.toString());
                             controller.postVideo(model);
                           }
                           _titleController.clear();
                           _descriptionController.clear();
+                           }
                         },
+                        
                         child: Container(
                           height: Get.height * 0.055,
                           width: Get.width * 0.31,

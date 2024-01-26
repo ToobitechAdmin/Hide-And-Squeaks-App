@@ -13,13 +13,13 @@ import '../models/treatmodel.dart';
 class treatController extends GetxController {
   var isLoading = false.obs;
 
-  List<TreatModel> treatList = <TreatModel>[];
+  List<TreatModel> treatList = <TreatModel>[].obs;
   fetchTreats() async {
-    isLoading=true.obs;
+    isLoading.value = true;
     String currentToken = appStorage.read('userToken');
 
-   
     try {
+      treatList.clear();
       final response = await http.get(
         Uri.parse(AppUrl.treatUrl),
         headers: {
@@ -31,29 +31,24 @@ class treatController extends GetxController {
       print(response.statusCode);
       print(response.body);
 
-      
       if (response.statusCode == 200) {
-         final List<dynamic> responseData = json.decode(response.body)['data'];
-         treatList = responseData
-            .map((treatData) => TreatModel(
-                  id: treatData['id'],
-                  treats: treatData['treats'],
-                  price: treatData['price'],
-                 
-                ))
-            .toList();
-            
-        
+        final List<dynamic> responseData = json.decode(response.body)['data'];
+        for (var videoData in responseData) {
+           print(videoData["id"]);
+          treatList.add(TreatModel(
+
+           
+              id: videoData["id"],
+              treats: videoData["treats"],
+              price: videoData["price"]));
+        }
 
         print("treatLength: ${treatList.length}");
-        isLoading=false.obs;
-
-        
-        
+        isLoading.value = false;
       } else {
-       final Map<String, dynamic> responseData = json.decode(response.body);
+        isLoading = false.obs;
+        final Map<String, dynamic> responseData = json.decode(response.body);
         showInSnackBar(responseData["message"], color: AppColors.errorcolor);
-      
       }
     } catch (e) {
       isLoading.value = false;
@@ -61,4 +56,10 @@ class treatController extends GetxController {
       print('discover error');
     }
   }
+
+  
+
+
+
+
 }

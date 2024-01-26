@@ -92,12 +92,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                Container(
                     height: Get.height * 0.2,
                     width: Get.width * 0.1,
-                    child: Obx(()=>
-                // List<VideoModel> socialVideos = controller.videoList
-                //     .where((public) => public.videotype == "public")
-                //     .toList();
-
-                controller.isLoading.value?
+                    child: Obx(()=>controller.isLoading.value?
                   Center(
                     child: CircularProgressIndicator(
                       color: AppColors.primaryColor,
@@ -262,12 +257,12 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                               ),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.only(left: 10,right: 10,bottom: 15),
                               child: Column(
+                               
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  SizedBox(
-                                    height: Get.height * 0.11,
-                                  ),
+                                 
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -277,7 +272,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                                         child: Text(
                                           video.title.toString(),
                                           style: TextStyle(
-                                            color: Colors.black,
+                                            color: AppColors.whitecolor,
                                             fontWeight: FontWeight.w700,
                                             fontSize: 17,
                                           ),

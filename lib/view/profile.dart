@@ -81,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: Get.height * 0.015,
+                        height: Get.height * 0.03,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -162,7 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ],
                       ),
                       SizedBox(
-                        height: Get.height * 0.02,
+                        height: Get.height * 0.01,
                       ),
                       Container(
                         height: Get.height * 0.082,
@@ -478,9 +478,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: Get.height * 0.03,
-                      ),
+                      
                      
                     ],
                   ),

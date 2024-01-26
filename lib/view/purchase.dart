@@ -20,6 +20,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
   @override
   void initState() {
     super.initState();
+    Get.put(treatController());
     
 
     controller.fetchTreats();
@@ -48,7 +49,12 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                 height: Get.height * 0.83,
                 width: Get.width * 0.82,
                 color: Colors.transparent,
-                child: ListView.builder(
+                child:Obx(()=> controller.isLoading.value?
+                  Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                    ),
+                  ): ListView.builder(
                     itemCount: controller.treatList.length,
                     itemBuilder: (context, int index) {
                       TreatModel treat = controller.treatList[index];
@@ -137,6 +143,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                         ),
                       );
                     }),
+              )
               )
             ],
           ),
