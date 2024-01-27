@@ -45,4 +45,5 @@ class AppAssets {
   static var save = "assets/images/save.png";
   static var menuback = "assets/images/menuback.png";
   static var eye = "assets/images/eye.png";
+  static var defaultimg ="assets/images/default.jpg";
 }

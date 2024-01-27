@@ -12,6 +12,7 @@ import '../models/treatmodel.dart';
 
 class treatController extends GetxController {
   var isLoading = false.obs;
+  var isLoadingpolicy=false.obs;
 
   List<TreatModel> treatList = <TreatModel>[].obs;
   fetchTreats() async {
@@ -34,10 +35,8 @@ class treatController extends GetxController {
       if (response.statusCode == 200) {
         final List<dynamic> responseData = json.decode(response.body)['data'];
         for (var videoData in responseData) {
-           print(videoData["id"]);
+          print(videoData["id"]);
           treatList.add(TreatModel(
-
-           
               id: videoData["id"],
               treats: videoData["treats"],
               price: videoData["price"]));
@@ -57,9 +56,34 @@ class treatController extends GetxController {
     }
   }
 
-  
+  var para = "".obs;
+  getPolicy() async {
+    isLoadingpolicy.value = true;
+    String currentToken = appStorage.read('userToken');
+    try {
+      final response = await http.get(
+        Uri.parse(AppUrl.policyUrl),
+        headers: {
+          'Authorization': "Bearer  $currentToken ",
+          'Accept': "application/json"
+        },
+      );
+    
+    
 
-
-
-
+      if (response.statusCode==200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        print(responseData['data']['paragraph']);
+        para.value = responseData['data']['paragraph'];
+       isLoadingpolicy.value=false;
+      }
+      else{
+        print(response.statusCode);
+      }
+    } catch (e) {
+      isLoading.value = false;
+      print(e.toString());
+      print('discover error');
+    }
+  }
 }

@@ -5,6 +5,7 @@ import 'package:squeak/view/menu.dart';
 import 'package:squeak/view/profile.dart';
 
 import '../components/colors.dart';
+import 'package:app_settings/app_settings.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -90,12 +91,17 @@ class _SettingScreenState extends State<SettingScreen> {
                   SizedBox(
                     width: Get.width * 0.05,
                   ),
-                  Text(
-                    "Bluetooth",
-                    style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.whitecolor),
+                  GestureDetector(
+                    onTap: (){
+                      AppSettings.openAppSettings(type: AppSettingsType.bluetooth);
+                    },
+                    child: Text(
+                      "Bluetooth",
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.whitecolor),
+                    ),
                   )
                 ],
               ),

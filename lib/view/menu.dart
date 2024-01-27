@@ -6,7 +6,7 @@ import 'package:squeak/view/appstore.dart';
 import 'package:squeak/view/profile.dart';
 import 'package:squeak/view/setting.dart';
 import 'package:squeak/view/socialfeed.dart';
-import 'package:squeak/view/text.dart';
+import 'package:squeak/view/policy.dart';
 import 'package:squeak/view/upload.dart';
 import '../components/colors.dart';
 import 'audio_play_screen.dart';

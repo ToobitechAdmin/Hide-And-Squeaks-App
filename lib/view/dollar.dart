@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/view/text.dart';
+import 'package:squeak/models/treatmodel.dart';
+import 'package:squeak/view/policy.dart';
 
 import '../components/colors.dart';
 
 class DollarScreen extends StatefulWidget {
-  const DollarScreen({super.key});
+  final TreatModel treat;
+  const DollarScreen({required this.treat});
 
   @override
   State<DollarScreen> createState() => _DollarScreenState();
@@ -77,7 +79,7 @@ class _DollarScreenState extends State<DollarScreen> {
                               child: Row(
                                 children: [
                                   Text(
-                                    "100",
+                                    widget.treat.treats.toString(),
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 20,
@@ -97,7 +99,7 @@ class _DollarScreenState extends State<DollarScreen> {
                               ),
                             ),
                             Text(
-                              "\$20",
+                              "\$${widget.treat.price.toString()}",
                               style: TextStyle(
                                   fontWeight: FontWeight.w900,
                                   fontSize: 20,

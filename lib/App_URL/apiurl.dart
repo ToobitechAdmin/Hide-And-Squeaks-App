@@ -24,6 +24,8 @@ class AppUrl {
   static String treatUrl="${base}list-treats";
   static String videoDelUrl="${base}video-del";
   static String balanceUrl="${base}my-balance";
+  static String policyUrl="${base}paragraph";
+
 
   
  

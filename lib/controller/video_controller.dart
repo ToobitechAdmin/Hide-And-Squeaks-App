@@ -14,6 +14,7 @@ import 'package:squeak/models/comment_model.dart';
 
 import 'package:squeak/models/video_model.dart';
 import 'package:squeak/view/socialfeed.dart';
+import 'package:squeak/view/upload.dart';
 import 'package:squeak/view/video_player.dart';
 import '../App_URL/apiurl.dart';
 import '../Local Storage/global_variable.dart';
@@ -98,6 +99,7 @@ class VideoController extends GetxController {
         if (imagethumbnail.value != null) {
           imagethumbnail.value = null;
         }
+       
 
         {
           print(" ${responseData['message']}");

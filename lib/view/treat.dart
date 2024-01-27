@@ -8,8 +8,8 @@ import '../components/colors.dart';
 import '../models/treatmodel.dart';
 
 class TreatScreen6 extends StatefulWidget {
-  final TreatModel treat;
-  const TreatScreen6({required this.treat});
+  
+  const TreatScreen6({super.key});
 
   @override
   State<TreatScreen6> createState() => _TreatScreen6State();
@@ -49,7 +49,7 @@ class _TreatScreen6State extends State<TreatScreen6> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    widget.treat.treats.toString(),
+                   "20",
                     style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w600,

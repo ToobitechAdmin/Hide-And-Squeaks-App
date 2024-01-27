@@ -3,6 +3,7 @@ import 'package:squeak/controller/treat_Controller.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/custom.dart';
+import 'package:squeak/view/dollar.dart';
 import 'package:squeak/view/treat.dart';
 
 import '../components/colors.dart';
@@ -108,7 +109,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                                       ),
                                     ),
                                      Text(
-                                      treat.price.toString(),
+                                      "\$${treat.price.toString()}",
                                       style: TextStyle(
                                           fontWeight: FontWeight.w900,
                                           fontSize: 20,
@@ -116,7 +117,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        Get.to(TreatScreen6(treat: treat));
+                                        Get.to(DollarScreen(treat: treat));
                                       },
                                       child: Container(
                                           height: Get.height * 0.03,

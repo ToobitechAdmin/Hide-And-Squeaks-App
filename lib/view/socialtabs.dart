@@ -23,6 +23,31 @@ class _SocialTabScreenState extends State<SocialTabScreen>
 
   VideoController controller = Get.put(VideoController());
 
+  void showDeleteBox(BuildContext context,{required int videoId,required VideoModel number}) {
+    
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Delete video ${number.title} "),
+          content: Text("Do you want to delete this video"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                controller.videoListprivate.remove(number);
+                controller.deleteVideo(videoId);
+               Get.back();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  
+
   @override
   void initState() {
     super.initState();
@@ -92,7 +117,8 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                Container(
                     height: Get.height * 0.2,
                     width: Get.width * 0.1,
-                    child: Obx(()=>controller.isLoading.value?
+                    child: Obx(()=>
+controller.isLoading.value?
                   Center(
                     child: CircularProgressIndicator(
                       color: AppColors.primaryColor,
@@ -106,7 +132,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisSpacing: 20,
                         mainAxisSpacing: 20,
-                        crossAxisCount: 2, // Number of items per row
+                        crossAxisCount: 2, 
                       ),
                       itemBuilder: (context, int index) {
                         VideoModel video = controller.videoListpublic[index];
@@ -281,10 +307,11 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                                       GestureDetector(
                                          behavior: HitTestBehavior.translucent,
                                         onTap: (){
+                                          showDeleteBox(context,videoId: video.id!,number:controller.videoListprivate[index]);
                                           
                                           print("videoid: ${video.id}");
-                                          controller.videoListprivate.remove(controller.videoListprivate[index]);
-                                          controller.deleteVideo(video.id!);
+                                          // controller.videoListprivate.remove(controller.videoListprivate[index]);
+                                          // controller.deleteVideo(video.id!);
                                           
                                           
                                           
