@@ -4,7 +4,7 @@ import 'package:squeak/components/app_assets.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/custom.dart';
 import 'package:squeak/view/dollar.dart';
-import 'package:squeak/view/treat.dart';
+import 'package:squeak/view/balance.dart';
 
 import '../components/colors.dart';
 import '../models/treatmodel.dart';

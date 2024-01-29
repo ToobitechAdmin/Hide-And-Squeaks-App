@@ -30,9 +30,10 @@ class _TextScreenState extends State<TextScreen> {
       body: Container(
         height: Get.height * 1,
         width: Get.width * 1,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(AppAssets.textback), fit: BoxFit.fill)),
+        color: Colors.black,
+        // decoration: BoxDecoration(
+        //     image: DecorationImage(
+        //         image: AssetImage(AppAssets.textback), fit: BoxFit.fill)),
         child: Padding(
           padding: const EdgeInsets.only(left: 5, right: 5),
           child: SingleChildScrollView(

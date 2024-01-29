@@ -102,7 +102,7 @@ class ProfileController extends GetxController {
           'Accept': "application/json"
         },
       );
-      print('Audio Player Api Status');
+      print('Get user profile Status');
       print(response.statusCode);
       print('Response Body');
       print(response.body);

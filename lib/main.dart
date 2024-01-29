@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:squeak/components/snakbar.dart';
+import 'package:squeak/view/balance.dart';
 
 
 import 'view/splashScreen.dart';

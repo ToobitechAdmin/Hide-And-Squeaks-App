@@ -23,12 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   TextEditingController _nameController = TextEditingController();
   TextEditingController _breedController = TextEditingController();
-  // String? validateimage() {
-  //   if (controller.image.value == null) {
-  //     return 'Select a image';
-  //   }
-  //   return null;
-  // }
+ 
 
   String? validateName(String? value) {
     if (value == null || value.isEmpty) {

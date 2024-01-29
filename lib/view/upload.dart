@@ -6,7 +6,6 @@ import 'package:squeak/components/snakbar.dart';
 import 'package:squeak/controller/video_controller.dart';
 import 'package:squeak/models/video_model.dart';
 
-
 import '../components/colors.dart';
 
 class UploadScreen extends StatefulWidget {
@@ -62,18 +61,20 @@ class _UploadScreenState extends State<UploadScreen> {
                 children: [
                   Stack(
                     children: [
-                      Obx(()=> Container(
-                        height: Get.height * 0.45,
-                        width: Get.width * 1,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                         image: DecorationImage(image:controller.imagethumbnail.value !=
-                                              null
-                                          ? Image.file(controller.imagethumbnail.value!)
-                                              .image:AssetImage(AppAssets.defaultimg),fit: BoxFit.cover)
-                         
-                          ),
-                      ),
+                      Obx(
+                        () => Container(
+                          height: Get.height * 0.45,
+                          width: Get.width * 1,
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              image: DecorationImage(
+                                  image: controller.imagethumbnail.value != null
+                                      ? Image.file(
+                                              controller.imagethumbnail.value!)
+                                          .image
+                                      : AssetImage(AppAssets.defaultimg),
+                                  fit: BoxFit.cover)),
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 40),
@@ -183,8 +184,7 @@ class _UploadScreenState extends State<UploadScreen> {
                           onTap: () {
                             print("pick image");
 
-                          controller.pickThumb();
-                           
+                            controller.pickThumb();
                           },
                           child: Container(
                             color: Colors.transparent,
@@ -286,35 +286,39 @@ class _UploadScreenState extends State<UploadScreen> {
                           print(controller.selectedVideo.value.toString());
                           print(privacyOption);
                           print(controller.imagethumbnail.value.toString());
-
-                          
+                          String? validatePrivacyOptions(
+                              bool isChecked, bool isChecked2) {
+                            if (!isChecked && !isChecked2) {
+                              return 'Please select a privacy option';
+                            }
+                            return null; 
+                          }
+                          String? privacyValidationResult = validatePrivacyOptions(isChecked, isChecked2);
 
                           if (_videokey.currentState?.validate() ?? false) {
-                            if(controller.selectedVideo.value!=null
-                            &&controller.imagethumbnail.value!=null
-                            && privacyOption !=null
-                            ){
-                            var model = VideoModel(
-                                title: _titleController.text,
-                                description: _descriptionController.text,
-                                videotype: privacyOption,
-                                thumbnail: controller.imagethumbnail.value.toString(),
-                               
-                                file_path:
-                                    controller.selectedVideo.value.toString());
-                            controller.postVideo(model);
+                            if (controller.selectedVideo.value != null &&
+                                controller.imagethumbnail.value != null &&
+                                privacyOption != null) {
+                              var model = VideoModel(
+                                  title: _titleController.text,
+                                  description: _descriptionController.text,
+                                  videotype: privacyOption,
+                                  thumbnail: controller.imagethumbnail.value
+                                      .toString(),
+                                  file_path: controller.selectedVideo.value
+                                      .toString());
+                              controller.postVideo(model);
+                            } else if (controller.selectedVideo.value == null) {
+                              showInSnackBar("Select a video to upload",
+                                  color: AppColors.errorcolor);
+                            } else if (controller.imagethumbnail.value ==
+                                null) {
+                              showInSnackBar("Select a thumbnial",
+                                  color: AppColors.errorcolor);
+                            } else {
+                              showInSnackBar("Select video Type",
+                                  color: AppColors.errorcolor);
                             }
-                            else if(controller.selectedVideo.value==null){
-                              showInSnackBar("Select a video to upload",color: AppColors.errorcolor);
-                            }
-                             else if(controller.imagethumbnail.value==null){
-                              showInSnackBar("Select a thumbnial",color: AppColors.errorcolor);
-                            }
-                            else{
-                              showInSnackBar("Select video Type",color: AppColors.errorcolor);
-
-                            }
-                            
                           }
                           // _titleController.clear();
                           // _descriptionController.clear();
@@ -344,7 +348,7 @@ class _UploadScreenState extends State<UploadScreen> {
                                   setState(() {
                                     isChecked = value ?? false;
                                     isChecked2 = !isChecked;
-                                    privacyOption = isChecked ? 'private' : null!;
+                                    privacyOption = "private";
                                   });
                                 },
                               ),
@@ -378,7 +382,7 @@ class _UploadScreenState extends State<UploadScreen> {
                                   setState(() {
                                     isChecked2 = value ?? false;
                                     isChecked = !isChecked2;
-                                    privacyOption = isChecked2 ? 'public' : null!;
+                                    privacyOption = "public";
                                   });
                                 },
                               ),

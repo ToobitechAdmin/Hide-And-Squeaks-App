@@ -25,6 +25,7 @@ import 'package:file_picker/file_picker.dart';
 class VideoController extends GetxController {
   Rx<File?> selectedVideo = Rx<File?>(null);
   var isLoading = false.obs;
+  var viewDataLaoding =false.obs;
 
   pickVideo() async {
     FilePickerResult? result =
@@ -36,7 +37,7 @@ class VideoController extends GetxController {
 
   Rx<File?> imagethumbnail = Rx<File?>(null);
 
-  void pickThumb() async {
+  pickThumb() async {
     try {
       final pickedthumb =
           await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -59,6 +60,7 @@ class VideoController extends GetxController {
 
   postVideo(VideoModel videodata) async {
     showDialogue();
+    
 
     String currentToken = appStorage.read('userToken');
 
@@ -201,7 +203,7 @@ class VideoController extends GetxController {
             videoListprivate.add(VideoModel(
                 title: videoData["title"],
                 description:videoData["description"] ,
-                file_path: videoData["filepath"],
+                file_path: videoData["file_path"],
                 thumbnail: videoData["thumbnail_path"],
                 created_at: videoData["created_at"],
                 id: videoData["id"],
@@ -274,6 +276,7 @@ class VideoController extends GetxController {
   RxInt total_likes = 0.obs;
 
   ViewData(userid) async {
+    viewDataLaoding.value=true;
     print(userid);
     print("View data API call");
     String currentToken = appStorage.read('userToken');
@@ -328,6 +331,7 @@ class VideoController extends GetxController {
             );
 
             Get.to(VideoPlayerScreen(view: videoViewData,comments:comments));
+            viewDataLaoding.value=false;
           }
         } else {
           print('Response body is null');
@@ -358,7 +362,7 @@ class VideoController extends GetxController {
       final Map<String, dynamic> responseData = json.decode(response.body);
 
       if (response.statusCode == 200) {
-        showInSnackBar(responseData["message"], color: AppColors.greencolor);
+        // showInSnackBar(responseData["message"], color: AppColors.greencolor);
         print('Comment posted successfully');
         print('Response body: ${response.body}');
       } else {
@@ -369,7 +373,7 @@ class VideoController extends GetxController {
       print('Exception during postComment: $e');
     }
   }
-
+  var likeCheck="". obs;
   postLike(int videoId) async {
     String currentToken = appStorage.read('userToken');
     try {
@@ -386,8 +390,10 @@ class VideoController extends GetxController {
       final Map<String, dynamic> responseData = json.decode(response.body);
 
       if (response.statusCode == 200) {
-        showInSnackBar(responseData["message"], color: Colors.pink);
+        // showInSnackBar(responseData["message"], color: Colors.pink);
         print('Like posted successfully');
+        print(responseData["message"]);
+        likeCheck.value=responseData["message"];
         print('Response body: ${response.body}');
       } else {
         print('Error posting Like. Status code: ${response.statusCode}');

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
+import 'package:squeak/view/balance.dart';
 import 'package:squeak/view/menu.dart';
 import 'package:squeak/view/profile.dart';
 
@@ -45,7 +46,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(MenuScreen());
+                      Get.to(BalanceScreen());
                     },
                     child: Container(
                         height: Get.height * 0.08,
@@ -125,12 +126,17 @@ class _SettingScreenState extends State<SettingScreen> {
                   SizedBox(
                     width: Get.width * 0.05,
                   ),
-                  Text(
-                    "Legal",
-                    style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.whitecolor),
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(BalanceScreen());
+                    },
+                    child: Text(
+                      "Legal",
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.whitecolor),
+                    ),
                   )
                 ],
               ),

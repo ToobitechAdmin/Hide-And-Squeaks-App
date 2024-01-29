@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
+import 'package:squeak/controller/treat_Controller.dart';
 
 import '../components/colors.dart';
 import '../models/treatmodel.dart';
 
-class TreatScreen6 extends StatefulWidget {
-  
-  const TreatScreen6({super.key});
+class BalanceScreen extends StatefulWidget {
+  const BalanceScreen({super.key});
 
   @override
-  State<TreatScreen6> createState() => _TreatScreen6State();
+  State<BalanceScreen> createState() => _BalanceScreenState();
 }
 
-class _TreatScreen6State extends State<TreatScreen6> {
+class _BalanceScreenState extends State<BalanceScreen> {
+  treatController controller =Get.put(treatController());
+  @override
+  void initState() {
+    super.initState();
+    controller.getBalance();
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,12 +33,10 @@ class _TreatScreen6State extends State<TreatScreen6> {
         width: Get.width * 1,
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(AppAssets.backgroundmain),
-                fit: BoxFit.fill)),
+                image: AssetImage(AppAssets.backgroundmain), fit: BoxFit.fill)),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              
               Customhead(),
               SizedBox(height: Get.height * 0.080),
               Text(
@@ -48,13 +55,13 @@ class _TreatScreen6State extends State<TreatScreen6> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                   "20",
+                 Obx(() => controller.isLoadingbalance.value? CircularProgressIndicator(color: AppColors.primaryColor,)  :Text(
+                    controller.balance.toString(),
                     style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w600,
                         color: Colors.white),
-                  ),
+                  ),),
                   Padding(
                     padding: EdgeInsets.only(left: 8),
                     child: Text(

@@ -13,6 +13,7 @@ import '../models/treatmodel.dart';
 class treatController extends GetxController {
   var isLoading = false.obs;
   var isLoadingpolicy=false.obs;
+  var isLoadingbalance=false.obs;
 
   List<TreatModel> treatList = <TreatModel>[].obs;
   fetchTreats() async {
@@ -81,9 +82,44 @@ class treatController extends GetxController {
         print(response.statusCode);
       }
     } catch (e) {
-      isLoading.value = false;
+      isLoadingpolicy.value = false;
       print(e.toString());
       print('discover error');
     }
   }
+
+  var balance = "".obs;
+  getBalance() async {
+    isLoadingbalance.value = true;
+    String currentToken = appStorage.read('userToken');
+    try {
+      final response = await http.get(
+        Uri.parse(AppUrl.balanceUrl),
+        headers: {
+          'Authorization': "Bearer  $currentToken ",
+          'Accept': "application/json"
+        },
+      );
+    
+    
+
+      if (response.statusCode==200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        print(responseData['data']['balance']);
+        balance.value = responseData['data']['balance'];
+       isLoadingbalance.value=false;
+      }
+      else{
+        print(response.statusCode);
+      }
+    } catch (e) {
+      isLoadingbalance.value = false;
+      print(e.toString());
+      print('discover error');
+    }
+  }
+
+
+
+
 }

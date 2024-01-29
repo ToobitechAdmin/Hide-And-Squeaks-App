@@ -7,6 +7,7 @@ import 'package:squeak/controller/video_controller.dart';
 import 'package:squeak/components/app_assets.dart';
 
 import 'package:squeak/models/video_model.dart';
+import 'package:squeak/view/privateScreen.dart';
 import 'package:squeak/view/socialfeed.dart';
 
 
@@ -20,6 +21,7 @@ class SocialTabScreen extends StatefulWidget {
 class _SocialTabScreenState extends State<SocialTabScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  bool isLoadingvideo = true;
 
   VideoController controller = Get.put(VideoController());
 
@@ -29,8 +31,8 @@ class _SocialTabScreenState extends State<SocialTabScreen>
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Delete video ${number.title} "),
-          content: Text("Do you want to delete this video"),
+          title: Text("Title:${number.title} "),
+          content: Text("Do you want to delete this video ?"),
           actions: [
             TextButton(
               onPressed: () {
@@ -38,7 +40,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                 controller.deleteVideo(videoId);
                Get.back();
               },
-              child: Text("OK"),
+              child: Text("OK",style: TextStyle(color: AppColors.primaryColor),),
             ),
           ],
         );
@@ -269,8 +271,11 @@ controller.isLoading.value?
 
                         return GestureDetector(
                           onTap: () {
-                            controller.ViewData(video.id);
-                            controller.Addview(video.id);
+                            print("file_path:${AppUrl.videoURL+video.file_path.toString()}");
+
+                            Get.to(PrivateScreen(link:video.file_path.toString(),title: video.title.toString()));
+                            // controller.ViewData(video.id);
+                            // controller.Addview(video.id);
                           },
                           child: Container(
                             decoration: BoxDecoration(

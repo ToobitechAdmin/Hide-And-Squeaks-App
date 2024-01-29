@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:squeak/view/menu.dart';
+import 'package:squeak/view/purchase.dart';
 import '../App_URL/apiurl.dart';
 import '../components/app_assets.dart';
 import '../components/colors.dart';
@@ -53,7 +55,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            // Get.to(PurchaseScreen());
+                            Get.to(PurchaseScreen());
                           },
                           child: Container(
                             height: Get.height * 0.069,
@@ -74,7 +76,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            // Get.to(MenuScreen());
+                            Get.to(MenuScreen());
                           },
                           child: Container(
                               height: Get.height * 0.08,
