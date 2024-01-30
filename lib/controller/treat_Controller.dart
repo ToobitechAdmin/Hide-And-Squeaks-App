@@ -42,11 +42,12 @@ class treatController extends GetxController {
               treats: videoData["treats"],
               price: videoData["price"]));
         }
+        isLoading.value = false;
 
         print("treatLength: ${treatList.length}");
-        isLoading.value = false;
+        
       } else {
-        isLoading = false.obs;
+        isLoading.value = false;
         final Map<String, dynamic> responseData = json.decode(response.body);
         showInSnackBar(responseData["message"], color: AppColors.errorcolor);
       }
@@ -54,6 +55,9 @@ class treatController extends GetxController {
       isLoading.value = false;
       print(e.toString());
       print('discover error');
+    }
+    finally{
+      isLoading.value=false;
     }
   }
 

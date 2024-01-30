@@ -4,6 +4,7 @@ import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/view/balance.dart';
 import 'package:squeak/view/menu.dart';
 import 'package:squeak/view/profile.dart';
+import 'package:squeak/view/purchase.dart';
 
 import '../components/colors.dart';
 import 'package:app_settings/app_settings.dart';
@@ -31,18 +32,23 @@ class _SettingScreenState extends State<SettingScreen> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 25, right: 25, top: 10),
+              padding: EdgeInsets.only(left: 25, right: 25, top: 35),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    height: Get.height * 0.069,
-                    width: Get.width * 0.15,
-                    decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        image: DecorationImage(
-                            image: AssetImage(AppAssets.heart),
-                            fit: BoxFit.fill)),
+                  GestureDetector(
+                  onTap: (){
+                      Get.to(PurchaseScreen());
+                  },
+                    child: Container(
+                      height: Get.height * 0.069,
+                      width: Get.width * 0.15,
+                      decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          image: DecorationImage(
+                              image: AssetImage(AppAssets.heart),
+                              fit: BoxFit.fill)),
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -60,9 +66,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ],
               ),
             ),
-            SizedBox(
-              height: Get.height * 0.01,
-            ),
+           
             Text(
               "Settings",
               style: TextStyle(

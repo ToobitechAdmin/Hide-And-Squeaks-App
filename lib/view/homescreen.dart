@@ -10,6 +10,7 @@ import 'package:squeak/view/login_screen.dart';
 import '../components/colors.dart';
 import '../components/custom_playbutton.dart';
 
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -61,39 +62,36 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: Get.height * 0.009),
               // ...
 
-              Stack(
-                children: [
-                  Container(
-                    width: Get.width * 0.65,
-                    height: Get.height * 0.021,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(AppAssets.slider),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    child: GradientSlider(
-                      thumbAsset: "assets/images/button.png",
-                      thumbHeight: 36,
-                      thumbWidth: 25,
-                      inactiveTrackColor: Colors.transparent,
-                      trackHeight: Get.height * 0.007,
-                      activeTrackGradient: const LinearGradient(
-                        colors: [Color(0xff804D34), Color(0xffF1DF88)],
-                      ),
-                      slider: Slider(
-                        value: _sliderValue,
-                        min: 0.0,
-                        max: 100.0,
-                        onChanged: (double value) {
-                          setState(() {
-                            _sliderValue = value;
-                          });
-                        },
-                      ),
-                    ),
+              Container(
+                width: Get.width * 0.65,
+                height: Get.height * 0.021,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(AppAssets.slider),
+                    fit: BoxFit.fill,
                   ),
-                ],
+                ),
+                child: GradientSlider(
+                  thumbAsset: "assets/images/button.png",
+                  thumbHeight: 36,
+                  thumbWidth: 25,
+                  inactiveTrackColor: Colors.transparent,
+                  trackHeight: Get.height * 0.007,
+                  activeTrackGradient: const LinearGradient(
+                    colors: [Color(0xff804D34), Color(0xffF1DF88)],
+                  ),
+                  slider: Slider(
+                    value: _sliderValue,
+                    min: 0.0,
+                    max: 100.0,
+                    onChanged: (double value) {
+                      setState(() {
+                        _sliderValue = value;
+                        // VolumeWatcher.setVolume(value);
+                      });
+                    },
+                  ),
+                ),
               ),
 
               SizedBox(
