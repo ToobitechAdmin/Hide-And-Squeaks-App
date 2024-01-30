@@ -168,7 +168,7 @@ class VideoController extends GetxController {
               
                
             
-            videoListpublic.add(VideoModel(
+            videoListpublic.insert(0,VideoModel(
                 title: videoData["title"],
                 description:videoData["description"] ,
                 file_path: videoData["filepath"],
@@ -200,7 +200,7 @@ class VideoController extends GetxController {
               
                
             
-            videoListprivate.add(VideoModel(
+            videoListprivate.insert(0,VideoModel(
                 title: videoData["title"],
                 description:videoData["description"] ,
                 file_path: videoData["file_path"],
@@ -308,6 +308,7 @@ class VideoController extends GetxController {
             print("created_at: ${responseData["data"]["video"]["created_at"]}");
             print("Totalviews: ${responseData["data"]["total_views"]}");
             print("TotalLikes: ${responseData["data"]["total_likes"]}");
+             print("isUserLikedVideo: ${responseData["data"]["userLikedVideo"]}");
             print("TotalComments: ${responseData["data"]["total_comments"]}");
             print(
                 "Filepath: ${AppUrl.videoURL + responseData["data"]["video"]["file_path"]}");
@@ -328,6 +329,7 @@ class VideoController extends GetxController {
               totalLikes: responseData["data"]["total_likes"],
               totalComments: responseData["data"]["total_comments"],
               totalViews: responseData["data"]["total_views"],
+              userLikedVideo: responseData["data"]["userLikedVideo"]
             );
 
             Get.to(VideoPlayerScreen(view: videoViewData,comments:comments));

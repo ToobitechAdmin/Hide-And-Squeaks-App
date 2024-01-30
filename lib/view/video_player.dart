@@ -270,23 +270,22 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                         GestureDetector(
                           onTap: () {
                             controller.postLike(widget.view.id!);
-                            print(isLiked);
-                            isLikedcheck();
+                            
                             addLikes() {
-                              if (isLiked == true) {
+                              if (widget.view.userLikedVideo == true) {
                                 setState(() {
-                                  isLiked = false;
-                                });
-
-                                return widget.view.totalLikes =
-                                    (widget.view.totalLikes ?? 0) + 1;
-                              } else {
-                                setState(() {
-                                  isLiked = true;
+                                  widget.view.userLikedVideo=false;
                                 });
 
                                 return widget.view.totalLikes =
                                     (widget.view.totalLikes ?? 0) - 1;
+                              } else {
+                                setState(() {
+                                 widget.view.userLikedVideo=true;
+                                });
+
+                                return widget.view.totalLikes =
+                                    (widget.view.totalLikes ?? 0) + 1;
                               }
                             }
 
@@ -297,8 +296,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                           },
                           child: Icon(
                             Icons.favorite_outlined,
-                            color: isLikedcheck()
-                                ? AppColors.favouritecolor
+                            color: widget.view.userLikedVideo!?
+                                AppColors.favouritecolor
                                 : AppColors.whitecolor,
                             size: 30,
                           ),

@@ -9,7 +9,7 @@ import 'package:squeak/view/login_screen.dart';
 
 import '../components/colors.dart';
 import '../components/custom_playbutton.dart';
-
+import 'package:perfect_volume_control/perfect_volume_control.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,7 +19,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double _sliderValue = 0.0;
+  double _sliderValue = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,15 +82,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     colors: [Color(0xff804D34), Color(0xffF1DF88)],
                   ),
                   slider: Slider(
-                    value: _sliderValue,
                     min: 0.0,
-                    max: 100.0,
-                    onChanged: (double value) {
+                    max: 1.0,
+                    onChanged: (double Volume) {
                       setState(() {
-                        _sliderValue = value;
-                        // VolumeWatcher.setVolume(value);
+                        _sliderValue = Volume.clamp(0.0, 1.0);
+                        PerfectVolumeControl.setVolume(_sliderValue);
+                      
                       });
                     },
+                    value: _sliderValue,
                   ),
                 ),
               ),

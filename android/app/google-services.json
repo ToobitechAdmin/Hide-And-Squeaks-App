@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "195903977126",
+    "project_id": "hide-and-squeaks",
+    "storage_bucket": "hide-and-squeaks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195903977126:android:8c0baf79f2db8388712667",
+        "android_client_info": {
+          "package_name": "com.toobitech.squeak"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKiZE7jKL_7GILrNZpbB5rkhNl1DhcRAo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

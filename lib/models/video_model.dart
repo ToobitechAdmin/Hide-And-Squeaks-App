@@ -20,6 +20,7 @@ class VideoModel {
   String? videotype;
   String? thumbnail;
   String? updated_at;
+  bool? userLikedVideo;
   
 
 
@@ -42,6 +43,7 @@ class VideoModel {
       this.videotype,
       this.thumbnail,
       this.updated_at,
+      this.userLikedVideo,
   
       this.video_id});
 
@@ -69,6 +71,7 @@ class VideoModel {
     totalViews: json['total_views'] as int?,
     thumbnail: json["thumbnail_path"] as String? ?? '',
     video_id: json['video_id'] as int?,
+    userLikedVideo: json["userLikedVideo"]
     );
   }
 
@@ -88,6 +91,7 @@ class VideoModel {
       "total_views": totalViews,
       "video_type": videotype,
       "thumbnail": thumbnail,
+      "userLikedVideo":userLikedVideo
     };
   }
 }
