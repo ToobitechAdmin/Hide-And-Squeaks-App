@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/App_URL/apiurl.dart';
 import 'package:squeak/Local%20Storage/global_variable.dart';
@@ -34,10 +35,8 @@ class treatController extends GetxController {
       if (response.statusCode == 200) {
         final List<dynamic> responseData = json.decode(response.body)['data'];
         for (var videoData in responseData) {
-           print(videoData["id"]);
+          print(videoData["id"]);
           treatList.add(TreatModel(
-
-           
               id: videoData["id"],
               treats: videoData["treats"],
               price: videoData["price"]));
@@ -57,9 +56,38 @@ class treatController extends GetxController {
     }
   }
 
-  
-
-
-
-
+  purchaseTreats(String treatId, String transactionId, String amount) async {
+    try {
+      // showLoadingDialog();
+      final response = await http.post(
+        Uri.parse(AppUrl.purchaseTreats),
+        body: {
+          'treats_id': treatId,
+          'transaction_id': transactionId,
+          'price': amount
+        },
+        headers: {
+          'Authorization': "Bearer  $userToken ",
+          'Accept': "application/json"
+        },
+      );
+      print('Status Code ${response.statusCode}');
+      print('TopUp Response Data ${response.body}');
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = jsonDecode(response.body);
+        if (data['success'] == true) {
+          showInSnackBar('${data['message']}', color: Colors.green);
+        } else {
+          // hideLoadingDialog();
+          showInSnackBar('${data['message']}', color: Colors.red);
+        }
+        // hideLoadingDialog();
+      }
+    } catch (e) {
+      // hideLoadingDialog();
+      // hideLoadingDialog();
+      showInSnackBar('Someting Wrong.....', color: Colors.red);
+      print('Booked Appointment error $e');
+    }
+  }
 }
