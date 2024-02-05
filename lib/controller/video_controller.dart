@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison
+
 
 import 'dart:convert';
 
@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:squeak/components/colors.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'package:squeak/models/comment_model.dart';
 
@@ -16,6 +17,7 @@ import 'package:squeak/models/video_model.dart';
 import 'package:squeak/view/socialfeed.dart';
 import 'package:squeak/view/upload.dart';
 import 'package:squeak/view/video_player.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 import '../App_URL/apiurl.dart';
 import '../Local Storage/global_variable.dart';
 import '../components/snakbar.dart';
@@ -23,42 +25,86 @@ import '../global/alertbox.dart';
 import 'package:file_picker/file_picker.dart';
 
 class VideoController extends GetxController {
-  Rx<File?> selectedVideo = Rx<File?>(null);
+  // Rx<File?> selectedVideo = Rx<File?>(null);
   var isLoading = false.obs;
   var viewDataLaoding =false.obs;
 
+  // pickVideo() async {
+  //   FilePickerResult? result =
+  //       await FilePicker.platform.pickFiles(type: FileType.video);
+  //   if (result != null) {
+  //     selectedVideo.value = File(result.files.single.path!);
+  //   }
+  // }
+
+  // Rx<File?> imagethumbnail = Rx<File?>(null);
+
+  // pickThumb() async {
+  //   try {
+  //     final pickedthumb =
+  //         await ImagePicker().pickImage(source: ImageSource.gallery);
+
+  //     if (pickedthumb == null) {
+  //       print('No thumb image picked.');
+  //       return;
+  //     }
+
+  //     final imagethumbtemp = File(pickedthumb.path);
+
+  //     imagethumbnail.value = imagethumbtemp;
+  //     print(imagethumbnail.value);
+  //   } catch (e) {
+  //     print('Failed to pick Thumb: $e');
+  //   }
+  // }
+ Rx<File?> videofile = Rx<File?>(null);
+  Rx<File?> thumbnailFile = Rx<File?>(null);
+
+ 
+
   pickVideo() async {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(type: FileType.video);
-    if (result != null) {
-      selectedVideo.value = File(result.files.single.path!);
+    final pickedFile =
+        await ImagePicker().pickVideo(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      videofile.value = File(pickedFile.path);
+      generateThumbnail();
     }
   }
 
-  Rx<File?> imagethumbnail = Rx<File?>(null);
+  generateThumbnail() async {
+    if (videofile.value != null) {
+      final thumbnailPath = await VideoThumbnail.thumbnailFile(
+        video: videofile.value!.path,
+        thumbnailPath: (await getTemporaryDirectory()).path,
+        imageFormat: ImageFormat.JPEG,
+        // maxHeight: 100,
+        // quality: 100,
+      );
 
-  pickThumb() async {
-    try {
-      final pickedthumb =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-
-      if (pickedthumb == null) {
-        print('No thumb image picked.');
-        return;
-      }
-
-      final imagethumbtemp = File(pickedthumb.path);
-
-      imagethumbnail.value = imagethumbtemp;
-      print(imagethumbnail.value);
-    } catch (e) {
-      print('Failed to pick Thumb: $e');
+      thumbnailFile.value = File(thumbnailPath!);
     }
   }
+  
 
   RxBool uploading = false.obs;
 
   postVideo(VideoModel videodata) async {
+    if (videodata.videotype!.length<1) {
+       showInSnackBar("Kindly select video Public Or Private",color:AppColors.errorcolor);
+      return;
+      
+    }
+    print(videodata.title);
+     print(videodata.description);
+     print(videodata.videotype);
+     print(videodata.file_path);
+     print(videodata.thumbnail);
+     
+     
+    
+
+
     showDialogue();
     
 
@@ -74,16 +120,16 @@ class VideoController extends GetxController {
             ..fields['video_type'] = videodata.videotype!
             ..files.add(await http.MultipartFile.fromPath(
               'file_path',
-              selectedVideo.value!.path,
+              videodata.file_path!,
             ))
             ..files.add(await http.MultipartFile.fromPath(
-              'thumbnail',
-              imagethumbnail.value!.path,
+              'thumbnail_path',
+              videodata.thumbnail!,
             ));
 
-      print(
-        selectedVideo.value!.path,
-      );
+
+
+      
 
       var response = await request.send();
 
@@ -95,11 +141,11 @@ class VideoController extends GetxController {
             color: AppColors.greencolor);
         print(response.statusCode);
         print(responseData);
-        if (selectedVideo.value != null) {
-          selectedVideo.value = null;
+        if (videofile.value != null) {
+          videofile.value == null;
         }
-        if (imagethumbnail.value != null) {
-          imagethumbnail.value = null;
+        if (thumbnailFile.value != null) {
+          thumbnailFile.value = null;
         }
        
 
@@ -125,6 +171,7 @@ class VideoController extends GetxController {
         }
       }
     } catch (error) {
+      Get.back();
       print("Error: $error");
     }
   }
@@ -157,7 +204,7 @@ class VideoController extends GetxController {
           
 
           for (var videoData in videoDataList) {
-            print(videoData["id"]);
+            print("videoid: ${videoData["id"]}");
              print(videoData["title"]);
               print(videoData["user_id"]);
                print(videoData["file_path"]);
@@ -231,19 +278,19 @@ class VideoController extends GetxController {
     }
   }
 
-  Addview(userid) async {
+  Addview(int userid) async {
     String currentToken = appStorage.read('userToken');
 
     try {
       final response = await http.post(
         Uri.parse(AppUrl.addViewUrl),
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer  $currentToken ',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer  $currentToken',
         },
-        body: jsonEncode({
+        body: {
           'video_id': userid,
-        }),
+        },
       );
 
       if (response.statusCode == 200) {
@@ -254,16 +301,13 @@ class VideoController extends GetxController {
          
           if (responseData is List<dynamic>) {
             for (var data in responseData) {
+              print(responseData);
              
               final VideoModel postData = VideoModel.fromJson(data);
               print("title: ${postData.title}, id: ${postData.id}");
             }
-          } else {
-            print(responseData);
-          }
-        } else {
-          print('Response body is null');
-        }
+          } 
+        } 
       } else {
         print('POST request failed with status: ${response.statusCode}');
         print(response.body);
@@ -285,12 +329,12 @@ class VideoController extends GetxController {
       final response = await http.post(
         Uri.parse(AppUrl.viewVideoURL),
         headers: {
-          'Content-Type': 'application/json',
+          'Accept': 'application/json',
           'Authorization': 'Bearer  $currentToken ',
         },
-        body: jsonEncode({
-          'video_id': userid,
-        }),
+        body: {
+          'video_id': userid.toString(),
+        },
       );
 
       if (response.statusCode == 200) {
@@ -310,8 +354,9 @@ class VideoController extends GetxController {
             print("TotalLikes: ${responseData["data"]["total_likes"]}");
              print("isUserLikedVideo: ${responseData["data"]["userLikedVideo"]}");
             print("TotalComments: ${responseData["data"]["total_comments"]}");
-            print(
-                "Filepath: ${AppUrl.videoURL + responseData["data"]["video"]["file_path"]}");
+            //  print("thumbpath: ${AppUrl.imageUrl + responseData["data"]["video"]["thumbnail_path"]}");
+            // print(
+            //     "Filepath: ${AppUrl.videoURL + responseData["data"]["video"]["file_path"]}");
             List<Comment> comments =
                 (responseData['data']['video']['comments'] as List)
                     .map((commentJson) => Comment.fromJson(commentJson))
@@ -321,11 +366,13 @@ class VideoController extends GetxController {
 
             var videoViewData = VideoModel(
               id: responseData["data"]["video"]["id"],
+              thumbnail: responseData["video"]["thumbnail_path"],
               user_id: responseData["data"]["video"]["user_id"],
               title: responseData["data"]["video"]["title"],
               created_at: responseData["data"]["video"]["created_at"],
               file_path:
                   AppUrl.videoURL + responseData["data"]["video"]["file_path"],
+              
               totalLikes: responseData["data"]["total_likes"],
               totalComments: responseData["data"]["total_comments"],
               totalViews: responseData["data"]["total_views"],
@@ -366,36 +413,36 @@ class VideoController extends GetxController {
       if (response.statusCode == 200) {
         // showInSnackBar(responseData["message"], color: AppColors.greencolor);
         print('Comment posted successfully');
-        print('Response body: ${response.body}');
+        print('Response body: ${[responseData["message"]]}');
       } else {
         print('Error posting comment:${response.statusCode}');
-        print('Error response body: ${response.body}');
+        print('Error response body: ${responseData["message"]}');
       }
     } catch (e) {
       print('Exception during postComment: $e');
     }
   }
   var likeCheck="". obs;
-  postLike(int videoId) async {
+  postLike(videoId) async {
     String currentToken = appStorage.read('userToken');
     try {
       final response = await http.post(
         Uri.parse(AppUrl.likeUrl),
         headers: {
-          'Content-Type': 'application/json',
+          'Accept': 'application/json',
           'Authorization': 'Bearer  $currentToken ',
         },
-        body: jsonEncode({
-          'video_id': videoId,
-        }),
+        body: {
+          'video_id': videoId.toString(),
+        },
       );
       final Map<String, dynamic> responseData = json.decode(response.body);
 
       if (response.statusCode == 200) {
-        // showInSnackBar(responseData["message"], color: Colors.pink);
+      
         print('Like posted successfully');
         print(responseData["message"]);
-        likeCheck.value=responseData["message"];
+       
         print('Response body: ${response.body}');
       } else {
         print('Error posting Like. Status code: ${response.statusCode}');

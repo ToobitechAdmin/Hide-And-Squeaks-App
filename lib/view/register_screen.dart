@@ -151,7 +151,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomAuth(assetpath: AppAssets.facebook, onTap: () {}),
+                    CustomAuth(assetpath: AppAssets.facebook, onTap: () {
+                      controller.signInWithFacebook();
+                    }),
                     SizedBox(
                       width: Get.width * 0.045,
                     ),
@@ -159,7 +161,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(
                       width: Get.width * 0.05,
                     ),
-                    CustomAuth(assetpath: AppAssets.google, onTap: () {})
+                    CustomAuth(assetpath: AppAssets.google, onTap: () {
+                      controller.signInWithGoogle();
+                    })
                   ],
                 ),
               )

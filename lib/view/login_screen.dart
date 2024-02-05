@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
         image: AssetImage(AppAssets.backgroundimage1),
         fit: BoxFit.fill,
         colorFilter: ColorFilter.mode(
-          AppColors.filtercolor, // Adjust opacity as needed
+          AppColors.filtercolor,
           BlendMode.srcOver,
         ),
       )),
@@ -169,7 +169,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       width: Get.width * 0.05,
                     ),
-                    CustomAuth(assetpath: AppAssets.google, onTap: () {})
+                    CustomAuth(assetpath: AppAssets.google, onTap: () {
+                      controller.signInWithGoogle();
+                    })
                   ],
                 ),
               )

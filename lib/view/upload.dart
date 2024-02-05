@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
@@ -17,17 +19,12 @@ class UploadScreen extends StatefulWidget {
 
 class _UploadScreenState extends State<UploadScreen> {
   VideoController controller = Get.put(VideoController());
-  String? validateVideo() {
-    if (controller.selectedVideo.value == null) {
-      return 'Please select a video for upload';
-    }
-    return null;
-  }
+
 
   bool isChecked = false;
   bool isChecked2 = false;
   String privacyOption = "";
-  bool showSelectAnotherVideo = false;
+  
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   final GlobalKey<FormState> _videokey = GlobalKey<FormState>();
@@ -63,14 +60,14 @@ class _UploadScreenState extends State<UploadScreen> {
                     children: [
                       Obx(
                         () => Container(
-                          height: Get.height * 0.45,
+                          height: Get.height * 0.5,
                           width: Get.width * 1,
                           decoration: BoxDecoration(
                               color: Colors.black,
                               image: DecorationImage(
-                                  image: controller.imagethumbnail.value != null
+                                  image: controller.thumbnailFile.value != null
                                       ? Image.file(
-                                              controller.imagethumbnail.value!)
+                                              controller.thumbnailFile.value!)
                                           .image
                                       : AssetImage(AppAssets.defaultimg),
                                   fit: BoxFit.cover)),
@@ -179,46 +176,12 @@ class _UploadScreenState extends State<UploadScreen> {
                       SizedBox(
                         height: Get.height * 0.03,
                       ),
-                      if (showSelectAnotherVideo)
-                        GestureDetector(
-                          onTap: () {
-                            print("pick image");
-
-                            controller.pickThumb();
-                          },
-                          child: Container(
-                            color: Colors.transparent,
-                            height: Get.height * 0.085,
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.add_box_outlined, // Your icon here
-                                    color: AppColors.primaryColor,
-                                    size: 85,
-                                    weight: 10,
-                                  ),
-                                  SizedBox(
-                                    width: Get.width * 0.05,
-                                  ),
-                                  Text(
-                                    'Select another Video',
-                                    style: TextStyle(
-                                        color: AppColors.whitecolor,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w800),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                      
+                        
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            showSelectAnotherVideo = true;
+                          
                           });
                           print("pick video");
 
@@ -283,38 +246,28 @@ class _UploadScreenState extends State<UploadScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          print(controller.selectedVideo.value.toString());
-                          print(privacyOption);
-                          print(controller.imagethumbnail.value.toString());
-                          String? validatePrivacyOptions(
-                              bool isChecked, bool isChecked2) {
-                            if (!isChecked && !isChecked2) {
-                              return 'Please select a privacy option';
-                            }
-                            return null; 
-                          }
-                          String? privacyValidationResult = validatePrivacyOptions(isChecked, isChecked2);
+                          print("videopath:${controller.videofile.value}");
+                          print("Privacy:  ${privacyOption}");
+                          print( "Thumbnailpath ${controller.thumbnailFile.value}");
+                          
+                         
 
                           if (_videokey.currentState?.validate() ?? false) {
-                            if (controller.selectedVideo.value != null &&
-                                controller.imagethumbnail.value != null &&
-                                privacyOption != null) {
+                            if (controller.videofile.value != null
+                                ) {
                               var model = VideoModel(
                                   title: _titleController.text,
                                   description: _descriptionController.text,
                                   videotype: privacyOption,
-                                  thumbnail: controller.imagethumbnail.value
-                                      .toString(),
-                                  file_path: controller.selectedVideo.value
-                                      .toString());
+                                  thumbnail: controller.thumbnailFile.value!.path
+                            ,
+                                  file_path: controller.videofile.value!.path
+                                      );
                               controller.postVideo(model);
-                            } else if (controller.selectedVideo.value == null) {
+                            } else if (controller.videofile.value == null) {
                               showInSnackBar("Select a video to upload",
                                   color: AppColors.errorcolor);
-                            } else if (controller.imagethumbnail.value ==
-                                null) {
-                              showInSnackBar("Select a thumbnial",
-                                  color: AppColors.errorcolor);
+                            
                             } else {
                               showInSnackBar("Select video Type",
                                   color: AppColors.errorcolor);
@@ -333,7 +286,7 @@ class _UploadScreenState extends State<UploadScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: Get.height * 0.022,
+                        height: Get.height * 0.03,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

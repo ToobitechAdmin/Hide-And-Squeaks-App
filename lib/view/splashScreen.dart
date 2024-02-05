@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   signedIN() {
-    print("checking token");
+   
     print(appStorage.read("userToken"));
 
     if (appStorage.read("userToken") != null) {

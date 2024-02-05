@@ -3,13 +3,11 @@ import 'package:get/get.dart';
 import 'package:squeak/App_URL/apiurl.dart';
 import 'package:squeak/controller/video_controller.dart';
 
-
 import 'package:squeak/components/app_assets.dart';
 
 import 'package:squeak/models/video_model.dart';
 import 'package:squeak/view/privateScreen.dart';
 import 'package:squeak/view/socialfeed.dart';
-
 
 import '../components/colors.dart';
 
@@ -25,8 +23,8 @@ class _SocialTabScreenState extends State<SocialTabScreen>
 
   VideoController controller = Get.put(VideoController());
 
-  void showDeleteBox(BuildContext context,{required int videoId,required VideoModel number}) {
-    
+  void showDeleteBox(BuildContext context,
+      {required int videoId, required VideoModel number}) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -38,9 +36,12 @@ class _SocialTabScreenState extends State<SocialTabScreen>
               onPressed: () {
                 controller.videoListprivate.remove(number);
                 controller.deleteVideo(videoId);
-               Get.back();
+                Get.back();
               },
-              child: Text("OK",style: TextStyle(color: AppColors.primaryColor),),
+              child: Text(
+                "OK",
+                style: TextStyle(color: AppColors.primaryColor),
+              ),
             ),
           ],
         );
@@ -48,13 +49,10 @@ class _SocialTabScreenState extends State<SocialTabScreen>
     );
   }
 
-  
-
   @override
   void initState() {
     super.initState();
     controller.Getvideo();
-    
 
     _tabController = TabController(length: 2, vsync: this);
   }
@@ -115,239 +113,271 @@ class _SocialTabScreenState extends State<SocialTabScreen>
           child: TabBarView(
             controller: _tabController,
             children: [
-              
-               Container(
-                    height: Get.height * 0.2,
-                    width: Get.width * 0.1,
-                    child: Obx(()=>
-controller.isLoading.value?
-                  Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.primaryColor,
-                    ),
-                  ):
-                controller.videoListpublic.isEmpty?
-                  Center(
-                    child: Text('No Video Here',style: TextStyle(color: AppColors.primaryColor),),
-                  ):GridView.builder(
-                      itemCount: controller.videoListpublic.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                        crossAxisCount: 2, 
-                      ),
-                      itemBuilder: (context, int index) {
-                        VideoModel video = controller.videoListpublic[index];
-
-                        return GestureDetector(
-                          onTap: () {
-                            controller.ViewData(video.id!);
-                            controller.Addview(video.id!);
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.textfieldcolor,
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                image: NetworkImage(AppUrl.imageUrl +
-                                    video.thumbnail.toString()),
-                                fit: BoxFit.fill,
-                              ),
+              Container(
+                  height: Get.height * 0.2,
+                  width: Get.width * 0.1,
+                  child: Obx(
+                    () => controller.isLoading.value
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.primaryColor,
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            height: Get.height * 0.022,
-                                            width: Get.width * 0.05,
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                image: AssetImage(
-                                                    AppAssets.commentimg),
-                                                fit: BoxFit.fill,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: Get.width * 0.01,
-                                          ),
-                                          Text(
-                                            video.totalComments.toString(),
-                                            style: TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w700,
-                                              color: AppColors.whitecolor,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            video.totalLikes.toString(),
-                                            style: TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w700,
-                                              color: AppColors.whitecolor,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: Get.width * 0.01,
-                                          ),
-                                          Icon(
-                                            Icons.favorite,
-                                            color: AppColors.favouritecolor,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.11,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.bottomLeft,
-                                        child: Text(
-                                          video.title.toString(),
-                                          style: TextStyle(
-                                            color: AppColors.whitecolor,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 17,
-                                          ),
+                          )
+                        : controller.videoListpublic.isEmpty
+                            ? Center(
+                                child: Text(
+                                  'No Video Here',
+                                  style:
+                                      TextStyle(color: AppColors.primaryColor),
+                                ),
+                              )
+                            : GridView.builder(
+                                itemCount: controller.videoListpublic.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisSpacing: 20,
+                                  mainAxisSpacing: 20,
+                                  crossAxisCount: 2,
+                                ),
+                                itemBuilder: (context, int index) {
+                                  VideoModel video =
+                                      controller.videoListpublic[index];
+
+                                  return GestureDetector(
+                                    onTap: () {
+                                      print("View Video");
+                                      // controller.Addview(video.id!.toString());
+                                      print("VideoID:${video.id}");
+                                      controller.ViewData(video.id!);
+                                      
+                                    },
+                                    child:  Container(
+                                      decoration: BoxDecoration(
+                                        color: AppColors.textfieldcolor,
+                                        borderRadius: BorderRadius.circular(15),
+                                        image: DecorationImage(
+                                          image: NetworkImage(AppUrl.imageUrl +
+                                              video.thumbnail.toString()),
+                                          fit: BoxFit.fill,
                                         ),
                                       ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  )
-                
-              ),
-             
-               
-                 Container(
-                    height: Get.height * 0.2,
-                    width: Get.width * 0.1,
-                    child: Obx(()=>
-                
-                controller.isLoading.value?
-                  Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.primaryColor,
-                    ),
-                  ):
-               controller.videoListprivate .isEmpty?
-                 Center(
-                    child: Text('NO private videos',style: TextStyle(color: AppColors.primaryColor),),
-                  ): GridView.builder(
-                      itemCount: controller.videoListprivate.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                        crossAxisCount: 2,
-                      ),
-                      itemBuilder: (context, int index) {
-                        VideoModel video = controller.videoListprivate[index];
-
-                        return GestureDetector(
-                          onTap: () {
-                            print("file_path:${AppUrl.videoURL+video.file_path.toString()}");
-
-                            Get.to(PrivateScreen(link:video.file_path.toString(),title: video.title.toString()));
-                            // controller.ViewData(video.id);
-                            // controller.Addview(video.id);
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.textfieldcolor,
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                image: NetworkImage(AppUrl.imageUrl +
-                                    video.thumbnail.toString()),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 10,right: 10,bottom: 15),
-                              child: Column(
-                               
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                 
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.bottomLeft,
-                                        child: Text(
-                                          video.title.toString(),
-                                          style: TextStyle(
-                                            color: AppColors.whitecolor,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 17,
-                                          ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Container(
+                                                      height:
+                                                          Get.height * 0.022,
+                                                      width: Get.width * 0.05,
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                          image: AssetImage(
+                                                              AppAssets
+                                                                  .commentimg),
+                                                          fit: BoxFit.fill,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: Get.width * 0.01,
+                                                    ),
+                                                    Text(
+                                                      video.totalComments
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                        fontSize: 17,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        color: AppColors
+                                                            .whitecolor,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      video.totalLikes
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                        fontSize: 17,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        color: AppColors
+                                                            .whitecolor,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: Get.width * 0.01,
+                                                    ),
+                                                    Icon(
+                                                      Icons.favorite,
+                                                      color: AppColors
+                                                          .favouritecolor,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: Get.height * 0.11,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      Alignment.bottomLeft,
+                                                  child: Text(
+                                                    video.title.toString(),
+                                                    style: TextStyle(
+                                                      color:
+                                                          AppColors.whitecolor,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontSize: 17,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
                                         ),
                                       ),
-                                      GestureDetector(
-                                         behavior: HitTestBehavior.translucent,
-                                        onTap: (){
-                                          showDeleteBox(context,videoId: video.id!,number:controller.videoListprivate[index]);
-                                          
-                                          print("videoid: ${video.id}");
-                                          // controller.videoListprivate.remove(controller.videoListprivate[index]);
-                                          // controller.deleteVideo(video.id!);
-                                          
-                                          
-                                          
-                                         
-                                          
-                                         
-                                        },
-                                        child: Container(
-                                          height: Get.height * 0.03,
-                                          width: Get.width * 0.045,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: AssetImage(AppAssets.delimg),
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
+                                    ),
+                                  );
+                                },
                               ),
+                  )),
+              Container(
+                  height: Get.height * 0.2,
+                  width: Get.width * 0.1,
+                  child: Obx(
+                    () => controller.isLoading.value
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.primaryColor,
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                  )
-                  
-                
-              )
+                          )
+                        : controller.videoListprivate.isEmpty
+                            ? Center(
+                                child: Text(
+                                  'NO private videos',
+                                  style:
+                                      TextStyle(color: AppColors.primaryColor),
+                                ),
+                              )
+                            : GridView.builder(
+                                itemCount: controller.videoListprivate.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisSpacing: 20,
+                                  mainAxisSpacing: 20,
+                                  crossAxisCount: 2,
+                                ),
+                                itemBuilder: (context, int index) {
+                                  VideoModel video =
+                                      controller.videoListprivate[index];
+
+                                  return GestureDetector(
+                                    onTap: () {
+                                      print(
+                                          "file_path:${AppUrl.videoURL + video.file_path.toString()}");
+
+                                      Get.to(PrivateScreen(
+                                          link: video.file_path.toString(),
+                                          title: video.title.toString()));
+                                      // controller.ViewData(video.id);
+                                      // controller.Addview(video.id);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: AppColors.textfieldcolor,
+                                        borderRadius: BorderRadius.circular(15),
+                                        image: DecorationImage(
+                                          image: NetworkImage(AppUrl.imageUrl +
+                                              video.thumbnail.toString()),
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10, bottom: 15),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      Alignment.bottomLeft,
+                                                  child: Text(
+                                                    video.title.toString(),
+                                                    style: TextStyle(
+                                                      color:
+                                                          AppColors.whitecolor,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontSize: 17,
+                                                    ),
+                                                  ),
+                                                ),
+                                                GestureDetector(
+                                                  behavior: HitTestBehavior
+                                                      .translucent,
+                                                  onTap: () {
+                                                    showDeleteBox(context,
+                                                        videoId: video.id!,
+                                                        number: controller
+                                                                .videoListprivate[
+                                                            index]);
+
+                                                    print(
+                                                        "videoid: ${video.id}");
+                                                    // controller.videoListprivate.remove(controller.videoListprivate[index]);
+                                                    // controller.deleteVideo(video.id!);
+                                                  },
+                                                  child: Container(
+                                                    height: Get.height * 0.03,
+                                                    width: Get.width * 0.045,
+                                                    decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                        image: AssetImage(
+                                                            AppAssets.delimg),
+                                                        fit: BoxFit.fill,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                  ))
             ],
           ),
         ),

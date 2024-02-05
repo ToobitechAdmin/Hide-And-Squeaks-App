@@ -4,17 +4,17 @@ import 'package:get_storage/get_storage.dart';
 import 'package:squeak/components/snakbar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-
-
+import 'package:squeak/view/homescreen.dart';
 
 import 'view/splashScreen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await GetStorage.init();
   
-   WidgetsFlutterBinding.ensureInitialized();
-   await GetStorage.init();
-   await Firebase.initializeApp();
+  
+
   runApp(const MyApp());
 }
 

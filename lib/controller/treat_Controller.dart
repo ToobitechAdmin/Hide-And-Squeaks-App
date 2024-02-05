@@ -32,9 +32,10 @@ class treatController extends GetxController {
 
       print(response.statusCode);
       print(response.body);
+      final List<dynamic> responseData = json.decode(response.body)['data'];
 
       if (response.statusCode == 200) {
-        final List<dynamic> responseData = json.decode(response.body)['data'];
+        
         for (var videoData in responseData) {
           print(videoData["id"]);
           treatList.add(TreatModel(

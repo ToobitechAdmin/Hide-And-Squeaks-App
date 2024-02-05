@@ -98,7 +98,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   void initState() {
     super.initState();
 
-    controller.ViewData(widget.view.id!.toString());
+    controller.ViewData(widget.view.id!);
 
     _initializeController(widget.view.file_path.toString());
   }
@@ -110,6 +110,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   Widget build(BuildContext context) {
     String newdate = formatDate(widget.view.created_at.toString());
+     DateTime providedDate = DateTime.parse(widget.view.created_at.toString());
+
+    // Current date and time
+    DateTime currentDate = DateTime.now();
     
   
     return Scaffold(
@@ -213,13 +217,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                         commentController.text,
                                         widget.view.id!);
                                     controller.ViewData(
-                                        widget.view.id!.toString());
+                                        widget.view.id!);
                                     widget.view.totalComments =
                                         (widget.view.totalComments ?? 0) + 1;
 
                                     Comment newComment = Comment(
                                         comment: commentController.text,
                                         userId: widget.view.id,
+                                        createdAt: "1 minute ago",
                                         user: User(
                                             id: widget.view.id!,
                                             name: appStorage
@@ -460,8 +465,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               itemCount: widget.comments.length,
                               itemBuilder: (context, int index) {
                                 Comment usercomment = widget.comments[index];
-                                // String formateddays=formattimeago(usercomment.createdAt! as DateTime);
-                                // print(formateddays);
+                                String formateddays=formattimeago(usercomment.createdAt! as DateTime);
+                                print(formateddays);
 
                         
 
@@ -512,7 +517,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                                     width: Get.width * 0.015,
                                                   ),
                                                   Text(
-                                                    "20 days ago",
+                                                    "${formateddays.toString()}",
                                                  
                                                     style: TextStyle(
                                                         fontSize: 10,
@@ -576,6 +581,7 @@ class _ControlsOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
@@ -672,3 +678,56 @@ class VideoTimer extends StatelessWidget {
     );
   }
 }
+
+String formatRelativeTime(DateTime start, DateTime end) {
+  Duration difference = end.difference(start);
+  String relativeTime;
+
+  if (end.isAfter(start)) {
+    if (difference.inDays > 365) {
+      relativeTime = '${_differenceInYears(start, end)} years ago';
+    } else if (difference.inDays > 30) {
+      relativeTime = '${_differenceInMonths(start, end)} months ago';
+    } else if (difference.inDays > 7) {
+      relativeTime = '${_differenceInWeeks(start, end)} weeks ago';
+    } else if (difference.inDays > 0) {
+      relativeTime = '${_differenceInDays(start, end)} days ago';
+    } else if (difference.inHours > 0) {
+      relativeTime = '${_differenceInHours(start, end)} hours ago';
+    } else if (difference.inMinutes > 0) {
+      relativeTime = '${_differenceInMinutes(start, end)} minutes ago';
+    } else {
+      relativeTime = 'Just now';
+    }
+  } else {
+    relativeTime = 'Invalid date';
+  }
+
+  return relativeTime;
+}
+
+int _differenceInYears(DateTime start, DateTime end) {
+  return end.year - start.year;
+}
+
+int _differenceInMonths(DateTime start, DateTime end) {
+  return (end.year - start.year) * 12 + end.month - start.month;
+}
+
+int _differenceInWeeks(DateTime start, DateTime end) {
+  return end.difference(start).inDays ~/ 7;
+}
+
+int _differenceInDays(DateTime start, DateTime end) {
+  return end.difference(start).inDays;
+}
+
+int _differenceInHours(DateTime start, DateTime end) {
+  return end.difference(start).inHours;
+}
+
+int _differenceInMinutes(DateTime start, DateTime end) {
+  return end.difference(start).inMinutes;
+}
+
+

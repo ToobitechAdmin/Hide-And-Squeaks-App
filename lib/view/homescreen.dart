@@ -5,6 +5,7 @@ import 'package:squeak/Local%20Storage/global_variable.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
 import 'package:gradient_slider/gradient_slider.dart';
+import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/view/login_screen.dart';
 
 import '../components/colors.dart';
@@ -19,6 +20,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+AuthController controller =Get.put(AuthController());
+
   double _sliderValue = 1;
 
   @override
@@ -109,8 +112,14 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: Get.height * 0.02),
 
               GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    await controller.GoogleSignOut();
+                    await controller.facebookSignOut();
+                    
                     appStorage.erase();
+                    
+                    
+                    
                     Get.off(LoginScreen());
                   },
                   child: CustomButton(fieldname: "Sign Out"))

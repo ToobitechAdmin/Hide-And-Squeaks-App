@@ -90,7 +90,7 @@ class VideoModel {
       "totalLikes": totalLikes,
       "total_views": totalViews,
       "video_type": videotype,
-      "thumbnail": thumbnail,
+      "thumbnail_path": thumbnail,
       "userLikedVideo":userLikedVideo
     };
   }
