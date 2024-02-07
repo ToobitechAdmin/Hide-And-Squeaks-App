@@ -29,9 +29,9 @@ class _SplashScreenState extends State<SplashScreen> {
     print(appStorage.read("userToken"));
 
     if (appStorage.read("userToken") != null) {
-      return Get.to(HomeScreen());
+      return Get.offAll(HomeScreen());
     } else {
-      return Get.to(LoginScreen());
+      return Get.offAll(LoginScreen());
 
     }
   }

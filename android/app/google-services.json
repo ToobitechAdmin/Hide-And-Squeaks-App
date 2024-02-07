@@ -12,7 +12,20 @@
           "package_name": "com.toobitech.squeak"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "195903977126-mi1ltgnni0e59uugi7vmqffeotihql2t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.toobitech.squeak",
+            "certificate_hash": "b91e42b1088583c08513f7c40dc25e790c586ef2"
+          }
+        },
+        {
+          "client_id": "195903977126-8i08mng3qqphcd66srllvigb0oed87k3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDKiZE7jKL_7GILrNZpbB5rkhNl1DhcRAo"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "195903977126-8i08mng3qqphcd66srllvigb0oed87k3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

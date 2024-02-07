@@ -110,10 +110,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   Widget build(BuildContext context) {
     String newdate = formatDate(widget.view.created_at.toString());
-     DateTime providedDate = DateTime.parse(widget.view.created_at.toString());
+    //  DateTime providedDate = DateTime.parse(widget.view.created_at.toString());
 
-    // Current date and time
-    DateTime currentDate = DateTime.now();
+    // // Current date and time
+    // DateTime currentDate = DateTime.now();
     
   
     return Scaffold(
@@ -229,7 +229,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                             id: widget.view.id!,
                                             name: appStorage
                                                 .read("name")
-                                                .toString(),
+                                                .toString().toLowerCase(),
                                             profile: appStorage
                                                 .read("profile")
                                                 .toString()));

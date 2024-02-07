@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
 import 'package:squeak/controller/treat_Controller.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   //colors
-  static Color primaryColor = Color(0xffF78C00);
+  static Color primaryColor =  Color(0xffff1900) ;
   static var pinkcolor = Color(0xffFFF9E0);
   static var whitecolor = Colors.white;
 
@@ -14,4 +14,7 @@ class AppColors {
   static Color filtercolor = Color(0xff010F17).withOpacity(0.95);
   static Color errorcolor = Colors.red;
   static Color greencolor=Colors.green;
+  // Color(0xffF78C00);   main primary color orange
+
+  //  Color(0xffff1900)
 }

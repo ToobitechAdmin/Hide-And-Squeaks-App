@@ -45,7 +45,6 @@ class VideoController extends GetxController {
         video: videofile.value!.path,
         thumbnailPath: (await getTemporaryDirectory()).path,
         imageFormat: ImageFormat.JPEG,
-       
       );
 
       thumbnailFile.value = File(thumbnailPath!);
@@ -88,11 +87,10 @@ class VideoController extends GetxController {
             ));
 
       var response = await request.send();
-       String responseBody = await response.stream.bytesToString();
-        final Map<String, dynamic> responseData = json.decode(responseBody);
+      String responseBody = await response.stream.bytesToString();
+      final Map<String, dynamic> responseData = json.decode(responseBody);
 
       if (response.statusCode == 200) {
-       
         Get.back();
         showInSnackBar("${responseData["message"]}",
             color: AppColors.greencolor);
@@ -110,8 +108,6 @@ class VideoController extends GetxController {
           Get.to(SocialScreen());
         }
       } else {
-        
-
         print("Response: ${responseData["message"]}");
         if (responseData['success'] == false) {
           Get.back();
@@ -119,7 +115,7 @@ class VideoController extends GetxController {
           print("Response: ${responseData["message"]}");
           showInSnackBar("${responseData["message"]}",
               color: AppColors.errorcolor);
-        } 
+        }
       }
     } catch (error) {
       Get.back();
@@ -233,22 +229,13 @@ class VideoController extends GetxController {
           'video_id': userid.toString(),
         },
       );
+      final dynamic responseData = json.decode(response.body);
 
       if (response.statusCode == 200) {
-        if (response.body != null) {
-          final dynamic responseData = json.decode(response.body);
-
-          if (responseData is List<dynamic>) {
-            for (var data in responseData) {
-              print(responseData);
-
-              final VideoModel postData = VideoModel.fromJson(data);
-              print("title: ${postData.title}, id: ${postData.id}");
-            }
-          }
-        }
+        print(responseData["message"]);
+        print("View Added Successfuly");
       } else {
-        print('POST request failed with status: ${response.statusCode}');
+        print('Failed To Post View: ${response.statusCode}');
         print(response.body);
       }
     } catch (error) {
@@ -275,56 +262,48 @@ class VideoController extends GetxController {
           'video_id': userid.toString(),
         },
       );
+      final dynamic responseData = json.decode(response.body);
 
       if (response.statusCode == 200) {
-        if (response.body != null) {
-          final dynamic responseData = json.decode(response.body);
+        print("data:${responseData}");
 
-          if (responseData is List<dynamic>) {
-          } else {
-            print("data:${responseData}");
+        print("user_id: ${responseData["data"]["video"]["user_id"]}");
+        print("id: ${responseData["data"]["video"]["id"]}");
+        print("created_at: ${responseData["data"]["video"]["created_at"]}");
+        print("Totalviews: ${responseData["data"]["total_views"]}");
+        print("TotalLikes: ${responseData["data"]["total_likes"]}");
+        print("isUserLikedVideo: ${responseData["data"]["userLikedVideo"]}");
+        print("TotalComments: ${responseData["data"]["total_comments"]}");
+        print(
+            "thumbpath: ${AppUrl.imageUrl + responseData["data"]["video"]["thumbnail_path"]}");
+        print(
+            "Filepath: ${AppUrl.videoURL + responseData["data"]["video"]["file_path"]}");
+        List<Comment> comments =
+            (responseData['data']['video']['comments'] as List)
+                .map((commentJson) => Comment.fromJson(commentJson))
+                .toList();
 
-            print("user_id: ${responseData["data"]["video"]["user_id"]}");
-            print("id: ${responseData["data"]["video"]["id"]}");
-            print("created_at: ${responseData["data"]["video"]["created_at"]}");
-            print("Totalviews: ${responseData["data"]["total_views"]}");
-            print("TotalLikes: ${responseData["data"]["total_likes"]}");
-            print(
-                "isUserLikedVideo: ${responseData["data"]["userLikedVideo"]}");
-            print("TotalComments: ${responseData["data"]["total_comments"]}");
-            print(
-                "thumbpath: ${AppUrl.imageUrl + responseData["data"]["video"]["thumbnail_path"]}");
-            print(
-                "Filepath: ${AppUrl.videoURL + responseData["data"]["video"]["file_path"]}");
-            List<Comment> comments =
-                (responseData['data']['video']['comments'] as List)
-                    .map((commentJson) => Comment.fromJson(commentJson))
-                    .toList();
+        var videoViewData = VideoModel(
+            id: responseData["data"]["video"]["id"],
+            thumbnail: responseData["data"]["video"]["thumbnail_path"],
+            user_id: responseData["data"]["video"]["user_id"],
+            title: responseData["data"]["video"]["title"],
+            created_at: responseData["data"]["video"]["created_at"],
+            file_path:
+                AppUrl.videoURL + responseData["data"]["video"]["file_path"],
+            totalLikes: responseData["data"]["total_likes"],
+            totalComments: responseData["data"]["total_comments"],
+            totalViews: responseData["data"]["total_views"],
+            userLikedVideo: responseData["data"]["userLikedVideo"]);
 
-            var videoViewData = VideoModel(
-                id: responseData["data"]["video"]["id"],
-                thumbnail: responseData["data"]["video"]["thumbnail_path"],
-                user_id: responseData["data"]["video"]["user_id"],
-                title: responseData["data"]["video"]["title"],
-                created_at: responseData["data"]["video"]["created_at"],
-                file_path: AppUrl.videoURL +
-                    responseData["data"]["video"]["file_path"],
-                totalLikes: responseData["data"]["total_likes"],
-                totalComments: responseData["data"]["total_comments"],
-                totalViews: responseData["data"]["total_views"],
-                userLikedVideo: responseData["data"]["userLikedVideo"]);
-
-            Get.to(VideoPlayerScreen(view: videoViewData, comments: comments));
-            viewDataLaoding.value = false;
-          }
-        } else {
-          print('Response body is null');
-        }
+        Get.to(VideoPlayerScreen(view: videoViewData, comments: comments));
+        viewDataLaoding.value = false;
       } else {
         print('POST request failed with status: ${response.statusCode}');
         print(response.body);
       }
     } catch (error) {
+      
       print('Error during POST request: $error');
     }
   }
@@ -335,13 +314,13 @@ class VideoController extends GetxController {
       final response = await http.post(
         Uri.parse(AppUrl.commentUrl),
         headers: {
-          'Content-Type': 'application/json',
+          'Accept': 'application/json',
           'Authorization': 'Bearer  $currentToken ',
         },
-        body: jsonEncode({
+        body: {
           'comment': comment,
-          'video_id': videoId,
-        }),
+          'video_id': videoId.toString(),
+        },
       );
       final Map<String, dynamic> responseData = json.decode(response.body);
 

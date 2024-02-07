@@ -36,7 +36,7 @@ class AuthController extends GetxController {
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
-      showDialogue();
+     
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication =
             await googleSignInAccount.authentication;
@@ -48,6 +48,7 @@ class AuthController extends GetxController {
 
         UserCredential userCredential =
             await _auth.signInWithCredential(credential);
+            //  showDialogue();
 
         User? currentUser = _auth.currentUser;
         String userEmail = currentUser?.email ?? '';

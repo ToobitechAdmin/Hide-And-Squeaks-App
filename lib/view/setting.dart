@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:squeak/Local%20Storage/global_variable.dart';
 import 'package:squeak/components/app_assets.dart';
+import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/view/balance.dart';
+import 'package:squeak/view/login_screen.dart';
 import 'package:squeak/view/menu.dart';
 import 'package:squeak/view/profile.dart';
 import 'package:squeak/view/purchase.dart';
@@ -17,8 +20,8 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  AuthController controller = Get.put(AuthController());
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,9 +40,9 @@ class _SettingScreenState extends State<SettingScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                  onTap: (){
+                    onTap: () {
                       Get.to(PurchaseScreen());
-                  },
+                    },
                     child: Container(
                       height: Get.height * 0.069,
                       width: Get.width * 0.15,
@@ -66,7 +69,6 @@ class _SettingScreenState extends State<SettingScreen> {
                 ],
               ),
             ),
-           
             Text(
               "Settings",
               style: TextStyle(
@@ -97,8 +99,9 @@ class _SettingScreenState extends State<SettingScreen> {
                     width: Get.width * 0.05,
                   ),
                   GestureDetector(
-                    onTap: (){
-                      AppSettings.openAppSettings(type: AppSettingsType.bluetooth);
+                    onTap: () {
+                      AppSettings.openAppSettings(
+                          type: AppSettingsType.bluetooth);
                     },
                     child: Text(
                       "Bluetooth",
@@ -131,7 +134,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     width: Get.width * 0.05,
                   ),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Get.to(BalanceScreen());
                     },
                     child: Text(
@@ -170,6 +173,41 @@ class _SettingScreenState extends State<SettingScreen> {
                     },
                     child: Text(
                       "Profile",
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.whitecolor),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              height: Get.height * 0.09,
+              width: Get.width * 0.7,
+              decoration: BoxDecoration(
+                  border:
+                      Border(bottom: BorderSide(color: AppColors.whitecolor))),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.logout,
+                    color: AppColors.whitecolor,
+                    size: 45,
+                  ),
+                  SizedBox(
+                    width: Get.width * 0.05,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      await controller.GoogleSignOut();
+                      await controller.facebookSignOut();
+
+                      appStorage.erase();
+                       Get.offAll(LoginScreen());
+                    },
+                    child: Text(
+                      "Sign Out",
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w600,

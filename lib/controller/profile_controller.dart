@@ -31,7 +31,7 @@ class ProfileController extends GetxController {
 
       image.value = imageTemp;
       print(image.value);
-    } on PlatformException catch (e) {
+    } catch (e) {
       print('Failed to pick image: $e');
     }
   }
@@ -50,12 +50,13 @@ class ProfileController extends GetxController {
             ..fields['profile'] = model.profile!;
 
       var response = await request.send();
+      final Map<String, dynamic> responseData =
+            json.decode(await response.stream.bytesToString());
 
       if (response.statusCode == 200) {
         Get.back();
 
-        final Map<String, dynamic> responseData =
-            json.decode(await response.stream.bytesToString());
+        
         showInSnackBar("${responseData["message"]}",
             color: AppColors.greencolor);
 
@@ -67,8 +68,7 @@ class ProfileController extends GetxController {
           print(" ${responseData['message']}");
         }
       } else {
-        final Map<String, dynamic> responseData =
-            json.decode(await response.stream.bytesToString());
+        
 
         print("Response: ${responseData["message"]}");
         if (responseData['success'] == false) {

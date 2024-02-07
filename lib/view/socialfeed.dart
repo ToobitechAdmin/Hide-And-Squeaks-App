@@ -24,7 +24,7 @@ class _SocialScreenState extends State<SocialScreen> {
         image: AssetImage(AppAssets.backgroundimage1),
         fit: BoxFit.fill,
         colorFilter: ColorFilter.mode(
-          AppColors.filtercolor, // Adjust opacity as needed
+          AppColors.filtercolor,
           BlendMode.srcOver,
         ),
       )),

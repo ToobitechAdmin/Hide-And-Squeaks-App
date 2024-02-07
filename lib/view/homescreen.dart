@@ -20,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-AuthController controller =Get.put(AuthController());
+  AuthController controller = Get.put(AuthController());
 
   double _sliderValue = 1;
 
@@ -91,7 +91,6 @@ AuthController controller =Get.put(AuthController());
                       setState(() {
                         _sliderValue = Volume.clamp(0.0, 1.0);
                         PerfectVolumeControl.setVolume(_sliderValue);
-                      
                       });
                     },
                     value: _sliderValue,
@@ -111,18 +110,16 @@ AuthController controller =Get.put(AuthController());
               ),
               SizedBox(height: Get.height * 0.02),
 
-              GestureDetector(
-                  onTap: () async {
-                    await controller.GoogleSignOut();
-                    await controller.facebookSignOut();
-                    
-                    appStorage.erase();
-                    
-                    
-                    
-                    Get.off(LoginScreen());
-                  },
-                  child: CustomButton(fieldname: "Sign Out"))
+              // GestureDetector(
+              //     onTap: () async {
+              //       await controller.GoogleSignOut();
+              //       await controller.facebookSignOut();
+
+              //       appStorage.erase();
+
+              //       Get.off(LoginScreen());
+              //     },
+              //     child: CustomButton(fieldname: "Sign Out"))
             ],
           ),
         ),
