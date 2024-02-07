@@ -10,4 +10,6 @@
       **NOTE**: The scheme needs to start with `fb` and then your ID.
     -->
     <string name="fb_login_protocol_scheme">fb1446795982715680</string>
+
+    <string name="facebook_client_token">85b269eab7dbf577fd35292556fcd3bb</string>
 </resources>

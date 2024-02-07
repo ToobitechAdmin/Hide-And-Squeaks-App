@@ -10,3 +10,11 @@ showDialogue() {
     barrierDismissible: false,
   );
 }
+showProgress() {
+  return(
+    Center(
+      child: CircularProgressIndicator(color: AppColors.primaryColor),
+    ),
+    barrierDismissible: false,
+  );
+}

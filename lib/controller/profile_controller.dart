@@ -110,9 +110,9 @@ class ProfileController extends GetxController {
       final Map<String, dynamic> responseData = json.decode(response.body);
       if (response.statusCode == 200) {
         appStorage.write(name, responseData['data']["name"]);
-        appStorage.write("name", responseData['data']["name"]);
+        // appStorage.write("name", responseData['data']["name"]);
 
-        appStorage.write(profile, responseData['data']["profile"]);
+        // appStorage.write(profile, responseData['data']["profile"]);
         appStorage.write(id, responseData['data']["id"]);
         print(appStorage.read("name"));
         print(appStorage.read("id"));

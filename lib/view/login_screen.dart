@@ -161,7 +161,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomAuth(assetpath: AppAssets.facebook, onTap: () {}),
+                    CustomAuth(assetpath: AppAssets.facebook, onTap: () {
+                      controller.signInWithFacebook();
+                    }),
                     SizedBox(
                       width: Get.width * 0.045,
                     ),

@@ -146,7 +146,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                                   return GestureDetector(
                                     onTap: () {
                                       print("View Video");
-                                      // controller.Addview(video.id!.toString());
+                                      controller.Addview(video.id!);
                                       print("VideoID:${video.id}");
                                       controller.ViewData(video.id!);
                                       

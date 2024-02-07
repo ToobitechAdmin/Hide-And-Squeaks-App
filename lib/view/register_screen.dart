@@ -14,8 +14,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-   AuthController controller=Get.put(AuthController());
-
+  AuthController controller = Get.put(AuthController());
 
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
 
@@ -151,9 +150,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomAuth(assetpath: AppAssets.facebook, onTap: () {
-                      controller.signInWithFacebook();
-                    }),
+                    CustomAuth(
+                        assetpath: AppAssets.facebook,
+                        onTap: () {
+                          controller.signInWithFacebook();
+                        }),
                     SizedBox(
                       width: Get.width * 0.045,
                     ),
@@ -161,9 +162,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(
                       width: Get.width * 0.05,
                     ),
-                    CustomAuth(assetpath: AppAssets.google, onTap: () {
-                      controller.signInWithGoogle();
-                    })
+                    CustomAuth(
+                        assetpath: AppAssets.google,
+                        onTap: () {
+                          controller.signInWithGoogle();
+                        })
                   ],
                 ),
               )

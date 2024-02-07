@@ -36,6 +36,7 @@ class AuthController extends GetxController {
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
+      showDialogue();
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication =
             await googleSignInAccount.authentication;
@@ -62,9 +63,6 @@ class AuthController extends GetxController {
         String randomPassword = "toobitechsqueaks";
         print(randomPassword);
 
-        // ignore: deprecated_member_use
-        // await userCredential.user?.updateProfile(displayName: 'Google User');
-
         isUserRegistered() {
           if (userCredential.additionalUserInfo?.isNewUser == false) {
             print("Logincall");
@@ -81,6 +79,7 @@ class AuthController extends GetxController {
         isUserRegistered();
       }
     } catch (e) {
+      Get.back();
       showInSnackBar("Error While Authentcation${e}",
           color: AppColors.errorcolor);
       print(e.toString());
@@ -101,15 +100,13 @@ class AuthController extends GetxController {
 
   signInWithFacebook() async {
     try {
-      
       final LoginResult result = await FacebookAuth.instance.login();
+      showDialogue();
 
-     
       if (result.status == LoginStatus.success) {
         final AuthCredential credential =
             FacebookAuthProvider.credential(result.accessToken!.token);
 
-        // Sign in to Firebase with the Facebook Auth credentials
         UserCredential userCredential =
             await FirebaseAuth.instance.signInWithCredential(credential);
 
@@ -127,8 +124,7 @@ class AuthController extends GetxController {
         String randomPassword = "toobitechsqueaks";
         print(randomPassword);
 
-        // ignore: deprecated_member_use
-        await userCredential.user?.updateProfile(displayName: 'Facebook User');
+        // await userCredential.user?.updateProfile(displayName: 'Facebook User');
 
         isUserRegistered() {
           if (userCredential.additionalUserInfo?.isNewUser == false) {
@@ -148,6 +144,7 @@ class AuthController extends GetxController {
         isUserRegistered();
       }
     } catch (e) {
+      Get.back();
       showInSnackBar("Error While Authentication $e",
           color: AppColors.errorcolor);
       print(e.toString());
@@ -155,9 +152,10 @@ class AuthController extends GetxController {
   }
 
   signInUser(String email, String password) async {
+    showDialogue();
     print(email);
     print(password);
-    showDialogue();
+
     try {
       final response = await http.post(
         Uri.parse(AppUrl.SignInURL),
@@ -174,52 +172,48 @@ class AuthController extends GetxController {
           print(responseData["data"]["name"]);
           print(responseData);
 
-          appStorage.write(userToken, responseData['data']["token"]);
           appStorage.write("userToken", responseData['data']["token"]);
-         
+          appStorage.write("name", responseData['data']["name"]);
+
+          appStorage.write(profile, responseData['data']["profile"]);
+          print(appStorage.read("name"));
+          print(appStorage.read("profile"));
+
           print(userToken);
           print(appStorage.read('userToken'));
           print("Response: ${response.body}");
 
           Get.offAll(HomeScreen());
-        } else {
-          print(responseData['message']);
-          print("Sign In failed: ${responseData['message']}");
-        }
+        } 
       } else {
         final Map<String, dynamic> responseData = json.decode(response.body);
-        print("Sign In error: ${response.statusCode}");
+        print("Sign In error: ${response.statusCode+responseData["message"]}");
+        showInSnackBar("Sign In error: ${response.statusCode+responseData["message"]}",color:AppColors.errorcolor);
         print("Response: ${response.body}");
-        print(responseData["token"]);
-        if (responseData['success'] == false) {
-          print("Response: ${responseData["message"]}");
-
-          showInSnackBar("${responseData["message"]}",
-              color: AppColors.errorcolor);
-        } else {
-          showInSnackBar("${responseData["message"]}",
-              color: AppColors.errorcolor);
-        }
+       
+      
       }
     } catch (error) {
       print("Error: $error");
+      showInSnackBar(error.toString(),color: AppColors.errorcolor);
     }
   }
 
 //SignUp/Registration
-  registerUser(String firstNameController, String lastNameController,
-      String emailController, String passwordController) async {
-    print(emailController);
+  registerUser(String firstName, String lastName,
+      String email, String password) async {
+    showDialogue();
+    print(email);
     showDialogue();
 
     try {
       final response = await http.post(Uri.parse(AppUrl.registerURL), headers: {
         'Accept': 'application/json',
       }, body: {
-        "name": firstNameController,
-        "last_name": lastNameController,
-        "email": emailController,
-        "password": passwordController,
+        "name": firstName,
+        "last_name": lastName,
+        "email": email,
+        "password": password,
       });
       Get.back();
       final Map<String, dynamic> responseData = json.decode(response.body);
@@ -230,16 +224,18 @@ class AuthController extends GetxController {
           print("Response: ${response.body}");
 
           Get.offAll(LoginScreen());
-        } 
+        }
       } else {
         print("Sign Up error: ${response.statusCode}");
         print("Response: ${response.body}");
         showInSnackBar(
             "Error ${response.statusCode} ${responseData['message']}",
             color: AppColors.errorcolor);
+          Get.back();
       }
     } catch (error) {
       print("Error: $error");
+      showInSnackBar(error.toString(),color: AppColors.errorcolor);
     }
   }
 

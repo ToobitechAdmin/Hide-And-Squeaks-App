@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 import 'dart:io';
@@ -25,42 +23,11 @@ import '../global/alertbox.dart';
 import 'package:file_picker/file_picker.dart';
 
 class VideoController extends GetxController {
-  // Rx<File?> selectedVideo = Rx<File?>(null);
   var isLoading = false.obs;
-  var viewDataLaoding =false.obs;
+  var viewDataLaoding = false.obs;
 
-  // pickVideo() async {
-  //   FilePickerResult? result =
-  //       await FilePicker.platform.pickFiles(type: FileType.video);
-  //   if (result != null) {
-  //     selectedVideo.value = File(result.files.single.path!);
-  //   }
-  // }
-
-  // Rx<File?> imagethumbnail = Rx<File?>(null);
-
-  // pickThumb() async {
-  //   try {
-  //     final pickedthumb =
-  //         await ImagePicker().pickImage(source: ImageSource.gallery);
-
-  //     if (pickedthumb == null) {
-  //       print('No thumb image picked.');
-  //       return;
-  //     }
-
-  //     final imagethumbtemp = File(pickedthumb.path);
-
-  //     imagethumbnail.value = imagethumbtemp;
-  //     print(imagethumbnail.value);
-  //   } catch (e) {
-  //     print('Failed to pick Thumb: $e');
-  //   }
-  // }
- Rx<File?> videofile = Rx<File?>(null);
+  Rx<File?> videofile = Rx<File?>(null);
   Rx<File?> thumbnailFile = Rx<File?>(null);
-
- 
 
   pickVideo() async {
     final pickedFile =
@@ -78,35 +45,28 @@ class VideoController extends GetxController {
         video: videofile.value!.path,
         thumbnailPath: (await getTemporaryDirectory()).path,
         imageFormat: ImageFormat.JPEG,
-        // maxHeight: 100,
-        // quality: 100,
+       
       );
 
       thumbnailFile.value = File(thumbnailPath!);
     }
   }
-  
 
   RxBool uploading = false.obs;
 
   postVideo(VideoModel videodata) async {
-    if (videodata.videotype!.length<1) {
-       showInSnackBar("Kindly select video Public Or Private",color:AppColors.errorcolor);
+    if (videodata.videotype!.length < 1) {
+      showInSnackBar("Kindly select video Public Or Private",
+          color: AppColors.errorcolor);
       return;
-      
     }
     print(videodata.title);
-     print(videodata.description);
-     print(videodata.videotype);
-     print(videodata.file_path);
-     print(videodata.thumbnail);
-     
-     
-    
-
+    print(videodata.description);
+    print(videodata.videotype);
+    print(videodata.file_path);
+    print(videodata.thumbnail);
 
     showDialogue();
-    
 
     String currentToken = appStorage.read('userToken');
 
@@ -127,15 +87,12 @@ class VideoController extends GetxController {
               videodata.thumbnail!,
             ));
 
-
-
-      
-
       var response = await request.send();
+       String responseBody = await response.stream.bytesToString();
+        final Map<String, dynamic> responseData = json.decode(responseBody);
 
       if (response.statusCode == 200) {
-        String responseBody = await response.stream.bytesToString();
-        final Map<String, dynamic> responseData = json.decode(responseBody);
+       
         Get.back();
         showInSnackBar("${responseData["message"]}",
             color: AppColors.greencolor);
@@ -147,15 +104,13 @@ class VideoController extends GetxController {
         if (thumbnailFile.value != null) {
           thumbnailFile.value = null;
         }
-       
 
         {
           print(" ${responseData['message']}");
           Get.to(SocialScreen());
         }
       } else {
-        final Map<String, dynamic> responseData =
-            json.decode(await response.stream.bytesToString());
+        
 
         print("Response: ${responseData["message"]}");
         if (responseData['success'] == false) {
@@ -164,11 +119,7 @@ class VideoController extends GetxController {
           print("Response: ${responseData["message"]}");
           showInSnackBar("${responseData["message"]}",
               color: AppColors.errorcolor);
-        } else {
-          Get.back();
-          showInSnackBar("${responseData["message"]}",
-              color: AppColors.errorcolor);
-        }
+        } 
       }
     } catch (error) {
       Get.back();
@@ -192,86 +143,76 @@ class VideoController extends GetxController {
         },
       );
       if (response.statusCode == 200) {
-      print(response.body);
-      print("API call");
-      final Map<String, dynamic> responseData = json.decode(response.body);
+        print(response.body);
+        print("API call");
+        final Map<String, dynamic> responseData = json.decode(response.body);
 
-      if (responseData['status'] == true) {
-        if (responseData['data'] != null && responseData['data'].containsKey('public')) {
-          var publicVideos = responseData['data']['public'] as List;
+        if (responseData['status'] == true) {
+          if (responseData['data'] != null &&
+              responseData['data'].containsKey('public')) {
+            var publicVideos = responseData['data']['public'] as List;
 
-          final List<dynamic> videoDataList = publicVideos;
-          
+            final List<dynamic> videoDataList = publicVideos;
 
-          for (var videoData in videoDataList) {
-            print("videoid: ${videoData["id"]}");
-             print(videoData["title"]);
+            for (var videoData in videoDataList) {
+              print("videoid: ${videoData["id"]}");
+              print(videoData["title"]);
               print(videoData["user_id"]);
-               print(videoData["file_path"]);
-               print(videoData["thumbnail_path"]);
-               print(videoData["likes_count"]);
-               print(videoData["created_at]"]);
-               print(videoData["comments_count"]);
-              
-               
-            
-            videoListpublic.insert(0,VideoModel(
-                title: videoData["title"],
-                description:videoData["description"] ,
-                file_path: videoData["filepath"],
-                thumbnail: videoData["thumbnail_path"],
-                created_at: videoData["created_at"],
-                id: videoData["id"],
-                totalLikes:videoData["likes_count"],
-                totalComments: videoData["comments_count"],
-                ));
+              print(videoData["file_path"]);
+              print(videoData["thumbnail_path"]);
+              print(videoData["likes_count"]);
+              print(videoData["created_at]"]);
+              print(videoData["comments_count"]);
+
+              videoListpublic.insert(
+                  0,
+                  VideoModel(
+                    title: videoData["title"],
+                    description: videoData["description"],
+                    file_path: videoData["filepath"],
+                    thumbnail: videoData["thumbnail_path"],
+                    created_at: videoData["created_at"],
+                    id: videoData["id"],
+                    totalLikes: videoData["likes_count"],
+                    totalComments: videoData["comments_count"],
+                  ));
+            }
+            print(videoListpublic.length);
           }
-          print(videoListpublic.length);
-        
-        } 
-        if (responseData['data'] != null && responseData['data'].containsKey('private')) {
-          var privateVideos = responseData['data']['private'] as List;
+          if (responseData['data'] != null &&
+              responseData['data'].containsKey('private')) {
+            var privateVideos = responseData['data']['private'] as List;
 
-          final List<dynamic> videoDataList = privateVideos;
-          
+            final List<dynamic> videoDataList = privateVideos;
 
-          for (var videoData in videoDataList) {
-            print(videoData["id"]);
-             print(videoData["title"]);
+            for (var videoData in videoDataList) {
+              print(videoData["id"]);
+              print(videoData["title"]);
               print(videoData["user_id"]);
-               print(videoData["file_path"]);
-               print(videoData["thumbnail_path"]);
-               print(videoData["likes_count"]);
-               print(videoData["created_at]"]);
-               print(videoData["comments_count"]);
-              
-               
-            
-            videoListprivate.insert(0,VideoModel(
-                title: videoData["title"],
-                description:videoData["description"] ,
-                file_path: videoData["file_path"],
-                thumbnail: videoData["thumbnail_path"],
-                created_at: videoData["created_at"],
-                id: videoData["id"],
-                totalLikes:videoData["likes_count"],
-                totalComments: videoData["comments_count"],
-                ));
+              print(videoData["file_path"]);
+              print(videoData["thumbnail_path"]);
+              print(videoData["likes_count"]);
+              print(videoData["created_at]"]);
+              print(videoData["comments_count"]);
+
+              videoListprivate.insert(
+                  0,
+                  VideoModel(
+                    title: videoData["title"],
+                    description: videoData["description"],
+                    file_path: videoData["file_path"],
+                    thumbnail: videoData["thumbnail_path"],
+                    created_at: videoData["created_at"],
+                    id: videoData["id"],
+                    totalLikes: videoData["likes_count"],
+                    totalComments: videoData["comments_count"],
+                  ));
+            }
+            print(videoListprivate.length);
           }
-          print(videoListprivate.length);
-          
-        } 
-        isLoading.value = false;
-
-
-
-
-
-      } 
-    } 
-    
-
-       
+          isLoading.value = false;
+        }
+      }
     } catch (error) {
       print('Error during GET request: $error');
       isLoading.value = false;
@@ -289,25 +230,23 @@ class VideoController extends GetxController {
           'Authorization': 'Bearer  $currentToken',
         },
         body: {
-          'video_id': userid,
+          'video_id': userid.toString(),
         },
       );
 
       if (response.statusCode == 200) {
         if (response.body != null) {
-         
           final dynamic responseData = json.decode(response.body);
 
-         
           if (responseData is List<dynamic>) {
             for (var data in responseData) {
               print(responseData);
-             
+
               final VideoModel postData = VideoModel.fromJson(data);
               print("title: ${postData.title}, id: ${postData.id}");
             }
-          } 
-        } 
+          }
+        }
       } else {
         print('POST request failed with status: ${response.statusCode}');
         print(response.body);
@@ -320,7 +259,7 @@ class VideoController extends GetxController {
   RxInt total_likes = 0.obs;
 
   ViewData(userid) async {
-    viewDataLaoding.value=true;
+    viewDataLaoding.value = true;
     print(userid);
     print("View data API call");
     String currentToken = appStorage.read('userToken');
@@ -338,12 +277,10 @@ class VideoController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-       
         if (response.body != null) {
           final dynamic responseData = json.decode(response.body);
 
           if (responseData is List<dynamic>) {
-            
           } else {
             print("data:${responseData}");
 
@@ -352,35 +289,33 @@ class VideoController extends GetxController {
             print("created_at: ${responseData["data"]["video"]["created_at"]}");
             print("Totalviews: ${responseData["data"]["total_views"]}");
             print("TotalLikes: ${responseData["data"]["total_likes"]}");
-             print("isUserLikedVideo: ${responseData["data"]["userLikedVideo"]}");
+            print(
+                "isUserLikedVideo: ${responseData["data"]["userLikedVideo"]}");
             print("TotalComments: ${responseData["data"]["total_comments"]}");
-            //  print("thumbpath: ${AppUrl.imageUrl + responseData["data"]["video"]["thumbnail_path"]}");
-            // print(
-            //     "Filepath: ${AppUrl.videoURL + responseData["data"]["video"]["file_path"]}");
+            print(
+                "thumbpath: ${AppUrl.imageUrl + responseData["data"]["video"]["thumbnail_path"]}");
+            print(
+                "Filepath: ${AppUrl.videoURL + responseData["data"]["video"]["file_path"]}");
             List<Comment> comments =
                 (responseData['data']['video']['comments'] as List)
                     .map((commentJson) => Comment.fromJson(commentJson))
                     .toList();
-            
-           
 
             var videoViewData = VideoModel(
-              id: responseData["data"]["video"]["id"],
-              thumbnail: responseData["video"]["thumbnail_path"],
-              user_id: responseData["data"]["video"]["user_id"],
-              title: responseData["data"]["video"]["title"],
-              created_at: responseData["data"]["video"]["created_at"],
-              file_path:
-                  AppUrl.videoURL + responseData["data"]["video"]["file_path"],
-              
-              totalLikes: responseData["data"]["total_likes"],
-              totalComments: responseData["data"]["total_comments"],
-              totalViews: responseData["data"]["total_views"],
-              userLikedVideo: responseData["data"]["userLikedVideo"]
-            );
+                id: responseData["data"]["video"]["id"],
+                thumbnail: responseData["data"]["video"]["thumbnail_path"],
+                user_id: responseData["data"]["video"]["user_id"],
+                title: responseData["data"]["video"]["title"],
+                created_at: responseData["data"]["video"]["created_at"],
+                file_path: AppUrl.videoURL +
+                    responseData["data"]["video"]["file_path"],
+                totalLikes: responseData["data"]["total_likes"],
+                totalComments: responseData["data"]["total_comments"],
+                totalViews: responseData["data"]["total_views"],
+                userLikedVideo: responseData["data"]["userLikedVideo"]);
 
-            Get.to(VideoPlayerScreen(view: videoViewData,comments:comments));
-            viewDataLaoding.value=false;
+            Get.to(VideoPlayerScreen(view: videoViewData, comments: comments));
+            viewDataLaoding.value = false;
           }
         } else {
           print('Response body is null');
@@ -422,7 +357,8 @@ class VideoController extends GetxController {
       print('Exception during postComment: $e');
     }
   }
-  var likeCheck="". obs;
+
+  var likeCheck = "".obs;
   postLike(videoId) async {
     String currentToken = appStorage.read('userToken');
     try {
@@ -439,10 +375,9 @@ class VideoController extends GetxController {
       final Map<String, dynamic> responseData = json.decode(response.body);
 
       if (response.statusCode == 200) {
-      
         print('Like posted successfully');
         print(responseData["message"]);
-       
+
         print('Response body: ${response.body}');
       } else {
         print('Error posting Like. Status code: ${response.statusCode}');
@@ -457,17 +392,15 @@ class VideoController extends GetxController {
     print(videoId);
     String currentToken = appStorage.read('userToken');
     try {
-      
-
       final response = await http.post(
         Uri.parse(AppUrl.videoDelUrl),
         headers: {
-          'Content-Type': 'application/json',
+          'Accept': 'application/json',
           'Authorization': 'Bearer  $currentToken',
         },
-        body: jsonEncode({
+        body: {
           'video_id': videoId,
-        }),
+        },
       );
       final Map<String, dynamic> responseData = json.decode(response.body);
       print(responseData);

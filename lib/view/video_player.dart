@@ -224,7 +224,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                     Comment newComment = Comment(
                                         comment: commentController.text,
                                         userId: widget.view.id,
-                                        createdAt: "1 minute ago",
+                                        createdAt: DateTime.now().toString(),
                                         user: User(
                                             id: widget.view.id!,
                                             name: appStorage
@@ -464,8 +464,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                           child: ListView.builder(
                               itemCount: widget.comments.length,
                               itemBuilder: (context, int index) {
+                              
                                 Comment usercomment = widget.comments[index];
-                                String formateddays=formattimeago(usercomment.createdAt! as DateTime);
+                                String formateddays=formatRelativeTime(usercomment.createdAt!, DateTime.now());
                                 print(formateddays);
 
                         
@@ -517,7 +518,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                                     width: Get.width * 0.015,
                                                   ),
                                                   Text(
-                                                    "${formateddays.toString()}",
+                                                    "${formateddays}",
                                                  
                                                     style: TextStyle(
                                                         fontSize: 10,
@@ -679,7 +680,8 @@ class VideoTimer extends StatelessWidget {
   }
 }
 
-String formatRelativeTime(DateTime start, DateTime end) {
+ String formatRelativeTime(String startStr, DateTime end) {
+  DateTime start = DateTime.parse(startStr);
   Duration difference = end.difference(start);
   String relativeTime;
 
@@ -729,5 +731,7 @@ int _differenceInHours(DateTime start, DateTime end) {
 int _differenceInMinutes(DateTime start, DateTime end) {
   return end.difference(start).inMinutes;
 }
+
+
 
 
