@@ -89,18 +89,6 @@ class AudioController extends GetxController {
   }
 //  final RxInt currentAudioIndex = 0.obs;
 
-//   // Method to play the next audio URL
-//   void playNextAudio() {
-//     if (currentAudioIndex.value < controller.audioUrlsList.length - 1) {
-//       // If there is a next audio URL in the list, play it
-//       currentAudioIndex.value++;
-//       controller.playAudio(controller.audioUrlsList[currentAudioIndex.value]);
-//     } else {
-//       // If we're at the end of the list, loop back to the beginning
-//       currentAudioIndex.value = 0;
-//       controller.playAudio(controller.audioUrlsList[0]);
-//     }
-//   }
   Future<void> pauseAudio() async {
     isPlaying.value = false;
     await audioPlayer.pause();
@@ -111,7 +99,7 @@ class AudioController extends GetxController {
     // currentAudio.value = '';
   }
 
-  RxBool isPlaying = true.obs;
+  RxBool isPlaying = false.obs;
 
   getAudioData() async {
     String currentToken = appStorage.read('userToken');
@@ -300,49 +288,4 @@ class AudioController extends GetxController {
       print("Delete Library Error: $error");
     }
   }
-
-  // late AudioPlayer audioPlayer;
-  // RxBool isAudioLoading = true.obs;
-
-  // // Add an observable to track the current playing index
-  // RxInt currentPlayingIndex = (-1).obs;
-
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   audioPlayer = AudioPlayer();
-  // }
-
-  // Future<void> playAudio(String audioUrl, int index) async {
-  //   // Stop the current playing audio if any
-  //   if (audioPlayer.playing) {
-  //     audioPlayer.stop();
-  //   }
-
-  //   await audioPlayer.setUrl(audioUrl);
-  //   await audioPlayer.play();
-
-  //   // Update the current playing index
-  //   currentPlayingIndex.value = index;
-  // }
-
-  // Future<void> pauseAudio() async {
-  //   if (audioPlayer.playing) {
-  //     await audioPlayer.pause();
-  //   }
-  // }
-
-  // Future<void> stopAudio() async {
-  //   if (audioPlayer.playing) {
-  //     await audioPlayer.stop();
-  //   }
-  // }
-
-  // // Add any other necessary functions related to audio here
-
-  // @override
-  // void onClose() {
-  //   audioPlayer.dispose();
-  //   super.onClose();
-  // }
 }

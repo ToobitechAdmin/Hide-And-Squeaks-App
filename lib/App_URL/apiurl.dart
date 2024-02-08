@@ -3,7 +3,9 @@ class AppUrl {
       'https://digimaestros.com/dev/Hide-Squeaks/storage/';
   static String base = "https://digimaestros.com/dev/Hide-Squeaks/api/";
   static String imageUrl = "https://digimaestros.com/dev/Hide-Squeaks/";
-  static String videoURL ="https://digimaestros.com/dev/Hide-Squeaks/";
+  static String videoURL = "https://digimaestros.com/dev/Hide-Squeaks/";
+
+  static String purchaseTreats = "${base}purchase-treats";
   static String SignInURL = "${base}login";
   static String getAudio = "${base}audio";
   static String getMyLibrary = "${base}my-library";

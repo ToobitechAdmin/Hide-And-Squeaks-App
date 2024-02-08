@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:squeak/controller/treat_Controller.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:get/get.dart';
@@ -6,7 +9,10 @@ import 'package:squeak/components/custom.dart';
 import 'package:squeak/view/dollar.dart';
 import 'package:squeak/view/balance.dart';
 
+import 'package:squeak/view/homescreen.dart';
+import 'package:squeak/view/treat.dart';
 import '../components/colors.dart';
+import '../components/snakbar.dart';
 import '../models/treatmodel.dart';
 
 class PurchaseScreen extends StatefulWidget {
@@ -18,12 +24,11 @@ class PurchaseScreen extends StatefulWidget {
 
 class _PurchaseScreenState extends State<PurchaseScreen> {
   treatController controller = Get.put(treatController());
+  bool loading = false;
+  Map<String, dynamic>? paymentIntentData;
   @override
   void initState() {
     super.initState();
-    
-    
-
     controller.fetchTreats();
   }
 
@@ -38,7 +43,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
           image: AssetImage(AppAssets.backgroundimage1),
           fit: BoxFit.fill,
           colorFilter: ColorFilter.mode(
-            AppColors.filtercolor, 
+            AppColors.filtercolor,
             BlendMode.srcOver,
           ),
         )),
