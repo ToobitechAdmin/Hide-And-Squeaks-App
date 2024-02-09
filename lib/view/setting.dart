@@ -41,7 +41,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.to(PurchaseScreen());
+                      // Get.to(PurchaseScreen());
                     },
                     child: Container(
                       height: Get.height * 0.069,
@@ -55,7 +55,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(BalanceScreen());
+                      // Get.to(BalanceScreen());
                     },
                     child: Container(
                         height: Get.height * 0.08,
@@ -135,7 +135,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(BalanceScreen());
+                      // Get.to(BalanceScreen());
                     },
                     child: Text(
                       "Legal",

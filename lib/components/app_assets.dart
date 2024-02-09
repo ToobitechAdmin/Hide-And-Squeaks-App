@@ -1,7 +1,7 @@
 class AppAssets {
   //images
   static String backgroundimage1 = "assets/images/backgroundimage1.png";
-  static var signin = "assets/images/signin2.png";
+  static var signin = "assets/images/signin.png";
   static var links = "assets/images/links.png";
   static var play = "assets/images/play.png";
   static var backgroundmain = "assets/images/backgroundmain.png";

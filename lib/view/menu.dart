@@ -63,13 +63,20 @@ class _MenuScreenState extends State<MenuScreen> {
                             child: CustomSettings(
                                 library: "Video\nUpload",
                                 settingimage: AppAssets.settings2)),
-                        GestureDetector(
-                            onTap: () {
-                              Get.to(AppStoreScreen());
-                            },
-                            child: CustomSettings(
-                                library: "In-App\nStore",
-                                settingimage: AppAssets.settings3)),
+                                GestureDetector(
+                        onTap: () {
+                          Get.to(SettingScreen());
+                        },
+                        child: CustomSettings(
+                            library: "Settings",
+                            settingimage: AppAssets.settings7)),
+                        // GestureDetector(
+                        //     onTap: () {
+                        //       Get.to(AppStoreScreen());
+                        //     },
+                        //     child: CustomSettings(
+                        //         library: "In-App\nStore",
+                        //         settingimage: AppAssets.settings3)),
                       ],
                     ),
                     SizedBox(
@@ -104,13 +111,13 @@ class _MenuScreenState extends State<MenuScreen> {
                     SizedBox(
                       height: Get.height * 0.040,
                     ),
-                    GestureDetector(
-                        onTap: () {
-                          Get.to(SettingScreen());
-                        },
-                        child: CustomSettings(
-                            library: "Settings",
-                            settingimage: AppAssets.settings7)),
+                    // GestureDetector(
+                    //     onTap: () {
+                    //       Get.to(SettingScreen());
+                    //     },
+                    //     child: CustomSettings(
+                    //         library: "Settings",
+                    //         settingimage: AppAssets.settings7)),
                   ],
                 ),
               )

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/models/dumymodel5.dart';
+// import 'package:squeak/models/dumymodel5.dart';
 import 'package:squeak/view/purchase.dart';
 import 'package:squeak/view/menu.dart';
 import 'colors.dart';
@@ -16,7 +16,7 @@ class Customhead extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Get.to(PurchaseScreen());
+              // Get.to(PurchaseScreen());
             },
             child: Container(
               height: Get.height * 0.069,
@@ -35,7 +35,7 @@ class Customhead extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              Get.to(MenuScreen());
+              Get.offAll(MenuScreen());
             },
             child: Container(
                 height: Get.height * 0.08,
@@ -239,7 +239,7 @@ class CustomBar extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Get.to(PurchaseScreen());
+              // Get.to(PurchaseScreen());
             },
             child: Container(
               height: Get.height * 0.069,
@@ -341,16 +341,16 @@ class CustomBar extends StatelessWidget {
 //       img: AppAssets.gridimg, title: "First dog", comment: "1", favourite: "5"),
 // ];
 
-final List<AppModel> app = [
-  AppModel(img: AppAssets.appitem2, title: "Setgipping", price: "\$20"),
-  AppModel(img: AppAssets.appitem1, title: "Setgipping", price: "\$20"),
-  AppModel(img: AppAssets.appitem2, title: "Setgipping", price: "\$20"),
-  AppModel(img: AppAssets.appitem1, title: "Setgipping", price: "\$20"),
-  AppModel(img: AppAssets.appitem1, title: "Setgipping", price: "\$20"),
-  AppModel(img: AppAssets.appitem2, title: "Setgipping", price: "\$20"),
-  AppModel(img: AppAssets.appitem1, title: "Setgipping", price: "\$20"),
-  AppModel(img: AppAssets.appitem1, title: "Setgipping", price: "\$20"),
-];
+// final List<AppModel> app = [
+//   AppModel(img: AppAssets.appitem2, title: "Setgipping", price: "\$20"),
+//   AppModel(img: AppAssets.appitem1, title: "Setgipping", price: "\$20"),
+//   AppModel(img: AppAssets.appitem2, title: "Setgipping", price: "\$20"),
+//   AppModel(img: AppAssets.appitem1, title: "Setgipping", price: "\$20"),
+//   AppModel(img: AppAssets.appitem1, title: "Setgipping", price: "\$20"),
+//   AppModel(img: AppAssets.appitem2, title: "Setgipping", price: "\$20"),
+//   AppModel(img: AppAssets.appitem1, title: "Setgipping", price: "\$20"),
+//   AppModel(img: AppAssets.appitem1, title: "Setgipping", price: "\$20"),
+// ];
 
 class CustomTextField extends StatefulWidget {
   final String hinttext;

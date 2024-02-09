@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/view/menu.dart';
-import 'package:squeak/view/purchase.dart';
 import '../App_URL/apiurl.dart';
 import '../components/app_assets.dart';
 import '../components/colors.dart';
@@ -19,10 +18,9 @@ class AudioPlayScreen extends StatefulWidget {
 
 class _AudioPlayScreenState extends State<AudioPlayScreen> {
   AudioController controller = Get.put(AudioController());
-
   late List<bool> isPlayingList;
   final RxInt currentAudioIndex = 0.obs;
-  bool isCurrent = false;
+  // bool isCurrent = false;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +46,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.to(PurchaseScreen());
+                            // Get.to(PurchaseScreen());
                           },
                           child: Container(
                             height: Get.height * 0.069,
@@ -158,69 +156,95 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                               topRight: Radius.circular(30))),
                       child: Column(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isCurrent = false;
-                                  });
-                                },
-                                child: Container(
-                                  width: Get.width * 0.45,
+                          Container(
+                                  width: Get.width,
                                   padding: EdgeInsets.symmetric(vertical: 20),
                                   decoration: BoxDecoration(
-                                      color: isCurrent
-                                          ? Colors.black
-                                          : Color.fromARGB(255, 20, 20, 20),
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20))),
-                                  child: Center(
-                                    child: Text(
-                                      'Sound Library',
-                                      style: TextStyle(
-                                          color: isCurrent
-                                              ? AppColors.whitecolor
-                                              : AppColors.primaryColor,
-                                          fontSize: isCurrent ? 18 : 20,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isCurrent = true;
-                                  });
-                                },
-                                child: Container(
-                                  width: Get.width * 0.45,
-                                  padding: EdgeInsets.symmetric(vertical: 20),
-                                  decoration: BoxDecoration(
-                                      color: isCurrent
-                                          ? Color.fromARGB(255, 20, 20, 20)
-                                          : Colors.black,
+                                      color: Color.fromARGB(255, 20, 20, 20),
+                                      // isCurrent
+                                      //     ? Color.fromARGB(255, 20, 20, 20)
+                                      //     : Colors.black,
                                       borderRadius: BorderRadius.only(
                                           topRight: Radius.circular(20))),
                                   child: Center(
                                     child: Text(
                                       'My Library',
                                       style: TextStyle(
-                                          color: isCurrent
-                                              ? AppColors.primaryColor
-                                              : AppColors.whitecolor,
-                                          fontSize: isCurrent ? 20 : 18,
+                                          color: AppColors.primaryColor,
+                                          // isCurrent
+                                          //     ? AppColors.primaryColor
+                                          //     : AppColors.whitecolor,
+                                          fontSize:20,
+                                          //  isCurrent ? 20 : 18,
                                           fontWeight: FontWeight.w700),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          isCurrent
-                              ? Expanded(
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     GestureDetector(
+                          //       onTap: () {
+                          //         setState(() {
+                          //           isCurrent = false;
+                          //         });
+                          //       },
+                          //       child: Container(
+                          //         width: Get.width * 0.45,
+                          //         padding: EdgeInsets.symmetric(vertical: 20),
+                          //         decoration: BoxDecoration(
+                          //             color: isCurrent
+                          //                 ? Colors.black
+                          //                 : Color.fromARGB(255, 20, 20, 20),
+                          //             borderRadius: BorderRadius.only(
+                          //                 topLeft: Radius.circular(20))),
+                          //         child: Center(
+                          //           child: Text(
+                          //             'Sound Library',
+                          //             style: TextStyle(
+                          //                 color: isCurrent
+                          //                     ? AppColors.whitecolor
+                          //                     : AppColors.primaryColor,
+                          //                 fontSize: isCurrent ? 18 : 20,
+                          //                 fontWeight: FontWeight.w700),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     GestureDetector(
+                          //       onTap: () {
+                          //         setState(() {
+                          //           isCurrent = true;
+                          //         });
+                          //       },
+                          //       child: Container(
+                          //         width: Get.width * 0.45,
+                          //         padding: EdgeInsets.symmetric(vertical: 20),
+                          //         decoration: BoxDecoration(
+                          //             color: isCurrent
+                          //                 ? Color.fromARGB(255, 20, 20, 20)
+                          //                 : Colors.black,
+                          //             borderRadius: BorderRadius.only(
+                          //                 topRight: Radius.circular(20))),
+                          //         child: Center(
+                          //           child: Text(
+                          //             'My Library',
+                          //             style: TextStyle(
+                          //                 color: isCurrent
+                          //                     ? AppColors.primaryColor
+                          //                     : AppColors.whitecolor,
+                          //                 fontSize: isCurrent ? 20 : 18,
+                          //                 fontWeight: FontWeight.w700),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                          
+                          // isCurrent
+                          //     ? 
+                              Expanded(
                                   child: Obx(
                                     () => SizedBox(
                                       // width: Get.width * 0.8,
@@ -338,148 +362,148 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                     ),
                                   ),
                                 )
-                              : Expanded(
-                                  child: Obx(
-                                    () => SizedBox(
-                                      // width: Get.width * 0.8,
-                                      child: controller.isLoading.value
-                                          ? Center(
-                                              child: CircularProgressIndicator(
-                                                color: AppColors.primaryColor,
-                                              ),
-                                            )
-                                          : controller.audioSoundList.isEmpty
-                                              ? const Center(
-                                                  child: Text(
-                                                    'List is Empty..',
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                )
-                                              : ListView.builder(
-                                                  scrollDirection:
-                                                      Axis.vertical,
-                                                  itemCount: controller
-                                                      .audioSoundList.length,
-                                                  itemBuilder:
-                                                      (Context, index) {
-                                                    AudioModel item = controller
-                                                        .audioSoundList[index];
-                                                    return Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 13,
-                                                              right: 13),
-                                                      child: Container(
-                                                          height: Get.height *
-                                                              0.047,
-                                                          width:
-                                                              Get.width * 0.8,
-                                                          decoration: BoxDecoration(
-                                                              border: Border(
-                                                                  bottom: BorderSide(
-                                                                      color: AppColors
-                                                                          .whitecolor,
-                                                                      width:
-                                                                          2))),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceEvenly,
-                                                            children: [
-                                                              Obx(() =>
-                                                                  GestureDetector(
-                                                                    child: Icon(
-                                                                      controller.currentlyPlayingIndex.value == index &&
-                                                                              controller
-                                                                                  .isPlaying.value
-                                                                          ? Icons
-                                                                              .pause
-                                                                          : Icons
-                                                                              .play_arrow,
-                                                                      color: Colors
-                                                                          .white,
-                                                                    ),
-                                                                    onTap:
-                                                                        () async {
-                                                                      controller.play(
-                                                                          index,
-                                                                          '${AppUrl.audioPath + item.filePath}');
-                                                                    },
-                                                                  )),
-                                                              Text(
-                                                                item.title,
-                                                                style: TextStyle(
-                                                                    color: AppColors
-                                                                        .whitecolor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800),
-                                                              ),
-                                                              Text(
-                                                                item.time,
-                                                                style: TextStyle(
-                                                                    color: AppColors
-                                                                        .whitecolor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800),
-                                                              ),
-                                                              Text(
-                                                                "${item.count} treats",
-                                                                style: TextStyle(
-                                                                    color: AppColors
-                                                                        .primaryColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800),
-                                                              ),
-                                                              item.type ==
-                                                                      'free'
-                                                                  ? GestureDetector(
-                                                                      onTap:
-                                                                          () {
-                                                                        controller
-                                                                            .postMyLibrary(item.id);
-                                                                      },
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .cloud_download_outlined,
-                                                                        color: AppColors
-                                                                            .whitecolor,
-                                                                        size:
-                                                                            30,
-                                                                      ),
-                                                                    )
-                                                                  : Container(
-                                                                      padding: const EdgeInsets
-                                                                          .symmetric(
-                                                                          horizontal:
-                                                                              10,
-                                                                          vertical:
-                                                                              5),
-                                                                      decoration: BoxDecoration(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              15),
-                                                                          color:
-                                                                              Colors.red),
-                                                                      child:
-                                                                          const Text(
-                                                                        'buy',
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontWeight: FontWeight.normal),
-                                                                      ),
-                                                                    )
-                                                            ],
-                                                          )),
-                                                    );
-                                                  }),
-                                    ),
-                                  ),
-                                )
+                              // : Expanded(
+                              //     child: Obx(
+                              //       () => SizedBox(
+                              //         // width: Get.width * 0.8,
+                              //         child: controller.isLoading.value
+                              //             ? Center(
+                              //                 child: CircularProgressIndicator(
+                              //                   color: AppColors.primaryColor,
+                              //                 ),
+                              //               )
+                              //             : controller.audioSoundList.isEmpty
+                              //                 ? const Center(
+                              //                     child: Text(
+                              //                       'List is Empty..',
+                              //                       style: TextStyle(
+                              //                           color: Colors.white),
+                              //                     ),
+                              //                   )
+                              //                 : ListView.builder(
+                              //                     scrollDirection:
+                              //                         Axis.vertical,
+                              //                     itemCount: controller
+                              //                         .audioSoundList.length,
+                              //                     itemBuilder:
+                              //                         (Context, index) {
+                              //                       AudioModel item = controller
+                              //                           .audioSoundList[index];
+                              //                       return Padding(
+                              //                         padding:
+                              //                             const EdgeInsets.only(
+                              //                                 left: 13,
+                              //                                 right: 13),
+                              //                         child: Container(
+                              //                             height: Get.height *
+                              //                                 0.047,
+                              //                             width:
+                              //                                 Get.width * 0.8,
+                              //                             decoration: BoxDecoration(
+                              //                                 border: Border(
+                              //                                     bottom: BorderSide(
+                              //                                         color: AppColors
+                              //                                             .whitecolor,
+                              //                                         width:
+                              //                                             2))),
+                              //                             child: Row(
+                              //                               mainAxisAlignment:
+                              //                                   MainAxisAlignment
+                              //                                       .spaceEvenly,
+                              //                               children: [
+                              //                                 Obx(() =>
+                              //                                     GestureDetector(
+                              //                                       child: Icon(
+                              //                                         controller.currentlyPlayingIndex.value == index &&
+                              //                                                 controller
+                              //                                                     .isPlaying.value
+                              //                                             ? Icons
+                              //                                                 .pause
+                              //                                             : Icons
+                              //                                                 .play_arrow,
+                              //                                         color: Colors
+                              //                                             .white,
+                              //                                       ),
+                              //                                       onTap:
+                              //                                           () async {
+                              //                                         controller.play(
+                              //                                             index,
+                              //                                             '${AppUrl.audioPath + item.filePath}');
+                              //                                       },
+                              //                                     )),
+                              //                                 Text(
+                              //                                   item.title,
+                              //                                   style: TextStyle(
+                              //                                       color: AppColors
+                              //                                           .whitecolor,
+                              //                                       fontWeight:
+                              //                                           FontWeight
+                              //                                               .w800),
+                              //                                 ),
+                              //                                 Text(
+                              //                                   item.time,
+                              //                                   style: TextStyle(
+                              //                                       color: AppColors
+                              //                                           .whitecolor,
+                              //                                       fontWeight:
+                              //                                           FontWeight
+                              //                                               .w800),
+                              //                                 ),
+                              //                                 Text(
+                              //                                   "${item.count} treats",
+                              //                                   style: TextStyle(
+                              //                                       color: AppColors
+                              //                                           .primaryColor,
+                              //                                       fontWeight:
+                              //                                           FontWeight
+                              //                                               .w800),
+                              //                                 ),
+                              //                                 item.type ==
+                              //                                         'free'
+                              //                                     ? GestureDetector(
+                              //                                         onTap:
+                              //                                             () {
+                              //                                           controller
+                              //                                               .postMyLibrary(item.id);
+                              //                                         },
+                              //                                         child:
+                              //                                             Icon(
+                              //                                           Icons
+                              //                                               .cloud_download_outlined,
+                              //                                           color: AppColors
+                              //                                               .whitecolor,
+                              //                                           size:
+                              //                                               30,
+                              //                                         ),
+                              //                                       )
+                              //                                     : Container(
+                              //                                         padding: const EdgeInsets
+                              //                                             .symmetric(
+                              //                                             horizontal:
+                              //                                                 10,
+                              //                                             vertical:
+                              //                                                 5),
+                              //                                         decoration: BoxDecoration(
+                              //                                             borderRadius: BorderRadius.circular(
+                              //                                                 15),
+                              //                                             color:
+                              //                                                 Colors.red),
+                              //                                         child:
+                              //                                             const Text(
+                              //                                           'buy',
+                              //                                           style: TextStyle(
+                              //                                               color:
+                              //                                                   Colors.white,
+                              //                                               fontWeight: FontWeight.normal),
+                              //                                         ),
+                              //                                       )
+                              //                               ],
+                              //                             )),
+                              //                       );
+                              //                     }),
+                              //       ),
+                              //     ),
+                              //   )
                         ],
                       ),
                     ),

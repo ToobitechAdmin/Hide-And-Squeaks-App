@@ -37,7 +37,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.to(PurchaseScreen());
+                        // Get.to(PurchaseScreen());
                       },
                       child: Container(
                         height: Get.height * 0.069,

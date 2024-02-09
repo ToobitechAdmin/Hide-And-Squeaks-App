@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   //colors
-  static Color primaryColor =  Color(0xffff1900) ;
+  static Color primaryColor = Color(0xffF78C00)  ;
   static var pinkcolor = Color(0xffFFF9E0);
   static var whitecolor = Colors.white;
 
