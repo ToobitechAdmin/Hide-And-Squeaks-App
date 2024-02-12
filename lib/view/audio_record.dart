@@ -1,6 +1,5 @@
 import 'dart:async';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
@@ -17,8 +16,7 @@ class AudioRecord extends StatefulWidget {
 }
 
 class _AudioRecordState extends State<AudioRecord> {
-  void showDeleteBox(BuildContext context,
-      { required record,required title}) {
+  void showDeleteBox(BuildContext context, {required record, required title}) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -28,8 +26,8 @@ class _AudioRecordState extends State<AudioRecord> {
           actions: [
             TextButton(
               onPressed: () {
-              recordings.remove(record);
-               
+                recordings.remove(record);
+
                 Get.back();
               },
               child: Text(
@@ -42,10 +40,11 @@ class _AudioRecordState extends State<AudioRecord> {
       },
     );
   }
+
   late FlutterSoundRecorder _recordingSession;
   late FlutterSoundPlayer _recordingPlayer;
- RxList<AudioModel> recordings = <AudioModel>[].obs;
-  String recordTimer = '00:00:00';
+  RxList<AudioModel> recordings = <AudioModel>[].obs;
+  String recordTimer = '00:00';
   late String pathToAudio;
   // List to hold recorded audio paths
   bool isRecording = false;
@@ -58,7 +57,7 @@ class _AudioRecordState extends State<AudioRecord> {
     _initialize();
   }
 
-   _initialize() async {
+  _initialize() async {
     _recordingSession = FlutterSoundRecorder();
     _recordingPlayer = FlutterSoundPlayer();
     await _recordingSession.openRecorder();
@@ -66,7 +65,7 @@ class _AudioRecordState extends State<AudioRecord> {
     await Permission.storage.request();
     await Permission.manageExternalStorage.request();
     setState(() {
-      recordTimer = '00:00:00';
+      recordTimer = '00:00';
     });
   }
 
@@ -105,10 +104,10 @@ class _AudioRecordState extends State<AudioRecord> {
           time: recordTimer,
           type: "public",
           price: "20",
-          count: 1)); // Add recorded audio path to list
+          count: 1));
     });
     setState(() {
-      recordTimer = '00:00:00';
+      recordTimer = '00:00';
     });
   }
 
@@ -132,7 +131,7 @@ class _AudioRecordState extends State<AudioRecord> {
             _recordingPlayer.stopPlayer();
             setState(() {
               isPlaying = false;
-              recordTimer = '00:00:00';
+              recordTimer = '00:00';
             });
           }
         }
@@ -184,20 +183,51 @@ class _AudioRecordState extends State<AudioRecord> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              ElevatedButton(
-                onPressed: startRecording,
-                child: Text('Start Recording'),
+              GestureDetector(
+                onTap: () => startRecording(),
+                child: Container(
+                  height: Get.height * 0.037,
+                  width: Get.width * 0.22,
+                  decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Center(
+                    child: Text(
+                      "Start Recording",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: AppColors.whitecolor,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
               ),
               SizedBox(width: 20),
-              ElevatedButton(
-                onPressed: stopRecording,
-                child: Text('Stop Recording'),
+              GestureDetector(
+                onTap: () => stopRecording(),
+                child: Container(
+                  height: Get.height * 0.037,
+                  width: Get.width * 0.22,
+                  decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Center(
+                    child: Text(
+                      "Stop Recording",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: AppColors.whitecolor,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
           SizedBox(height: 20),
           Expanded(
-            child: Obx(() => ListView.builder(
+              child: Obx(
+            () => ListView.builder(
               itemCount: recordings.length,
               itemBuilder: (context, index) {
                 AudioModel recordingPath = recordings[index];
@@ -225,11 +255,12 @@ class _AudioRecordState extends State<AudioRecord> {
                                 : Icons.play_arrow)),
                         GestureDetector(
                             onTap: () {
-                            showDeleteBox(context,record:recordings[index],title:"Recording ${index + 1}");
-                              
+                              showDeleteBox(context,
+                                  record: recordings[index],
+                                  title: "Recording ${index + 1}");
+
                               // print("Removing");
                               // _recordings.removeAt(index);
-                              
                             },
                             child: Icon(Icons.delete)),
                       ],
@@ -239,10 +270,7 @@ class _AudioRecordState extends State<AudioRecord> {
                 );
               },
             ),
-            )
-          ),
-         
-          
+          )),
         ],
       ),
     );

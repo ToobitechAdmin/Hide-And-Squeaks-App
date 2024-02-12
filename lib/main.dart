@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:squeak/view/audio_record.dart';
 import 'package:squeak/view/homescreen.dart';
+import 'package:squeak/view/setting.dart';
 // import 'package:flutter_stripe/flutter_stripe.dart';
 
 import 'view/splashScreen.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       scaffoldMessengerKey: snackbarKey,
       debugShowCheckedModeBanner: false,
-      home: AudioRecord(),
+      home: SettingScreen(),
     );
   }
 }

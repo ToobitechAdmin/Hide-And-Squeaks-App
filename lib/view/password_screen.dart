@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
@@ -65,7 +65,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 SizedBox(height: Get.height * 0.075),
                 Text(
                   "New Password",
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 35,
                     color: AppColors.whitecolor,
@@ -120,7 +120,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     child: Center(
                       child: Text(
                         "Sign In",
-                        style: GoogleFonts.dmSans(
+                        style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
                           color: AppColors.whitecolor,

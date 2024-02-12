@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/colors.dart';
 import 'package:squeak/components/custom.dart';
@@ -44,7 +44,7 @@ class _TextScreenState extends State<TextScreen> {
                 Text(
                   "Ensuring Your Pet's \nWell-being During Play",
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.w700,
                       color: Colors.white),
@@ -55,7 +55,7 @@ class _TextScreenState extends State<TextScreen> {
                   child:Obx(() =>controller.isLoadingpolicy.isTrue? Center(child: CircularProgressIndicator(color: AppColors.primaryColor,)):  Text(
                    controller.para.value.toString(),
                     textAlign: TextAlign.justify,
-                    style: GoogleFonts.poppins(
+                    style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
                         color: Colors.white,

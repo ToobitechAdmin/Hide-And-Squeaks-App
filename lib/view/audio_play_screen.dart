@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:squeak/components/custom.dart';
 import 'package:squeak/view/menu.dart';
+import 'package:squeak/view/purchase.dart';
 import '../App_URL/apiurl.dart';
 import '../components/app_assets.dart';
 import '../components/colors.dart';
 import '../components/custom_playbutton.dart';
-import '../components/snakbar.dart';
 import '../controller/audio_controller.dart';
 import '../models/audio_model.dart';
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_sound/flutter_sound.dart';
+import 'package:get/get.dart';
+
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:squeak/components/colors.dart';
+import 'package:squeak/models/audio_model.dart';
 
 class AudioPlayScreen extends StatefulWidget {
   const AudioPlayScreen({super.key});
@@ -17,10 +29,228 @@ class AudioPlayScreen extends StatefulWidget {
 }
 
 class _AudioPlayScreenState extends State<AudioPlayScreen> {
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String? validateRecordingName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter Your Recording Names';
+    }
+    // You can add more complex password validation logic here if needed
+    return null; // Return null if the input is valid
+  }
+
+  void showDeleteBox(BuildContext context, {required record, required title}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("${title} "),
+          content: Text("Do you want to delete this Recording ?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                recordings.remove(record);
+
+                Get.back();
+              },
+              child: Text(
+                "OK",
+                style: TextStyle(color: AppColors.primaryColor),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  saveRecording(BuildContext context, {required audiopath, required timer}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController recordingNames = TextEditingController();
+        return AlertDialog(
+          title: Form(
+            key: _formKey,
+            child: CustomTextField(
+              hinttext: "Recording Title",
+              controller: recordingNames,
+              validator: validateRecordingName,
+              showSuffixIcon: false,
+            ),
+          ),
+          content: Text("Do you want to save this Recording ?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                if (_formKey.currentState?.validate() ?? false) {
+                  setState(() {
+                    recordings.add(AudioModel(
+                        id: 1,
+                        filePath: pathToAudio,
+                        title: recordingNames.text,
+                        time: recordTimer,
+                        type: "public",
+                        price: "20",
+                        count: 1));
+                  });
+                }
+                setState(() {
+                  recordTimer = '00:00';
+                });
+                Get.back();
+              },
+              child: Text(
+                "OK",
+                style: TextStyle(color: AppColors.primaryColor),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  late FlutterSoundRecorder _recordingSession;
+  late FlutterSoundPlayer _recordingPlayer;
+  RxList<AudioModel> recordings = <AudioModel>[].obs;
+  String recordTimer = '00:00';
+  late String pathToAudio;
+  // List to hold recorded audio paths
+  bool isRecording = false;
+  bool isPlaying = false;
+  int? currentIndexPlaying;
+
+  @override
+  void initState() {
+    super.initState();
+    controller.getAudioData();
+    controller.getMylibraryData();
+    _initialize();
+  }
+
+  _initialize() async {
+    _recordingSession = FlutterSoundRecorder();
+    _recordingPlayer = FlutterSoundPlayer();
+    await _recordingSession.openRecorder();
+    await Permission.microphone.request();
+    await Permission.storage.request();
+    await Permission.manageExternalStorage.request();
+    setState(() {
+      recordTimer = '00:00';
+    });
+  }
+
+  @override
+  void dispose() {
+    _recordingSession.closeRecorder();
+    _recordingPlayer.closePlayer();
+    super.dispose();
+  }
+
+  startRecording() async {
+    if (isRecording) return;
+    setState(() {
+      isRecording = true;
+    });
+    pathToAudio = (await getTemporaryDirectory()).path +
+        '/recording_${DateTime.now().millisecondsSinceEpoch}.wav';
+    await _recordingSession.startRecorder(
+      toFile: pathToAudio,
+      codec: Codec.pcm16WAV,
+    );
+    startTimer();
+  }
+
+  stopRecording() async {
+    if (!isRecording) return;
+    setState(() {
+      isRecording = false;
+    });
+
+    await _recordingSession.stopRecorder();
+    saveRecording(context, audiopath: pathToAudio, timer: recordTimer);
+    // setState(() {
+    //   recordings.add(AudioModel(
+    //       id: 1,
+    //       filePath: pathToAudio,
+    //       title: "audio1",
+    //       time: recordTimer,
+    //       type: "public",
+    //       price: "20",
+    //       count: 1));
+    // });
+  }
+
+  playAudio(String path) async {
+    if (isPlaying) return;
+    setState(() {
+      isPlaying = true;
+    });
+    try {
+      await _recordingPlayer.openPlayer(); // Open the player
+      await _recordingPlayer.startPlayer(fromURI: path);
+      _recordingPlayer.onProgress!.listen((e) {
+        if (e != null) {
+          final currentPosition = e.position.inSeconds;
+          final duration = e.duration.inSeconds;
+          setState(() {
+            recordTimer = DateFormat('mm:ss', 'en_US')
+                .format(DateTime(0, 0, 0, 0, 0, currentPosition));
+          });
+          if (currentPosition >= duration) {
+            _recordingPlayer.stopPlayer();
+            setState(() {
+              isPlaying = false;
+              recordTimer = '00:00';
+            });
+          }
+        }
+      });
+    } catch (e) {
+      print('Error playing recording: $e');
+      setState(() {
+        isPlaying = false;
+      });
+    }
+  }
+
+  stopPlayback() async {
+    if (!isPlaying) return;
+    setState(() {
+      isPlaying = false;
+    });
+    await _recordingPlayer.stopPlayer();
+  }
+
+  startTimer() {
+    DateTime startTime = DateTime.now();
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      if (!isRecording) {
+        timer.cancel();
+      } else {
+        final currentTime = DateTime.now();
+        final elapsed = currentTime.difference(startTime);
+        setState(() {
+          recordTimer = DateFormat('mm:ss', 'en_US').format(
+              DateTime(0, 0, 0, 0, elapsed.inMinutes, elapsed.inSeconds));
+        });
+      }
+    });
+  }
+
   AudioController controller = Get.put(AudioController());
+
   late List<bool> isPlayingList;
   final RxInt currentAudioIndex = 0.obs;
-  // bool isCurrent = false;
+  bool isCurrent = false;
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   controller.getAudioData();
+  //   controller.getMylibraryData();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -99,51 +329,22 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                 '${AppUrl.audioPath + controller.audioUrlsList[0]}');
                           }
                         },
-                        previousTap: () {
-                          if (controller.audioUrlsList.isNotEmpty) {
-                            if (currentAudioIndex.value > 0) {
-                              // If there is a previous audio URL in the list, play it
-                              print('Previous One');
-                              currentAudioIndex.value--;
-                              controller.playAudio(
-                                '${AppUrl.audioPath + controller.audioUrlsList[currentAudioIndex.value]}',
-                              );
-                            } else {
-                              print('Previous Two');
-                              // If we're at the beginning of the list, loop to the end
-                              currentAudioIndex.value =
-                                  controller.audioUrlsList.length - 1;
-                              controller.playAudio(
-                                '${AppUrl.audioPath + controller.audioUrlsList[currentAudioIndex.value]}',
-                              );
-                            }
-                          } else {
-                            showInSnackBar('Audio not available',
-                                color: Colors.red);
-                          }
-                        },
+                        previousTap: () {},
                         nextTap: () {
-                          if (controller.audioUrlsList.isNotEmpty) {
-                            if (currentAudioIndex.value <
-                                controller.audioUrlsList.length - 1) {
-                              print('Next One');
-                              // If there is a next audio URL in the list, play it
-                              currentAudioIndex.value++;
-                              controller.playAudio(
-                                '${AppUrl.audioPath + controller.audioUrlsList[currentAudioIndex.value]}',
-                              );
-                            } else {
-                              print('Next Two');
-                              // If we're at the end of the list, loop back to the beginning
-                              currentAudioIndex.value = 0;
-                              controller.playAudio(
-                                '${AppUrl.audioPath + controller.audioUrlsList[0]}',
-                              );
-                            }
-                          } else {
-                            showInSnackBar('audio not available',
-                                color: Colors.red);
-                          }
+                          // if (currentAudioIndex.value <
+                          //     controller.audioUrlsList.length - 1) {
+                          //   print('objectNext');
+                          //   // If there is a next audio URL in the list, play it
+                          //   currentAudioIndex.value++;
+                          //   controller.playAudio(
+                          //       '${AppUrl.audioPath + controller.audioUrlsList[currentAudioIndex.value]}');
+                          // } else {
+                          //   print('objectNextNot');
+                          //   // If we're at the end of the list, loop back to the beginning
+                          //   currentAudioIndex.value = 0;
+                          //   controller.playAudio(
+                          //       '${AppUrl.audioPath + controller.audioUrlsList[0]}');
+                          // }
                         },
                       )),
                   Expanded(
@@ -156,122 +357,251 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                               topRight: Radius.circular(30))),
                       child: Column(
                         children: [
-                          Container(
-                                  width: Get.width,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isCurrent = false;
+                                  });
+                                },
+                                child: Container(
+                                  width: Get.width * 0.45,
                                   padding: EdgeInsets.symmetric(vertical: 20),
                                   decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 20, 20, 20),
-                                      // isCurrent
-                                      //     ? Color.fromARGB(255, 20, 20, 20)
-                                      //     : Colors.black,
+                                      color: isCurrent
+                                          ? Colors.black
+                                          : Color.fromARGB(255, 20, 20, 20),
                                       borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(20))),
+                                          topLeft: Radius.circular(20))),
                                   child: Center(
                                     child: Text(
-                                      'My Library',
+                                      'Sound Library',
                                       style: TextStyle(
-                                          color: AppColors.primaryColor,
-                                          // isCurrent
-                                          //     ? AppColors.primaryColor
-                                          //     : AppColors.whitecolor,
-                                          fontSize:20,
-                                          //  isCurrent ? 20 : 18,
+                                          color: isCurrent
+                                              ? AppColors.whitecolor
+                                              : AppColors.primaryColor,
+                                          fontSize: isCurrent ? 18 : 20,
                                           fontWeight: FontWeight.w700),
                                     ),
                                   ),
                                 ),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //   children: [
-                          //     GestureDetector(
-                          //       onTap: () {
-                          //         setState(() {
-                          //           isCurrent = false;
-                          //         });
-                          //       },
-                          //       child: Container(
-                          //         width: Get.width * 0.45,
-                          //         padding: EdgeInsets.symmetric(vertical: 20),
-                          //         decoration: BoxDecoration(
-                          //             color: isCurrent
-                          //                 ? Colors.black
-                          //                 : Color.fromARGB(255, 20, 20, 20),
-                          //             borderRadius: BorderRadius.only(
-                          //                 topLeft: Radius.circular(20))),
-                          //         child: Center(
-                          //           child: Text(
-                          //             'Sound Library',
-                          //             style: TextStyle(
-                          //                 color: isCurrent
-                          //                     ? AppColors.whitecolor
-                          //                     : AppColors.primaryColor,
-                          //                 fontSize: isCurrent ? 18 : 20,
-                          //                 fontWeight: FontWeight.w700),
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //     GestureDetector(
-                          //       onTap: () {
-                          //         setState(() {
-                          //           isCurrent = true;
-                          //         });
-                          //       },
-                          //       child: Container(
-                          //         width: Get.width * 0.45,
-                          //         padding: EdgeInsets.symmetric(vertical: 20),
-                          //         decoration: BoxDecoration(
-                          //             color: isCurrent
-                          //                 ? Color.fromARGB(255, 20, 20, 20)
-                          //                 : Colors.black,
-                          //             borderRadius: BorderRadius.only(
-                          //                 topRight: Radius.circular(20))),
-                          //         child: Center(
-                          //           child: Text(
-                          //             'My Library',
-                          //             style: TextStyle(
-                          //                 color: isCurrent
-                          //                     ? AppColors.primaryColor
-                          //                     : AppColors.whitecolor,
-                          //                 fontSize: isCurrent ? 20 : 18,
-                          //                 fontWeight: FontWeight.w700),
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
-                          
-                          // isCurrent
-                          //     ? 
-                              Expanded(
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isCurrent = true;
+                                  });
+                                },
+                                child: Container(
+                                  width: Get.width * 0.45,
+                                  padding: EdgeInsets.symmetric(vertical: 20),
+                                  decoration: BoxDecoration(
+                                      color: isCurrent
+                                          ? Color.fromARGB(255, 20, 20, 20)
+                                          : Colors.black,
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(20))),
+                                  child: Center(
+                                    child: Text(
+                                      'My Recorder',
+                                      style: TextStyle(
+                                          color: isCurrent
+                                              ? AppColors.primaryColor
+                                              : AppColors.whitecolor,
+                                          fontSize: isCurrent ? 20 : 18,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          isCurrent
+                              ? Expanded(
+                                  child: Obx(() => Column(
+                                        children: [
+                                          Text(
+                                            recordTimer,
+                                            style: TextStyle(
+                                                fontSize: 32,
+                                                color: AppColors.primaryColor),
+                                          ),
+                                          SizedBox(height: 20),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              GestureDetector(
+                                                onTap: () => startRecording(),
+                                                child: Container(
+                                                  height: Get.height * 0.037,
+                                                  width: Get.width * 0.22,
+                                                  decoration: BoxDecoration(
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "Record",
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          color: AppColors
+                                                              .whitecolor,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(width: 20),
+                                              GestureDetector(
+                                                onTap: () => stopRecording(),
+                                                child: Container(
+                                                  height: Get.height * 0.037,
+                                                  width: Get.width * 0.22,
+                                                  decoration: BoxDecoration(
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "Stop",
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          color: AppColors
+                                                              .whitecolor,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 20),
+                                          Expanded(
+                                            child: Obx(() => ListView.builder(
+                                                  itemCount: recordings.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    AudioModel recordingPath =
+                                                        recordings[index];
+                                                    bool isCurrentlyPlaying =
+                                                        index ==
+                                                            currentIndexPlaying;
+                                                    return Container(
+                                                      height:
+                                                          Get.height * 0.065,
+                                                      decoration:
+                                                          BoxDecoration(),
+                                                      child: ListTile(
+                                                        title: Text(
+                                                            recordingPath.title,
+                                                            style: TextStyle(
+                                                                color: AppColors
+                                                                    .primaryColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontSize: 20)),
+                                                        trailing: Container(
+                                                          width:
+                                                              Get.width * 0.15,
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              GestureDetector(
+                                                                  onTap: () {
+                                                                    // _playAudio(recordingPath);
+                                                                    if (currentIndexPlaying ==
+                                                                        index) {
+                                                                      stopPlayback();
+                                                                      currentIndexPlaying =
+                                                                          null;
+                                                                    } else {
+                                                                      playAudio(
+                                                                          recordingPath
+                                                                              .filePath);
+                                                                      currentIndexPlaying =
+                                                                          index;
+                                                                    }
+                                                                  },
+                                                                  child: Icon(
+                                                                    isCurrentlyPlaying
+                                                                        ? Icons
+                                                                            .pause
+                                                                        : Icons
+                                                                            .play_arrow,
+                                                                    color: AppColors
+                                                                        .whitecolor,
+                                                                  )),
+                                                              GestureDetector(
+                                                                  onTap: () {
+                                                                    showDeleteBox(
+                                                                        context,
+                                                                        record: recordings[
+                                                                            index],
+                                                                        title:
+                                                                            "Recording ${index + 1}");
+
+                                                                    // print("Removing");
+                                                                    // _recordings.removeAt(index);
+                                                                  },
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .delete,
+                                                                    color: AppColors
+                                                                        .whitecolor,
+                                                                  )),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        subtitle: Text(
+                                                          "Audio length: ${recordingPath.time}",
+                                                          style: TextStyle(
+                                                              color: AppColors
+                                                                  .whitecolor),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                )),
+                                          )
+                                        ],
+                                      )),
+                                )
+                              : Expanded(
                                   child: Obx(
                                     () => SizedBox(
                                       // width: Get.width * 0.8,
-                                      child: controller.audioisLoading.value
+                                      child: controller.isLoading.value
                                           ? Center(
                                               child: CircularProgressIndicator(
                                                 color: AppColors.primaryColor,
                                               ),
                                             )
-                                          : controller.getMyLibraryList.isEmpty
+                                          : controller.audioSoundList.isEmpty
                                               ? const Center(
-                                                  child: Text(
-                                                    'List is Empty..',
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
+                                                  child:
+                                                      Text('List is Empty..'),
                                                 )
                                               : ListView.builder(
                                                   scrollDirection:
                                                       Axis.vertical,
                                                   itemCount: controller
-                                                      .getMyLibraryList.length,
+                                                      .audioSoundList.length,
                                                   itemBuilder:
                                                       (Context, index) {
                                                     AudioModel item = controller
-                                                            .getMyLibraryList[
-                                                        index];
+                                                        .audioSoundList[index];
                                                     return Padding(
                                                       padding:
                                                           const EdgeInsets.only(
@@ -341,20 +671,45 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                                                         FontWeight
                                                                             .w800),
                                                               ),
-                                                              GestureDetector(
-                                                                onTap: () {
-                                                                  controller
-                                                                      .deleteMyLibrary(
-                                                                          item.id);
-                                                                },
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .delete_outline,
-                                                                  color: AppColors
-                                                                      .whitecolor,
-                                                                  size: 30,
-                                                                ),
-                                                              )
+                                                              item.type ==
+                                                                      'free'
+                                                                  ? GestureDetector(
+                                                                      onTap:
+                                                                          () {
+                                                                        controller
+                                                                            .postMyLibrary(item.id);
+                                                                      },
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .cloud_download_outlined,
+                                                                        color: AppColors
+                                                                            .whitecolor,
+                                                                        size:
+                                                                            30,
+                                                                      ),
+                                                                    )
+                                                                  : Container(
+                                                                      padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                          horizontal:
+                                                                              10,
+                                                                          vertical:
+                                                                              5),
+                                                                      decoration: BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(
+                                                                              15),
+                                                                          color:
+                                                                              Colors.red),
+                                                                      child:
+                                                                          const Text(
+                                                                        'buy',
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontWeight: FontWeight.normal),
+                                                                      ),
+                                                                    )
                                                             ],
                                                           )),
                                                     );
@@ -362,148 +717,6 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                     ),
                                   ),
                                 )
-                              // : Expanded(
-                              //     child: Obx(
-                              //       () => SizedBox(
-                              //         // width: Get.width * 0.8,
-                              //         child: controller.isLoading.value
-                              //             ? Center(
-                              //                 child: CircularProgressIndicator(
-                              //                   color: AppColors.primaryColor,
-                              //                 ),
-                              //               )
-                              //             : controller.audioSoundList.isEmpty
-                              //                 ? const Center(
-                              //                     child: Text(
-                              //                       'List is Empty..',
-                              //                       style: TextStyle(
-                              //                           color: Colors.white),
-                              //                     ),
-                              //                   )
-                              //                 : ListView.builder(
-                              //                     scrollDirection:
-                              //                         Axis.vertical,
-                              //                     itemCount: controller
-                              //                         .audioSoundList.length,
-                              //                     itemBuilder:
-                              //                         (Context, index) {
-                              //                       AudioModel item = controller
-                              //                           .audioSoundList[index];
-                              //                       return Padding(
-                              //                         padding:
-                              //                             const EdgeInsets.only(
-                              //                                 left: 13,
-                              //                                 right: 13),
-                              //                         child: Container(
-                              //                             height: Get.height *
-                              //                                 0.047,
-                              //                             width:
-                              //                                 Get.width * 0.8,
-                              //                             decoration: BoxDecoration(
-                              //                                 border: Border(
-                              //                                     bottom: BorderSide(
-                              //                                         color: AppColors
-                              //                                             .whitecolor,
-                              //                                         width:
-                              //                                             2))),
-                              //                             child: Row(
-                              //                               mainAxisAlignment:
-                              //                                   MainAxisAlignment
-                              //                                       .spaceEvenly,
-                              //                               children: [
-                              //                                 Obx(() =>
-                              //                                     GestureDetector(
-                              //                                       child: Icon(
-                              //                                         controller.currentlyPlayingIndex.value == index &&
-                              //                                                 controller
-                              //                                                     .isPlaying.value
-                              //                                             ? Icons
-                              //                                                 .pause
-                              //                                             : Icons
-                              //                                                 .play_arrow,
-                              //                                         color: Colors
-                              //                                             .white,
-                              //                                       ),
-                              //                                       onTap:
-                              //                                           () async {
-                              //                                         controller.play(
-                              //                                             index,
-                              //                                             '${AppUrl.audioPath + item.filePath}');
-                              //                                       },
-                              //                                     )),
-                              //                                 Text(
-                              //                                   item.title,
-                              //                                   style: TextStyle(
-                              //                                       color: AppColors
-                              //                                           .whitecolor,
-                              //                                       fontWeight:
-                              //                                           FontWeight
-                              //                                               .w800),
-                              //                                 ),
-                              //                                 Text(
-                              //                                   item.time,
-                              //                                   style: TextStyle(
-                              //                                       color: AppColors
-                              //                                           .whitecolor,
-                              //                                       fontWeight:
-                              //                                           FontWeight
-                              //                                               .w800),
-                              //                                 ),
-                              //                                 Text(
-                              //                                   "${item.count} treats",
-                              //                                   style: TextStyle(
-                              //                                       color: AppColors
-                              //                                           .primaryColor,
-                              //                                       fontWeight:
-                              //                                           FontWeight
-                              //                                               .w800),
-                              //                                 ),
-                              //                                 item.type ==
-                              //                                         'free'
-                              //                                     ? GestureDetector(
-                              //                                         onTap:
-                              //                                             () {
-                              //                                           controller
-                              //                                               .postMyLibrary(item.id);
-                              //                                         },
-                              //                                         child:
-                              //                                             Icon(
-                              //                                           Icons
-                              //                                               .cloud_download_outlined,
-                              //                                           color: AppColors
-                              //                                               .whitecolor,
-                              //                                           size:
-                              //                                               30,
-                              //                                         ),
-                              //                                       )
-                              //                                     : Container(
-                              //                                         padding: const EdgeInsets
-                              //                                             .symmetric(
-                              //                                             horizontal:
-                              //                                                 10,
-                              //                                             vertical:
-                              //                                                 5),
-                              //                                         decoration: BoxDecoration(
-                              //                                             borderRadius: BorderRadius.circular(
-                              //                                                 15),
-                              //                                             color:
-                              //                                                 Colors.red),
-                              //                                         child:
-                              //                                             const Text(
-                              //                                           'buy',
-                              //                                           style: TextStyle(
-                              //                                               color:
-                              //                                                   Colors.white,
-                              //                                               fontWeight: FontWeight.normal),
-                              //                                         ),
-                              //                                       )
-                              //                               ],
-                              //                             )),
-                              //                       );
-                              //                     }),
-                              //       ),
-                              //     ),
-                              //   )
                         ],
                       ),
                     ),

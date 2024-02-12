@@ -35,12 +35,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   get: ^4.6.6
-  google_fonts: ^6.1.0
+  # google_fonts: ^6.1.0
   gradient_slider: ^1.0.1
   http: ^1.1.2
   video_player: ^2.8.1
   file_picker: ^6.1.1
-  dio: ^5.4.0
+  # dio: ^5.4.0
   # chunked_uploader: ^1.1.0
   # percent_indicator: ^4.0.1
   url_launcher: ^6.2.2

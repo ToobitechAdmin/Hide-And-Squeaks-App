@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:squeak/Local%20Storage/global_variable.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
@@ -70,13 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: Get.height * 0.022),
               Text(
                 "Volume",
-                style: GoogleFonts.poppins(
+                style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 26,
                     color: AppColors.whitecolor),
               ),
               SizedBox(height: Get.height * 0.009),
-              // ...
 
               Container(
                 width: Get.width * 0.65,

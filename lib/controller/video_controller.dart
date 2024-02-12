@@ -91,9 +91,10 @@ class VideoController extends GetxController {
       final Map<String, dynamic> responseData = json.decode(responseBody);
 
       if (response.statusCode == 200) {
-        Get.back();
         showInSnackBar("${responseData["message"]}",
             color: AppColors.greencolor);
+        Get.back();
+        
         print(response.statusCode);
         print(responseData);
         if (videofile.value != null) {
@@ -378,7 +379,7 @@ class VideoController extends GetxController {
           'Authorization': 'Bearer  $currentToken',
         },
         body: {
-          'video_id': videoId,
+          'video_id': videoId.toString(),
         },
       );
       final Map<String, dynamic> responseData = json.decode(response.body);

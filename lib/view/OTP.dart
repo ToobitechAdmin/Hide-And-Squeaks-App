@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import '../controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
@@ -67,7 +67,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 Text(
                   "OTP Code",
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                       fontWeight: FontWeight.w800,
                       fontSize: 35,
                       color: AppColors.whitecolor),

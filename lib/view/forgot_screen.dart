@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:squeak/components/colors.dart';
 import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
@@ -58,7 +58,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
               Text(
                 "Forgot\n Password",
                 textAlign: TextAlign.center,
-                style: GoogleFonts.poppins(
+                style: TextStyle(
                     height: 1.05,
                     fontWeight: FontWeight.w700,
                     fontSize: 35,
