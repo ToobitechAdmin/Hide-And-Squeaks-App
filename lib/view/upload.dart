@@ -1,4 +1,4 @@
-
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,11 +20,10 @@ class UploadScreen extends StatefulWidget {
 class _UploadScreenState extends State<UploadScreen> {
   VideoController controller = Get.put(VideoController());
 
-
   bool isChecked = false;
   bool isChecked2 = false;
   String privacyOption = "";
-  
+
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   final GlobalKey<FormState> _videokey = GlobalKey<FormState>();
@@ -176,13 +175,9 @@ class _UploadScreenState extends State<UploadScreen> {
                       SizedBox(
                         height: Get.height * 0.03,
                       ),
-                      
-                        
                       GestureDetector(
                         onTap: () {
-                          setState(() {
-                          
-                          });
+                          setState(() {});
                           print("pick video");
 
                           controller.pickVideo();
@@ -248,34 +243,37 @@ class _UploadScreenState extends State<UploadScreen> {
                         onTap: () {
                           print("videopath:${controller.videofile.value}");
                           print("Privacy:  ${privacyOption}");
-                          print( "Thumbnailpath ${controller.thumbnailFile.value}");
-                          
-                         
+                          print(
+                              "Thumbnailpath ${controller.thumbnailFile.value}");
 
-                          if (_videokey.currentState?.validate() ?? false) {
-                            if (controller.videofile.value != null
-                                ) {
+                         
+                            if (controller.videofile.value != null&& _titleController.text.isNotEmpty && _descriptionController.text.isNotEmpty&& privacyOption.length>2 ) {
                               var model = VideoModel(
                                   title: _titleController.text,
                                   description: _descriptionController.text,
                                   videotype: privacyOption,
-                                  thumbnail: controller.thumbnailFile.value!.path
-                            ,
-                                  file_path: controller.videofile.value!.path
-                                      );
+                                  thumbnail:
+                                      controller.thumbnailFile.value!.path,
+                                  file_path: controller.videofile.value!.path);
                               controller.postVideo(model);
+                              _titleController.clear();
+                              _descriptionController.clear();
                             } else if (controller.videofile.value == null) {
                               showInSnackBar("Select a video to upload",
                                   color: AppColors.errorcolor);
-                            
-                            } else {
-                              showInSnackBar("Select video Type",
+                            } else if(_titleController.text.isEmpty) {
+                              showInSnackBar("Enter Video Title",
                                   color: AppColors.errorcolor);
+                          
                             }
-                          }
-                          // _titleController.clear();
-                          // _descriptionController.clear();
-                        },
+                            else if(_descriptionController.text.isEmpty) {
+                              showInSnackBar("Enter Video Descriptiion",color: AppColors.errorcolor);
+                            }
+                            else{
+                              showInSnackBar("Select Video Type Private or Public",color: AppColors.errorcolor);
+                            }
+                          },
+                        
                         child: Container(
                           height: Get.height * 0.055,
                           width: Get.width * 0.31,

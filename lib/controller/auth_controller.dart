@@ -31,7 +31,7 @@ class AuthController extends GetxController {
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
-     
+
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication =
             await googleSignInAccount.authentication;
@@ -43,9 +43,10 @@ class AuthController extends GetxController {
 
         UserCredential userCredential =
             await _auth.signInWithCredential(credential);
-            //  showDialogue();
+        //  showDialogue();
+        
 
-        User? currentUser = _auth.currentUser;
+        User? currentUser = FirebaseAuth.instance.currentUser;
         String userEmail = currentUser?.email ?? '';
         String userDisplayName = currentUser?.displayName ?? '';
 
@@ -160,10 +161,9 @@ class AuthController extends GetxController {
           "password": password,
         },
       );
+      final Map<String, dynamic> responseData = json.decode(response.body);
       Get.back();
       if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-
         if (responseData['success'] == true) {
           print(responseData["data"]["name"]);
           print(responseData);
@@ -176,28 +176,35 @@ class AuthController extends GetxController {
           print(appStorage.read("profile"));
 
           print(userToken);
+          
           print(appStorage.read('userToken'));
           print("Response: ${response.body}");
 
           Get.offAll(HomeScreen());
-        } 
+        }
       } else {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        print("Sign In error: ${response.statusCode+responseData["message"]}");
-        showInSnackBar("Sign In error: ${response.statusCode+responseData["message"]}",color:AppColors.errorcolor);
+        Get.back();
+        print(
+            "Sign In error: ${response.statusCode.toString()} ${responseData["message"]}");
+            GoogleSignOut();
+            facebookSignOut();
+
+        showInSnackBar(
+            "Sign In error: ${response.statusCode.toString()} ${responseData["message"]}",
+            color: AppColors.errorcolor);
         print("Response: ${response.body}");
-       
-      
       }
     } catch (error) {
-      print("Error: $error");
-      showInSnackBar(error.toString(),color: AppColors.errorcolor);
+      Get.back();
+      print("SignIn Error: $error");
+      showInSnackBar(error.toString(), color: AppColors.errorcolor);
+     
     }
   }
 
 //SignUp/Registration
-  registerUser(String firstName, String lastName,
-      String email, String password) async {
+  registerUser(
+      String firstName, String lastName, String email, String password) async {
     showDialogue();
     print(email);
     showDialogue();
@@ -224,14 +231,17 @@ class AuthController extends GetxController {
       } else {
         print("Sign Up error: ${response.statusCode}");
         print("Response: ${response.body}");
+       
         showInSnackBar(
             "Error ${response.statusCode} ${responseData['message']}",
             color: AppColors.errorcolor);
-          Get.back();
+        Get.back();
       }
     } catch (error) {
       print("Error: $error");
-      showInSnackBar(error.toString(),color: AppColors.errorcolor);
+      showInSnackBar(error.toString(), color: AppColors.errorcolor);
+      Get.back();
+     
     }
   }
 
@@ -268,12 +278,12 @@ class AuthController extends GetxController {
     }
   }
 
-  void verifyOtpAndNavigate(List<TextEditingController> otpControllers,
+  verifyOtpAndNavigate(List<TextEditingController> otpControllers,
       String receivedOtp, String userEmail) async {
-    if (otpControllers.any((controller) => controller.text.isEmpty)) {
-      showInSnackBar("Error:Please Fill all OTP Fields");
-      return;
-    }
+    // if (otpControllers.any((controller) => controller.text.isEmpty)) {
+    //   showInSnackBar("Please Fill all OTP Fields");
+    //   return;
+    // }
 
     String enteredOtp =
         otpControllers.map((controller) => controller.text).join();
@@ -327,9 +337,11 @@ class AuthController extends GetxController {
       } else {
         print(
             'Failed to update password: ${response.statusCode} ${responseData["message"]}');
+            Get.back();
       }
     } catch (error) {
       print('Error updating password: $error');
+      Get.back();
     }
   }
 }

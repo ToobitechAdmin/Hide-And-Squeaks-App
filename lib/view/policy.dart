@@ -52,13 +52,13 @@ class _TextScreenState extends State<TextScreen> {
                 SizedBox(height: Get.height * 0.025),
                 Padding(
                   padding: EdgeInsets.only(left: 17, right: 17),
-                  child:Obx(() =>controller.isLoadingpolicy.isTrue? Center(child: CircularProgressIndicator(color: AppColors.primaryColor,)):  Text(
+                  child:Obx(() =>controller.isLoadingpolicy.isTrue? Padding(padding: EdgeInsets.only(top: Get.height*0.23),   child: Center(child: Text("Ensurance Policy.......",style: TextStyle(color: AppColors.primaryColor,fontSize: 25),))):  Text(
                    controller.para.value.toString(),
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
-                        color: Colors.white,
+                        color:AppColors.whitecolor,
                         height: 1.45),
                   ),)
                 )

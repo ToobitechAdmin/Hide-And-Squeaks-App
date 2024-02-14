@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:squeak/App_URL/apiurl.dart';
 import 'package:squeak/Local%20Storage/global_variable.dart';
 import 'package:squeak/components/app_assets.dart';
+import 'package:squeak/components/snakbar.dart';
 import 'package:squeak/controller/video_controller.dart';
 import 'package:squeak/models/comment_model.dart';
 import 'package:squeak/models/user_model.dart';
@@ -25,7 +26,7 @@ class VideoPlayerScreen extends StatefulWidget {
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   TextEditingController commentController = TextEditingController();
   VideoController controller = Get.put(VideoController());
-  GlobalKey<FormState> _commentkey = GlobalKey<FormState>();
+
   
   String? validateComment(String? value) {
     if (value == null || value.isEmpty) {
@@ -196,79 +197,79 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                             ),
                           ),
                         ),
-                        Form(
-                          key: _commentkey,
-                          child: TextFormField(
-                            validator: validateComment,
-                            controller: commentController,
-                            textAlign: TextAlign.start,
-                            cursorColor: AppColors.whitecolor,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
+                        TextFormField(
+                          validator: validateComment,
+                          controller: commentController,
+                          textAlign: TextAlign.start,
+                          cursorColor: AppColors.whitecolor,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                          decoration: InputDecoration(
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                if (commentController.text.isNotEmpty
+                                    ) {
+                                  print(widget.view.id!);
+                                  controller.postComment(
+                                      commentController.text,
+                                      widget.view.id!);
+                                  controller.ViewData(
+                                      widget.view.id!);
+                                  widget.view.totalComments =
+                                      (widget.view.totalComments ?? 0) + 1;
+                        
+                                  Comment newComment = Comment(
+                                      comment: commentController.text,
+                                      userId: widget.view.id,
+                                      createdAt: DateTime.now().toString(),
+                                      user: User(
+                                          id: widget.view.id!,
+                                          name: appStorage
+                                              .read("name")
+                                              .toString().toLowerCase(),
+                                          profile: appStorage
+                                              .read("profile")
+                                              .toString()));
+                        
+                                  setState(() {
+                                    widget.comments.insert(0,newComment);
+                                  });
+                                  commentController.clear();
+                                }
+                                else{
+                                  showInSnackBar("Enter Comment",color: AppColors.errorcolor);
+                                }
+                                
+                              },
+                              child: Icon(
+                                Icons.add_comment,
+                                color: AppColors.whitecolor,
+                                size: 25,
+                              ),
                             ),
-                            decoration: InputDecoration(
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  if (_commentkey.currentState?.validate() ??
-                                      false) {
-                                    print(widget.view.id!);
-                                    controller.postComment(
-                                        commentController.text,
-                                        widget.view.id!);
-                                    controller.ViewData(
-                                        widget.view.id!);
-                                    widget.view.totalComments =
-                                        (widget.view.totalComments ?? 0) + 1;
-
-                                    Comment newComment = Comment(
-                                        comment: commentController.text,
-                                        userId: widget.view.id,
-                                        createdAt: DateTime.now().toString(),
-                                        user: User(
-                                            id: widget.view.id!,
-                                            name: appStorage
-                                                .read("name")
-                                                .toString().toLowerCase(),
-                                            profile: appStorage
-                                                .read("profile")
-                                                .toString()));
-
-                                    setState(() {
-                                      widget.comments.insert(0,newComment);
-                                    });
-                                    commentController.clear();
-                                  }
-                                  ;
-                                },
-                                child: Icon(
-                                  Icons.post_add,
-                                  color: AppColors.whitecolor,
-                                  size: 25,
-                                ),
-                              ),
-                              hintText: "Comment",
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 10),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                borderSide:
-                                    BorderSide(color: Colors.white, width: 2.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                borderSide:
-                                    BorderSide(color: Colors.white, width: 2.0),
-                              ),
-                              hintStyle: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              constraints: BoxConstraints.tightFor(
-                                height: Get.height * 0.04,
-                                width: Get.width * 0.56,
-                              ),
+                            hintText: "Comment",
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 10),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 2.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 2.0),
+                            ),
+                            hintStyle: TextStyle(
+                              fontSize: 14,
+                              color:AppColors.whitecolor,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            constraints: BoxConstraints.tightFor(
+                              height: Get.height * 0.04,
+                              width: Get.width * 0.56,
                             ),
                           ),
                         ),
@@ -453,7 +454,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     ),
                     SizedBox(height: Get.height * 0.01),
                     Container(
-                      height: Get.height * 0.327,
+                      height: Get.height * 0.285,
                       width: Get.width * 0.95,
                       decoration: BoxDecoration(
                         color: Colors.transparent,

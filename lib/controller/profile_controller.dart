@@ -11,6 +11,7 @@ import 'package:squeak/components/colors.dart';
 import 'package:squeak/components/snakbar.dart';
 import 'package:squeak/models/user_model.dart';
 import 'package:squeak/global/alertbox.dart';
+import 'package:squeak/view/homescreen.dart';
 
 class ProfileController extends GetxController {
   final Rx<File?> image = Rx<File?>(null);
@@ -46,17 +47,24 @@ class ProfileController extends GetxController {
             ..headers['Authorization'] = 'Bearer $currentToken'
             ..headers['Accept'] = 'application/json'
             ..fields['pet_name'] = model.petName!
-            ..fields['pet_breed'] = model.petBreed!
-            ..fields['profile'] = model.profile!;
+            ..fields['pet_breed'] = model.petBreed!;
+             List<http.MultipartFile> files = [];
+
+      if (model.profile != null) {
+        files.add(await http.MultipartFile.fromPath(
+          'profile',
+          model.profile!,
+        ));
+      }
+       request.files.addAll(files);
 
       var response = await request.send();
       final Map<String, dynamic> responseData =
-            json.decode(await response.stream.bytesToString());
+          json.decode(await response.stream.bytesToString());
 
       if (response.statusCode == 200) {
         Get.back();
 
-        
         showInSnackBar("${responseData["message"]}",
             color: AppColors.greencolor);
 
@@ -64,12 +72,11 @@ class ProfileController extends GetxController {
           print(responseData);
 
           print("Response: ${responseData}");
+          Get.to(HomeScreen());
         } else {
           print(" ${responseData['message']}");
         }
       } else {
-        
-
         print("Response: ${responseData["message"]}");
         if (responseData['success'] == false) {
           print("Response: ${responseData["message"]}");

@@ -55,7 +55,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // Get.to(BalanceScreen());
+                    Get.to(MenuScreen());
                     },
                     child: Container(
                         height: Get.height * 0.08,

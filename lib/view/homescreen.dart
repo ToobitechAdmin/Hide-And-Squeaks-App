@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late List<bool> isPlayingList;
   final RxInt currentAudioIndex = 0.obs;
-  double _sliderValue = 0.0;
+  double _sliderValue = 1;
   @override
   void initState() {
     super.initState();
@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   inactiveTrackColor: Colors.transparent,
                   trackHeight: Get.height * 0.007,
                   activeTrackGradient: const LinearGradient(
-                    colors: [Color(0xff804D34), Color(0xffF1DF88)],
+                    colors: [Color(0xff420303), Color(0xffde4343)],
                   ),
                   slider: Slider(
                     min: 0.0,

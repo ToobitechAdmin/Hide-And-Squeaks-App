@@ -12,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:squeak/models/comment_model.dart';
 
 import 'package:squeak/models/video_model.dart';
+import 'package:squeak/view/homescreen.dart';
 import 'package:squeak/view/socialfeed.dart';
 import 'package:squeak/view/upload.dart';
 import 'package:squeak/view/video_player.dart';
@@ -54,11 +55,11 @@ class VideoController extends GetxController {
   RxBool uploading = false.obs;
 
   postVideo(VideoModel videodata) async {
-    if (videodata.videotype!.length < 1) {
-      showInSnackBar("Kindly select video Public Or Private",
-          color: AppColors.errorcolor);
-      return;
-    }
+    // if (videodata.videotype!.length < 1) {
+    //   showInSnackBar("Kindly select video Public Or Private",
+    //       color: AppColors.errorcolor);
+    //   return;
+    // }
     print(videodata.title);
     print(videodata.description);
     print(videodata.videotype);
@@ -93,8 +94,8 @@ class VideoController extends GetxController {
       if (response.statusCode == 200) {
         showInSnackBar("${responseData["message"]}",
             color: AppColors.greencolor);
-        Get.back();
-        
+      
+
         print(response.statusCode);
         print(responseData);
         if (videofile.value != null) {
@@ -103,6 +104,7 @@ class VideoController extends GetxController {
         if (thumbnailFile.value != null) {
           thumbnailFile.value = null;
         }
+         Get.to(Get.to(HomeScreen()));
 
         {
           print(" ${responseData['message']}");
@@ -152,14 +154,14 @@ class VideoController extends GetxController {
             final List<dynamic> videoDataList = publicVideos;
 
             for (var videoData in videoDataList) {
-              print("videoid: ${videoData["id"]}");
-              print(videoData["title"]);
-              print(videoData["user_id"]);
-              print(videoData["file_path"]);
-              print(videoData["thumbnail_path"]);
-              print(videoData["likes_count"]);
-              print(videoData["created_at]"]);
-              print(videoData["comments_count"]);
+              // print("videoid: ${videoData["id"]}");
+              // print(videoData["title"]);
+              // print(videoData["user_id"]);
+              // print(videoData["file_path"]);
+              // print(videoData["thumbnail_path"]);
+              // print(videoData["likes_count"]);
+              // print(videoData["created_at]"]);
+              // print(videoData["comments_count"]);
 
               videoListpublic.insert(
                   0,
@@ -174,7 +176,7 @@ class VideoController extends GetxController {
                     totalComments: videoData["comments_count"],
                   ));
             }
-            print(videoListpublic.length);
+            // print(videoListpublic.length);
           }
           if (responseData['data'] != null &&
               responseData['data'].containsKey('private')) {
@@ -183,14 +185,14 @@ class VideoController extends GetxController {
             final List<dynamic> videoDataList = privateVideos;
 
             for (var videoData in videoDataList) {
-              print(videoData["id"]);
-              print(videoData["title"]);
-              print(videoData["user_id"]);
-              print(videoData["file_path"]);
-              print(videoData["thumbnail_path"]);
-              print(videoData["likes_count"]);
-              print(videoData["created_at]"]);
-              print(videoData["comments_count"]);
+              // print(videoData["id"]);
+              // print(videoData["title"]);
+              // print(videoData["user_id"]);
+              // print(videoData["file_path"]);
+              // print(videoData["thumbnail_path"]);
+              // print(videoData["likes_count"]);
+              // print(videoData["created_at]"]);
+              // print(videoData["comments_count"]);
 
               videoListprivate.insert(
                   0,
@@ -205,7 +207,7 @@ class VideoController extends GetxController {
                     totalComments: videoData["comments_count"],
                   ));
             }
-            print(videoListprivate.length);
+            // print(videoListprivate.length);
           }
           isLoading.value = false;
         }
@@ -244,7 +246,7 @@ class VideoController extends GetxController {
     }
   }
 
-  RxInt total_likes = 0.obs;
+ 
 
   ViewData(userid) async {
     viewDataLaoding.value = true;
@@ -304,7 +306,6 @@ class VideoController extends GetxController {
         print(response.body);
       }
     } catch (error) {
-      
       print('Error during POST request: $error');
     }
   }

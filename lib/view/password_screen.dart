@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:squeak/components/snakbar.dart';
 
 import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
@@ -103,13 +104,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                             widget.userEmail, _newPasswordController.text);
                       } else {
                       
-                        Get.snackbar(
-                          'Password Mismatch',
-                          'New Password and Re-entered Password do not match',
-                          snackPosition: SnackPosition.TOP,
-                          backgroundColor: AppColors.errorcolor,
-                          colorText: AppColors.whitecolor,
-                        );
+                        showInSnackBar('Password Mismatch New Password and Re-entered Password do not match',color: AppColors.errorcolor);
                       }
                     }
                   },

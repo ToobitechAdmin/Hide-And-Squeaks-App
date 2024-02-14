@@ -8,7 +8,7 @@ void showInSnackBar(String value,
     {Color? color, int? duration, VoidCallback? ontap}) {
   FocusManager.instance.primaryFocus?.unfocus();
   final SnackBar snackBar = SnackBar(
-    margin: EdgeInsets.only(bottom: Get.height * 0.85, left: 30, right: 30),
+    margin: EdgeInsets.only(bottom: Get.height *0.85 , left: 30, right: 30),
     content: InkWell(
       onTap: ontap ?? () {},
       child: Text(
@@ -23,7 +23,7 @@ void showInSnackBar(String value,
     dismissDirection: DismissDirection.up,
     backgroundColor: color ?? Colors.green,
     behavior: SnackBarBehavior.floating,
-    duration: Duration(milliseconds: duration ?? 5000),
+    duration: Duration(milliseconds: duration ?? 2000),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(5),
     ),

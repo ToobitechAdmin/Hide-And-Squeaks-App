@@ -173,7 +173,7 @@ class _AudioRecordState extends State<AudioRecord> {
     return Scaffold(
       appBar: AppBar(title: Text('Audio Recording and Playing')),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Text(
             recordTimer,

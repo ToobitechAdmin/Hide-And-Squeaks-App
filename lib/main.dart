@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       scaffoldMessengerKey: snackbarKey,
       debugShowCheckedModeBanner: false,
-      home: SettingScreen(),
+      home:SplashScreen(),
     );
   }
 }

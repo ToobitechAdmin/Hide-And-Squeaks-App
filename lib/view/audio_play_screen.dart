@@ -34,8 +34,8 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
     if (value == null || value.isEmpty) {
       return 'Please enter Your Recording Names';
     }
-    // You can add more complex password validation logic here if needed
-    return null; // Return null if the input is valid
+
+    return null;
   }
 
   void showDeleteBox(BuildContext context, {required record, required title}) {
@@ -78,8 +78,23 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
               showSuffixIcon: false,
             ),
           ),
-          content: Text("Do you want to save this Recording ?"),
+          backgroundColor: Colors.black,
+          content: Text(
+            "Do you want to save this Recording ?",
+            style: TextStyle(color: AppColors.primaryColor),
+          ),
           actions: [
+            TextButton(
+                onPressed: () {
+                  setState(() {
+                    recordTimer = '00:00';
+                  });
+                  Get.back();
+                },
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(color: AppColors.primaryColor),
+                )),
             TextButton(
               onPressed: () {
                 if (_formKey.currentState?.validate() ?? false) {
@@ -258,469 +273,417 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
         // appBar: AppBar(
         //   title: Text('My Screen'),
         // ),
-        body: SafeArea(
-            child: Container(
-                height: Get.height * 1,
-                width: Get.width * 1,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(AppAssets.backgroundmain),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                child: Column(children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 25, right: 25, top: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            // Get.to(PurchaseScreen());
-                          },
-                          child: Container(
-                            height: Get.height * 0.069,
-                            width: Get.width * 0.15,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(AppAssets.heart),
-                                    fit: BoxFit.fill)),
-                          ),
-                        ),
-                        Container(
-                          height: Get.height * 0.085,
-                          width: Get.width * 0.29,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(AppAssets.signin),
-                                  fit: BoxFit.fill)),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(MenuScreen());
-                          },
-                          child: Container(
-                              height: Get.height * 0.08,
-                              width: Get.width * 0.12,
-                              child: Icon(
-                                Icons.menu_rounded,
-                                color: AppColors.primaryColor,
-                                size: 50,
-                              )),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: Get.height * 0.02),
-                  Obx(() => CustonPlayButton(
-                        playIcon: Icon(
-                            controller.isPlaying.value
-                                ? Icons.pause
-                                : Icons.play_arrow,
-                            size: 42,
-                            color: AppColors.buttoncolor),
-                        playTap: () async {
-                          print('object123');
-                          print(controller.isPlaying.value);
-                          if (controller.isPlaying.value) {
-                            controller.pauseAudio();
-                          } else {
-                            controller.playAudio(
-                                '${AppUrl.audioPath + controller.audioUrlsList[0]}');
-                          }
-                        },
-                        previousTap: () {},
-                        nextTap: () {
-                          // if (currentAudioIndex.value <
-                          //     controller.audioUrlsList.length - 1) {
-                          //   print('objectNext');
-                          //   // If there is a next audio URL in the list, play it
-                          //   currentAudioIndex.value++;
-                          //   controller.playAudio(
-                          //       '${AppUrl.audioPath + controller.audioUrlsList[currentAudioIndex.value]}');
-                          // } else {
-                          //   print('objectNextNot');
-                          //   // If we're at the end of the list, loop back to the beginning
-                          //   currentAudioIndex.value = 0;
-                          //   controller.playAudio(
-                          //       '${AppUrl.audioPath + controller.audioUrlsList[0]}');
-                          // }
-                        },
-                      )),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15),
-                      decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30))),
-                      child: Column(
+        body: Container(
+            height: Get.height * 1,
+            width: Get.width * 1,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppAssets.backgroundmain),
+                fit: BoxFit.fill,
+              ),
+            ),
+            child: Column(children: [
+              Customhead(),
+              SizedBox(height: Get.height * 0.02),
+              Obx(() => CustonPlayButton(
+                    playIcon: Icon(
+                        controller.isPlaying.value
+                            ? Icons.pause
+                            : Icons.play_arrow,
+                        size: 42,
+                        color: AppColors.buttoncolor),
+                    playTap: () async {
+                      print('object123');
+                      print(controller.isPlaying.value);
+                      if (controller.isPlaying.value) {
+                        controller.pauseAudio();
+                      } else {
+                        controller.playAudio(
+                            '${AppUrl.audioPath + controller.audioUrlsList[0]}');
+                      }
+                    },
+                    previousTap: () {},
+                    nextTap: () {
+                      // if (currentAudioIndex.value <
+                      //     controller.audioUrlsList.length - 1) {
+                      //   print('objectNext');
+                      //   // If there is a next audio URL in the list, play it
+                      //   currentAudioIndex.value++;
+                      //   controller.playAudio(
+                      //       '${AppUrl.audioPath + controller.audioUrlsList[currentAudioIndex.value]}');
+                      // } else {
+                      //   print('objectNextNot');
+                      //   // If we're at the end of the list, loop back to the beginning
+                      //   currentAudioIndex.value = 0;
+                      //   controller.playAudio(
+                      //       '${AppUrl.audioPath + controller.audioUrlsList[0]}');
+                      // }
+                    },
+                  )),
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 15),
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30))),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isCurrent = false;
-                                  });
-                                },
-                                child: Container(
-                                  width: Get.width * 0.45,
-                                  padding: EdgeInsets.symmetric(vertical: 20),
-                                  decoration: BoxDecoration(
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isCurrent = false;
+                              });
+                            },
+                            child: Container(
+                              width: Get.width * 0.45,
+                              padding: EdgeInsets.symmetric(vertical: 20),
+                              decoration: BoxDecoration(
+                                  color: isCurrent
+                                      ? Colors.black
+                                      : Color.fromARGB(255, 20, 20, 20),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20))),
+                              child: Center(
+                                child: Text(
+                                  'Sound Library',
+                                  style: TextStyle(
                                       color: isCurrent
-                                          ? Colors.black
-                                          : Color.fromARGB(255, 20, 20, 20),
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20))),
-                                  child: Center(
-                                    child: Text(
-                                      'Sound Library',
-                                      style: TextStyle(
-                                          color: isCurrent
-                                              ? AppColors.whitecolor
-                                              : AppColors.primaryColor,
-                                          fontSize: isCurrent ? 18 : 20,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ),
+                                          ? AppColors.whitecolor
+                                          : AppColors.primaryColor,
+                                      fontSize: isCurrent ? 18 : 20,
+                                      fontWeight: FontWeight.w700),
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isCurrent = true;
-                                  });
-                                },
-                                child: Container(
-                                  width: Get.width * 0.45,
-                                  padding: EdgeInsets.symmetric(vertical: 20),
-                                  decoration: BoxDecoration(
-                                      color: isCurrent
-                                          ? Color.fromARGB(255, 20, 20, 20)
-                                          : Colors.black,
-                                      borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(20))),
-                                  child: Center(
-                                    child: Text(
-                                      'My Recorder',
-                                      style: TextStyle(
-                                          color: isCurrent
-                                              ? AppColors.primaryColor
-                                              : AppColors.whitecolor,
-                                          fontSize: isCurrent ? 20 : 18,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                          isCurrent
-                              ? Expanded(
-                                  child: Obx(() => Column(
-                                        children: [
-                                          Text(
-                                            recordTimer,
-                                            style: TextStyle(
-                                                fontSize: 32,
-                                                color: AppColors.primaryColor),
-                                          ),
-                                          SizedBox(height: 20),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              GestureDetector(
-                                                onTap: () => startRecording(),
-                                                child: Container(
-                                                  height: Get.height * 0.037,
-                                                  width: Get.width * 0.22,
-                                                  decoration: BoxDecoration(
-                                                      color: AppColors
-                                                          .primaryColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10)),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "Record",
-                                                      style: TextStyle(
-                                                          fontSize: 20,
-                                                          color: AppColors
-                                                              .whitecolor,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                    ),
-                                                  ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isCurrent = true;
+                              });
+                            },
+                            child: Container(
+                              width: Get.width * 0.45,
+                              padding: EdgeInsets.symmetric(vertical: 20),
+                              decoration: BoxDecoration(
+                                  color: isCurrent
+                                      ? Color.fromARGB(255, 20, 20, 20)
+                                      : Colors.black,
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(20))),
+                              child: Center(
+                                child: Text(
+                                  'My Recorder',
+                                  style: TextStyle(
+                                      color: isCurrent
+                                          ? AppColors.primaryColor
+                                          : AppColors.whitecolor,
+                                      fontSize: isCurrent ? 20 : 18,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      isCurrent
+                          ? Expanded(
+                              child: Obx(() => Column(
+                                    children: [
+                                      Text(
+                                        recordTimer,
+                                        style: TextStyle(
+                                            fontSize: 32,
+                                            color: AppColors.primaryColor),
+                                      ),
+                                      SizedBox(height: 20),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          GestureDetector(
+                                            onTap: () => startRecording(),
+                                            child: Container(
+                                              height: Get.height * 0.037,
+                                              width: Get.width * 0.22,
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.primaryColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: Center(
+                                                child: Text(
+                                                  "Record",
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color:
+                                                          AppColors.whitecolor,
+                                                      fontWeight:
+                                                          FontWeight.w600),
                                                 ),
                                               ),
-                                              SizedBox(width: 20),
-                                              GestureDetector(
-                                                onTap: () => stopRecording(),
-                                                child: Container(
-                                                  height: Get.height * 0.037,
-                                                  width: Get.width * 0.22,
-                                                  decoration: BoxDecoration(
-                                                      color: AppColors
-                                                          .primaryColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10)),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "Stop",
-                                                      style: TextStyle(
-                                                          fontSize: 20,
-                                                          color: AppColors
-                                                              .whitecolor,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                    ),
-                                                  ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 20),
+                                          GestureDetector(
+                                            onTap: () => stopRecording(),
+                                            child: Container(
+                                              height: Get.height * 0.037,
+                                              width: Get.width * 0.22,
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.primaryColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: Center(
+                                                child: Text(
+                                                  "Stop",
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color:
+                                                          AppColors.whitecolor,
+                                                      fontWeight:
+                                                          FontWeight.w600),
                                                 ),
                                               ),
-                                            ],
+                                            ),
                                           ),
-                                          SizedBox(height: 20),
-                                          Expanded(
-                                            child: Obx(() => ListView.builder(
-                                                  itemCount: recordings.length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    AudioModel recordingPath =
-                                                        recordings[index];
-                                                    bool isCurrentlyPlaying =
-                                                        index ==
-                                                            currentIndexPlaying;
-                                                    return Container(
+                                        ],
+                                      ),
+                                      SizedBox(height: 20),
+                                      Expanded(
+                                        child: Obx(() => ListView.builder(
+                                              itemCount: recordings.length,
+                                              itemBuilder: (context, index) {
+                                                AudioModel recordingPath =
+                                                    recordings[index];
+                                                bool isCurrentlyPlaying =
+                                                    index ==
+                                                        currentIndexPlaying;
+                                                // print(recordingPath.filePath);
+                                                return Container(
+                                                  height: Get.height * 0.065,
+                                                  decoration: BoxDecoration(),
+                                                  child: ListTile(
+                                                    title: Text(
+                                                        recordingPath.title,
+                                                        style: TextStyle(
+                                                            color: AppColors
+                                                                .primaryColor,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontSize: 20)),
+                                                    trailing: Container(
+                                                      width: Get.width * 0.15,
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          GestureDetector(
+                                                              onTap: () {
+                                                                // _playAudio(recordingPath);
+                                                                if (currentIndexPlaying ==
+                                                                    index) {
+                                                                  stopPlayback();
+                                                                  currentIndexPlaying =
+                                                                      null;
+                                                                } else {
+                                                                  playAudio(
+                                                                      recordingPath
+                                                                          .filePath);
+                                                                  currentIndexPlaying =
+                                                                      index;
+                                                                }
+                                                              },
+                                                              child: Icon(
+                                                                isCurrentlyPlaying
+                                                                    ? Icons
+                                                                        .pause
+                                                                    : Icons
+                                                                        .play_arrow,
+                                                                color: AppColors
+                                                                    .whitecolor,
+                                                              )),
+                                                          GestureDetector(
+                                                              onTap: () {
+                                                                showDeleteBox(
+                                                                    context,
+                                                                    record:
+                                                                        recordings[
+                                                                            index],
+                                                                    title: recordingPath
+                                                                        .title);
+
+                                                                // print("Removing");
+                                                                // _recordings.removeAt(index);
+                                                              },
+                                                              child: Icon(
+                                                                Icons.delete,
+                                                                color: AppColors
+                                                                    .whitecolor,
+                                                              )),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    subtitle: Text(
+                                                      "Audio length: ${recordingPath.time}",
+                                                      style: TextStyle(
+                                                          color: AppColors
+                                                              .whitecolor),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            )),
+                                      )
+                                    ],
+                                  )),
+                            )
+                          : Expanded(
+                              child: Obx(
+                                () => SizedBox(
+                                  // width: Get.width * 0.8,
+                                  child: controller.isLoading.value
+                                      ? Center(
+                                          child: CircularProgressIndicator(
+                                            color: AppColors.primaryColor,
+                                          ),
+                                        )
+                                      : controller.audioSoundList.isEmpty
+                                          ? const Center(
+                                              child: Text('List is Empty..'),
+                                            )
+                                          : ListView.builder(
+                                              scrollDirection: Axis.vertical,
+                                              itemCount: controller
+                                                  .audioSoundList.length,
+                                              itemBuilder: (Context, index) {
+                                                AudioModel item = controller
+                                                    .audioSoundList[index];
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 13, right: 13),
+                                                  child: Container(
                                                       height:
-                                                          Get.height * 0.065,
-                                                      decoration:
-                                                          BoxDecoration(),
-                                                      child: ListTile(
-                                                        title: Text(
-                                                            recordingPath.title,
+                                                          Get.height * 0.047,
+                                                      width: Get.width * 0.8,
+                                                      decoration: BoxDecoration(
+                                                          border: Border(
+                                                              bottom: BorderSide(
+                                                                  color: AppColors
+                                                                      .whitecolor,
+                                                                  width: 2))),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          Obx(() =>
+                                                              GestureDetector(
+                                                                child: Icon(
+                                                                  controller.currentlyPlayingIndex
+                                                                                  .value ==
+                                                                              index &&
+                                                                          controller
+                                                                              .isPlaying
+                                                                              .value
+                                                                      ? Icons
+                                                                          .pause
+                                                                      : Icons
+                                                                          .play_arrow,
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                                onTap:
+                                                                    () async {
+                                                                  controller.play(
+                                                                      index,
+                                                                      '${AppUrl.audioPath + item.filePath}');
+                                                                },
+                                                              )),
+                                                          Text(
+                                                            item.title,
+                                                            style: TextStyle(
+                                                                color: AppColors
+                                                                    .whitecolor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w800),
+                                                          ),
+                                                          Text(
+                                                            item.time,
+                                                            style: TextStyle(
+                                                                color: AppColors
+                                                                    .whitecolor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w800),
+                                                          ),
+                                                          Text(
+                                                            "${item.count} treats",
                                                             style: TextStyle(
                                                                 color: AppColors
                                                                     .primaryColor,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w600,
-                                                                fontSize: 20)),
-                                                        trailing: Container(
-                                                          width:
-                                                              Get.width * 0.15,
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              GestureDetector(
+                                                                        .w800),
+                                                          ),
+                                                          item.type == 'free'
+                                                              ? GestureDetector(
                                                                   onTap: () {
-                                                                    // _playAudio(recordingPath);
-                                                                    if (currentIndexPlaying ==
-                                                                        index) {
-                                                                      stopPlayback();
-                                                                      currentIndexPlaying =
-                                                                          null;
-                                                                    } else {
-                                                                      playAudio(
-                                                                          recordingPath
-                                                                              .filePath);
-                                                                      currentIndexPlaying =
-                                                                          index;
-                                                                    }
-                                                                  },
-                                                                  child: Icon(
-                                                                    isCurrentlyPlaying
-                                                                        ? Icons
-                                                                            .pause
-                                                                        : Icons
-                                                                            .play_arrow,
-                                                                    color: AppColors
-                                                                        .whitecolor,
-                                                                  )),
-                                                              GestureDetector(
-                                                                  onTap: () {
-                                                                    showDeleteBox(
-                                                                        context,
-                                                                        record: recordings[
-                                                                            index],
-                                                                        title:
-                                                                            "Recording ${index + 1}");
-
-                                                                    // print("Removing");
-                                                                    // _recordings.removeAt(index);
+                                                                    controller
+                                                                        .postMyLibrary(
+                                                                            item.id);
                                                                   },
                                                                   child: Icon(
                                                                     Icons
-                                                                        .delete,
+                                                                        .cloud_download_outlined,
                                                                     color: AppColors
                                                                         .whitecolor,
-                                                                  )),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        subtitle: Text(
-                                                          "Audio length: ${recordingPath.time}",
-                                                          style: TextStyle(
-                                                              color: AppColors
-                                                                  .whitecolor),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                )),
-                                          )
-                                        ],
-                                      )),
-                                )
-                              : Expanded(
-                                  child: Obx(
-                                    () => SizedBox(
-                                      // width: Get.width * 0.8,
-                                      child: controller.isLoading.value
-                                          ? Center(
-                                              child: CircularProgressIndicator(
-                                                color: AppColors.primaryColor,
-                                              ),
-                                            )
-                                          : controller.audioSoundList.isEmpty
-                                              ? const Center(
-                                                  child:
-                                                      Text('List is Empty..'),
-                                                )
-                                              : ListView.builder(
-                                                  scrollDirection:
-                                                      Axis.vertical,
-                                                  itemCount: controller
-                                                      .audioSoundList.length,
-                                                  itemBuilder:
-                                                      (Context, index) {
-                                                    AudioModel item = controller
-                                                        .audioSoundList[index];
-                                                    return Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 13,
-                                                              right: 13),
-                                                      child: Container(
-                                                          height: Get.height *
-                                                              0.047,
-                                                          width:
-                                                              Get.width * 0.8,
-                                                          decoration: BoxDecoration(
-                                                              border: Border(
-                                                                  bottom: BorderSide(
-                                                                      color: AppColors
-                                                                          .whitecolor,
-                                                                      width:
-                                                                          2))),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceEvenly,
-                                                            children: [
-                                                              Obx(() =>
-                                                                  GestureDetector(
-                                                                    child: Icon(
-                                                                      controller.currentlyPlayingIndex.value == index &&
-                                                                              controller
-                                                                                  .isPlaying.value
-                                                                          ? Icons
-                                                                              .pause
-                                                                          : Icons
-                                                                              .play_arrow,
-                                                                      color: Colors
-                                                                          .white,
-                                                                    ),
-                                                                    onTap:
-                                                                        () async {
-                                                                      controller.play(
-                                                                          index,
-                                                                          '${AppUrl.audioPath + item.filePath}');
-                                                                    },
-                                                                  )),
-                                                              Text(
-                                                                item.title,
-                                                                style: TextStyle(
-                                                                    color: AppColors
-                                                                        .whitecolor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800),
-                                                              ),
-                                                              Text(
-                                                                item.time,
-                                                                style: TextStyle(
-                                                                    color: AppColors
-                                                                        .whitecolor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800),
-                                                              ),
-                                                              Text(
-                                                                "${item.count} treats",
-                                                                style: TextStyle(
-                                                                    color: AppColors
-                                                                        .primaryColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800),
-                                                              ),
-                                                              item.type ==
-                                                                      'free'
-                                                                  ? GestureDetector(
-                                                                      onTap:
-                                                                          () {
-                                                                        controller
-                                                                            .postMyLibrary(item.id);
-                                                                      },
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .cloud_download_outlined,
-                                                                        color: AppColors
-                                                                            .whitecolor,
-                                                                        size:
-                                                                            30,
-                                                                      ),
-                                                                    )
-                                                                  : Container(
-                                                                      padding: const EdgeInsets
-                                                                          .symmetric(
-                                                                          horizontal:
-                                                                              10,
-                                                                          vertical:
-                                                                              5),
-                                                                      decoration: BoxDecoration(
-                                                                          borderRadius: BorderRadius.circular(
+                                                                    size: 30,
+                                                                  ),
+                                                                )
+                                                              : Container(
+                                                                  padding: const EdgeInsets
+                                                                      .symmetric(
+                                                                      horizontal:
+                                                                          10,
+                                                                      vertical:
+                                                                          5),
+                                                                  decoration: BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
                                                                               15),
-                                                                          color:
-                                                                              Colors.red),
-                                                                      child:
-                                                                          const Text(
-                                                                        'buy',
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontWeight: FontWeight.normal),
-                                                                      ),
-                                                                    )
-                                                            ],
-                                                          )),
-                                                    );
-                                                  }),
-                                    ),
-                                  ),
-                                )
-                        ],
-                      ),
-                    ),
-                  )
-                ]))));
+                                                                      color: Colors
+                                                                          .red),
+                                                                  child:
+                                                                      const Text(
+                                                                    'buy',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontWeight:
+                                                                            FontWeight.normal),
+                                                                  ),
+                                                                )
+                                                        ],
+                                                      )),
+                                                );
+                                              }),
+                                ),
+                              ),
+                            )
+                    ],
+                  ),
+                ),
+              )
+            ])));
   }
 }
