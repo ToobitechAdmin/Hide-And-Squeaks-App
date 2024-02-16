@@ -27,6 +27,11 @@ class AppUrl {
   static String videoDelUrl="${base}video-del";
   static String balanceUrl="${base}my-balance";
   static String policyUrl="${base}paragraph";
+  static String postRecording="${base}recorder/add";
+  static String DeleteRecording="${base}recorder/delete";
+  static String GetRecordings="${base}recorder";
+
+
 
 
   

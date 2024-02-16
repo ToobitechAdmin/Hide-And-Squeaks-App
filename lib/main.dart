@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:squeak/view/audio_record.dart';
 import 'package:squeak/view/homescreen.dart';
+import 'package:squeak/view/love_audio.dart';
 import 'package:squeak/view/setting.dart';
 // import 'package:flutter_stripe/flutter_stripe.dart';
 

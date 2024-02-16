@@ -4,6 +4,7 @@ import 'package:squeak/Local%20Storage/global_variable.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/view/balance.dart';
+import 'package:squeak/view/homescreen.dart';
 import 'package:squeak/view/login_screen.dart';
 import 'package:squeak/view/menu.dart';
 import 'package:squeak/view/profile.dart';
@@ -21,6 +22,53 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   AuthController controller = Get.put(AuthController());
+  void showSignOut(
+    BuildContext context,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Do you want to sign out?",
+            style: TextStyle(fontSize: 20),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: Text(
+                        "cancel",
+                        style: TextStyle(
+                            color: AppColors.primaryColor, fontSize: 18),
+                      )),
+                  TextButton(
+                    onPressed: () async {
+                      await controller.GoogleSignOut();
+                      await controller.facebookSignOut();
+                      appStorage.erase();
+                      Get.offAll(LoginScreen());
+                    },
+                    child: Text(
+                      "Log out",
+                      style: TextStyle(
+                          color: AppColors.primaryColor, fontSize: 18),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +89,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      // Get.to(PurchaseScreen());
+                      Get.to(HomeScreen());
                     },
                     child: Container(
                       height: Get.height * 0.069,
@@ -55,7 +103,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                    Get.to(MenuScreen());
+                      Get.to(MenuScreen());
                     },
                     child: Container(
                         height: Get.height * 0.08,
@@ -74,7 +122,7 @@ class _SettingScreenState extends State<SettingScreen> {
               style: TextStyle(
                   fontSize: 37,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xffDEA549)),
+                  color:AppColors.primaryColor),
             ),
             SizedBox(
               height: Get.height * 0.28,
@@ -200,11 +248,12 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      await controller.GoogleSignOut();
-                      await controller.facebookSignOut();
+                      showSignOut(context);
+                      // await controller.GoogleSignOut();
+                      // await controller.facebookSignOut();
 
-                      appStorage.erase();
-                       Get.offAll(LoginScreen());
+                      // appStorage.erase();
+                      //  Get.offAll(LoginScreen());
                     },
                     child: Text(
                       "Sign Out",

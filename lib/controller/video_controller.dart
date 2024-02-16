@@ -94,7 +94,6 @@ class VideoController extends GetxController {
       if (response.statusCode == 200) {
         showInSnackBar("${responseData["message"]}",
             color: AppColors.greencolor);
-      
 
         print(response.statusCode);
         print(responseData);
@@ -104,7 +103,7 @@ class VideoController extends GetxController {
         if (thumbnailFile.value != null) {
           thumbnailFile.value = null;
         }
-         Get.to(Get.to(HomeScreen()));
+        Get.to(Get.to(HomeScreen()));
 
         {
           print(" ${responseData['message']}");
@@ -245,8 +244,6 @@ class VideoController extends GetxController {
       print('Error during POST request: $error');
     }
   }
-
- 
 
   ViewData(userid) async {
     viewDataLaoding.value = true;

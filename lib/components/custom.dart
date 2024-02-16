@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
+import 'package:squeak/view/homescreen.dart';
 // import 'package:squeak/models/dumymodel5.dart';
 import 'package:squeak/view/purchase.dart';
 import 'package:squeak/view/menu.dart';
@@ -16,7 +17,7 @@ class Customhead extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              // Get.to(PurchaseScreen());
+              Get.to(HomeScreen());
             },
             child: Container(
               height: Get.height * 0.069,
@@ -239,7 +240,7 @@ class CustomBar extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              // Get.to(PurchaseScreen());
+              Get.to(HomeScreen());
             },
             child: Container(
               height: Get.height * 0.069,
@@ -254,7 +255,7 @@ class CustomBar extends StatelessWidget {
             midtext,
             style: TextStyle(
                 fontSize: 30,
-                color: AppColors.whitecolor,
+                color: AppColors.primaryColor,
                 fontWeight: FontWeight.w700),
           ),
           GestureDetector(

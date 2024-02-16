@@ -10,6 +10,7 @@ import 'package:squeak/models/user_model.dart';
 import 'package:squeak/models/video_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../components/colors.dart';
 
@@ -27,14 +28,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   TextEditingController commentController = TextEditingController();
   VideoController controller = Get.put(VideoController());
 
-  
-  String? validateComment(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter Comment';
-    }
-    return null;
-  }
-
   String formatDate(String dateStr) {
     DateTime dateTime = DateTime.parse(dateStr);
     return DateFormat('dd MMMM yyyy').format(dateTime);
@@ -44,7 +37,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     final DateFormat formatter = DateFormat('E, d MMM, y');
     return formatter.format(dateTime);
   }
-  
 
   bool isLiked = false;
   isLikedcheck() {
@@ -115,8 +107,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
     // // Current date and time
     // DateTime currentDate = DateTime.now();
-    
-  
+
     return Scaffold(
       body: SafeArea(
           child: Container(
@@ -181,24 +172,28 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          height: Get.height * 0.037,
-                          width: Get.width * 0.22,
-                          decoration: BoxDecoration(
-                              color: AppColors.primaryColor,
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Center(
-                            child: Text(
-                              "Share",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: AppColors.whitecolor,
-                                  fontWeight: FontWeight.w600),
+                        GestureDetector(
+                          onTap: () {
+                            Share.share(widget.view.file_path.toString());
+                          },
+                          child: Container(
+                            height: Get.height * 0.037,
+                            width: Get.width * 0.22,
+                            decoration: BoxDecoration(
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Center(
+                              child: Text(
+                                "Share",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: AppColors.whitecolor,
+                                    fontWeight: FontWeight.w600),
+                              ),
                             ),
                           ),
                         ),
                         TextFormField(
-                          validator: validateComment,
                           controller: commentController,
                           textAlign: TextAlign.start,
                           cursorColor: AppColors.whitecolor,
@@ -209,17 +204,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                           decoration: InputDecoration(
                             suffixIcon: GestureDetector(
                               onTap: () {
-                                if (commentController.text.isNotEmpty
-                                    ) {
+                                if (commentController.text.isNotEmpty) {
                                   print(widget.view.id!);
                                   controller.postComment(
-                                      commentController.text,
-                                      widget.view.id!);
-                                  controller.ViewData(
-                                      widget.view.id!);
+                                      commentController.text, widget.view.id!);
+                                  controller.ViewData(widget.view.id!);
                                   widget.view.totalComments =
                                       (widget.view.totalComments ?? 0) + 1;
-                        
+
                                   Comment newComment = Comment(
                                       comment: commentController.text,
                                       userId: widget.view.id,
@@ -228,20 +220,20 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                           id: widget.view.id!,
                                           name: appStorage
                                               .read("name")
-                                              .toString().toLowerCase(),
+                                              .toString()
+                                              .toLowerCase(),
                                           profile: appStorage
                                               .read("profile")
                                               .toString()));
-                        
+
                                   setState(() {
-                                    widget.comments.insert(0,newComment);
+                                    widget.comments.insert(0, newComment);
                                   });
                                   commentController.clear();
+                                } else {
+                                  showInSnackBar("Enter Comment",
+                                      color: AppColors.errorcolor);
                                 }
-                                else{
-                                  showInSnackBar("Enter Comment",color: AppColors.errorcolor);
-                                }
-                                
                               },
                               child: Icon(
                                 Icons.add_comment,
@@ -264,7 +256,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                             ),
                             hintStyle: TextStyle(
                               fontSize: 14,
-                              color:AppColors.whitecolor,
+                              color: AppColors.whitecolor,
                               fontWeight: FontWeight.w400,
                             ),
                             constraints: BoxConstraints.tightFor(
@@ -276,18 +268,18 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                         GestureDetector(
                           onTap: () {
                             controller.postLike(widget.view.id!);
-                            
+
                             addLikes() {
                               if (widget.view.userLikedVideo == true) {
                                 setState(() {
-                                  widget.view.userLikedVideo=false;
+                                  widget.view.userLikedVideo = false;
                                 });
 
                                 return widget.view.totalLikes =
                                     (widget.view.totalLikes ?? 0) - 1;
                               } else {
                                 setState(() {
-                                 widget.view.userLikedVideo=true;
+                                  widget.view.userLikedVideo = true;
                                 });
 
                                 return widget.view.totalLikes =
@@ -302,8 +294,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                           },
                           child: Icon(
                             Icons.favorite_outlined,
-                            color: widget.view.userLikedVideo!?
-                                AppColors.favouritecolor
+                            color: widget.view.userLikedVideo!
+                                ? AppColors.favouritecolor
                                 : AppColors.whitecolor,
                             size: 30,
                           ),
@@ -447,7 +439,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                      "Comments",
+                        "Comments",
                         style: TextStyle(
                             fontSize: 15, color: AppColors.whitecolor),
                       ),
@@ -465,12 +457,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                           child: ListView.builder(
                               itemCount: widget.comments.length,
                               itemBuilder: (context, int index) {
-                              
                                 Comment usercomment = widget.comments[index];
-                                String formateddays=formatRelativeTime(usercomment.createdAt!, DateTime.now());
+                                String formateddays = formatRelativeTime(
+                                    usercomment.createdAt!, DateTime.now());
                                 print(formateddays);
-
-                        
 
                                 return Container(
                                   height: Get.height * 0.06,
@@ -520,7 +510,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                                   ),
                                                   Text(
                                                     "${formateddays}",
-                                                 
                                                     style: TextStyle(
                                                         fontSize: 10,
                                                         fontWeight:
@@ -583,7 +572,6 @@ class _ControlsOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
@@ -681,7 +669,7 @@ class VideoTimer extends StatelessWidget {
   }
 }
 
- String formatRelativeTime(String startStr, DateTime end) {
+String formatRelativeTime(String startStr, DateTime end) {
   DateTime start = DateTime.parse(startStr);
   Duration difference = end.difference(start);
   String relativeTime;
@@ -732,7 +720,3 @@ int _differenceInHours(DateTime start, DateTime end) {
 int _differenceInMinutes(DateTime start, DateTime end) {
   return end.difference(start).inMinutes;
 }
-
-
-
-
