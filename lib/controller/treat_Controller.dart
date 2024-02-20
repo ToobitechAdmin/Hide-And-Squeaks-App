@@ -12,8 +12,8 @@ import '../models/treatmodel.dart';
 
 class treatController extends GetxController {
   var isLoading = false.obs;
-  var isLoadingpolicy=false.obs;
-  var isLoadingbalance=false.obs;
+  var isLoadingpolicy = false.obs;
+  var isLoadingbalance = false.obs;
 
   List<TreatModel> treatList = <TreatModel>[].obs;
   fetchTreats() async {
@@ -35,7 +35,6 @@ class treatController extends GetxController {
       final List<dynamic> responseData = json.decode(response.body)['data'];
 
       if (response.statusCode == 200) {
-        
         for (var videoData in responseData) {
           print(videoData["id"]);
           treatList.add(TreatModel(
@@ -46,7 +45,6 @@ class treatController extends GetxController {
         isLoading.value = false;
 
         print("treatLength: ${treatList.length}");
-        
       } else {
         isLoading.value = false;
         final Map<String, dynamic> responseData = json.decode(response.body);
@@ -56,9 +54,8 @@ class treatController extends GetxController {
       isLoading.value = false;
       print(e.toString());
       print('discover error');
-    }
-    finally{
-      isLoading.value=false;
+    } finally {
+      isLoading.value = false;
     }
   }
 
@@ -74,19 +71,17 @@ class treatController extends GetxController {
           'Accept': "application/json"
         },
       );
-    final Map<String, dynamic> responseData = json.decode(response.body);
-    
+      final Map<String, dynamic> responseData = json.decode(response.body);
 
-      if (response.statusCode==200) {
-        
+      print(response.body);
+      if (response.statusCode == 200) {
         final List<dynamic> dataList = responseData['data'];
-    if (dataList.isNotEmpty) {
-        final Map<String, dynamic> firstItem = dataList.first;
-        para.value = firstItem['paragraph'] as String;
-    }
-    isLoadingpolicy.value = false;
-      }
-      else{
+        if (dataList.isNotEmpty) {
+          final Map<String, dynamic> firstItem = dataList.first;
+          para.value = firstItem['paragraph'] as String;
+        }
+        isLoadingpolicy.value = false;
+      } else {
         print(response.statusCode);
       }
     } catch (e) {
@@ -108,17 +103,14 @@ class treatController extends GetxController {
           'Accept': "application/json"
         },
       );
-    
-    
 
-      if (response.statusCode==200) {
+      if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         print(responseData);
         print(responseData['data']['balance']);
         balance.value = responseData['data']['balance'];
-       isLoadingbalance.value=false;
-      }
-      else{
+        isLoadingbalance.value = false;
+      } else {
         print(response.statusCode);
       }
     } catch (e) {
@@ -127,9 +119,6 @@ class treatController extends GetxController {
       print('discover error');
     }
   }
-
-
-
 
   purchaseTreats(String treatId, String transactionId, String amount) async {
     try {
