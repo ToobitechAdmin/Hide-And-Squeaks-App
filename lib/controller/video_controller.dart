@@ -103,7 +103,7 @@ class VideoController extends GetxController {
         if (thumbnailFile.value != null) {
           thumbnailFile.value = null;
         }
-        Get.to(Get.to(HomeScreen()));
+        Get.to(HomeScreen());
 
         {
           print(" ${responseData['message']}");
@@ -382,12 +382,13 @@ class VideoController extends GetxController {
       );
       final Map<String, dynamic> responseData = json.decode(response.body);
       print(responseData);
+       print(response.statusCode);
 
       if (response.statusCode == 200) {
         showInSnackBar(responseData["message"], color: AppColors.greencolor);
 
         print(response.statusCode);
-        print(responseData);
+       
         print("Video Deleted Successfully");
         // Getvideo();
       } else {

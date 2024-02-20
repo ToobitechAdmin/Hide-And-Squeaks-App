@@ -74,14 +74,17 @@ class treatController extends GetxController {
           'Accept': "application/json"
         },
       );
-    
+    final Map<String, dynamic> responseData = json.decode(response.body);
     
 
       if (response.statusCode==200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        print(responseData['data']['paragraph']);
-        para.value = responseData['data']['paragraph'];
-       isLoadingpolicy.value=false;
+        
+        final List<dynamic> dataList = responseData['data'];
+    if (dataList.isNotEmpty) {
+        final Map<String, dynamic> firstItem = dataList.first;
+        para.value = firstItem['paragraph'] as String;
+    }
+    isLoadingpolicy.value = false;
       }
       else{
         print(response.statusCode);
@@ -110,6 +113,7 @@ class treatController extends GetxController {
 
       if (response.statusCode==200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
+        print(responseData);
         print(responseData['data']['balance']);
         balance.value = responseData['data']['balance'];
        isLoadingbalance.value=false;

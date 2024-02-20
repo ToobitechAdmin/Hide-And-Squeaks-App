@@ -183,15 +183,17 @@ class AuthController extends GetxController {
           Get.offAll(HomeScreen());
         }
       } else {
+
         Get.back();
+        showInSnackBar(
+            "Sign In error: ${response.statusCode.toString()} ${responseData["message"]}",
+            color: AppColors.errorcolor);
         print(
             "Sign In error: ${response.statusCode.toString()} ${responseData["message"]}");
             GoogleSignOut();
             facebookSignOut();
 
-        showInSnackBar(
-            "Sign In error: ${response.statusCode.toString()} ${responseData["message"]}",
-            color: AppColors.errorcolor);
+        
         print("Response: ${response.body}");
       }
     } catch (error) {
@@ -333,7 +335,7 @@ class AuthController extends GetxController {
         showInSnackBar("Password Updated Successfully",
             color: AppColors.greencolor);
 
-        Get.off(() => LoginScreen());
+        Get.offAll(() => LoginScreen());
       } else {
         print(
             'Failed to update password: ${response.statusCode} ${responseData["message"]}');

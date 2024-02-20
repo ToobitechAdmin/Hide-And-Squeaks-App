@@ -455,6 +455,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                         alignment: Alignment.topLeft,
                         child: Expanded(
                           child: ListView.builder(
+                              reverse: true,
                               itemCount: widget.comments.length,
                               itemBuilder: (context, int index) {
                                 Comment usercomment = widget.comments[index];

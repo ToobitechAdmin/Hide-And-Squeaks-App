@@ -105,6 +105,7 @@ class recordController extends GetxController {
         isLoading.value = false;
       }
     } catch (error) {
+      
       print('Error during GET request: $error');
       isLoading.value = false;
     }

@@ -186,15 +186,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   : CircleAvatar(
                                       radius: 88,
                                       backgroundColor: Colors.transparent,
-                                      backgroundImage: controller.image.value !=
+                                      backgroundImage: 
+                                      controller.image.value !=
                                               null
                                           ? Image.file(controller.image.value!)
-                                              .image
-                                          : Image.network(
+                                              .image 
+                                          : controller.userDataList.value.profile!=null? Image.network(
                                               AppUrl.imageUrl +
                                                   controller.userDataList.value
                                                       .profile!,
-                                            ).image,
+                                            ).image:AssetImage(AppAssets.back2) ,
                                       child: Padding(
                                         padding:
                                             EdgeInsets.only(left: 150, top: 80),
