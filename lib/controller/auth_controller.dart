@@ -44,7 +44,6 @@ class AuthController extends GetxController {
         UserCredential userCredential =
             await _auth.signInWithCredential(credential);
         //  showDialogue();
-        
 
         User? currentUser = FirebaseAuth.instance.currentUser;
         String userEmail = currentUser?.email ?? '';
@@ -176,31 +175,27 @@ class AuthController extends GetxController {
           print(appStorage.read("profile"));
 
           print(userToken);
-          
+
           print(appStorage.read('userToken'));
           print("Response: ${response.body}");
 
           Get.offAll(HomeScreen());
         }
       } else {
-
         Get.back();
-        showInSnackBar(
-            "Sign In error: ${response.statusCode.toString()} ${responseData["message"]}",
+        showInSnackBar("${responseData["message"]}",
             color: AppColors.errorcolor);
         print(
             "Sign In error: ${response.statusCode.toString()} ${responseData["message"]}");
-            GoogleSignOut();
-            facebookSignOut();
+        GoogleSignOut();
+        facebookSignOut();
 
-        
         print("Response: ${response.body}");
       }
     } catch (error) {
       Get.back();
       print("SignIn Error: $error");
       showInSnackBar(error.toString(), color: AppColors.errorcolor);
-     
     }
   }
 
@@ -233,7 +228,7 @@ class AuthController extends GetxController {
       } else {
         print("Sign Up error: ${response.statusCode}");
         print("Response: ${response.body}");
-       
+
         showInSnackBar(
             "Error ${response.statusCode} ${responseData['message']}",
             color: AppColors.errorcolor);
@@ -243,7 +238,6 @@ class AuthController extends GetxController {
       print("Error: $error");
       showInSnackBar(error.toString(), color: AppColors.errorcolor);
       Get.back();
-     
     }
   }
 
@@ -339,7 +333,7 @@ class AuthController extends GetxController {
       } else {
         print(
             'Failed to update password: ${response.statusCode} ${responseData["message"]}');
-            Get.back();
+        Get.back();
       }
     } catch (error) {
       print('Error updating password: $error');
