@@ -54,8 +54,13 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("${title} "),
-          content: Text("Do you want to delete this Recording ?"),
+           backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    side: BorderSide(color:AppColors.whitecolor,width: 1), // Border color
+                  ),
+          title: Center(child: Text("${title} ",style: TextStyle(color: AppColors.whitecolor,fontSize: 24),)),
+          content: Text("Do you want to delete this Recording ?",style: TextStyle(color:AppColors.whitecolor,fontSize: 15 ),),
           actions: [
             TextButton(
               onPressed: () {
@@ -81,6 +86,12 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
       builder: (BuildContext context) {
         TextEditingController recordingNames = TextEditingController();
         return AlertDialog(
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    side: BorderSide(color:AppColors.whitecolor,width: 1), // Border color
+                  ),
+          
           title: Form(
             key: _formKey,
             child: CustomTextField(
@@ -305,7 +316,8 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                 fit: BoxFit.fill,
               ),
             ),
-            child: Column(children: [
+            child: Column(
+              children: [
               Customhead(),
               SizedBox(height: Get.height * 0.02),
               Obx(() => CustonPlayButton(
@@ -610,137 +622,135 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                             )
                           : Expanded(
                               child: Obx(
-                                () => SizedBox(
-                                  // width: Get.width * 0.8,
-                                  child: controller.isLoading.value
-                                      ? Center(
-                                          child: CircularProgressIndicator(
-                                            color: AppColors.primaryColor,
-                                          ),
-                                        )
-                                      : controller.audioSoundList.isEmpty
-                                          ? const Center(
-                                              child: Text('List is Empty..'),
-                                            )
-                                          : ListView.builder(
-                                              scrollDirection: Axis.vertical,
-                                              itemCount: controller
-                                                  .audioSoundList.length,
-                                              itemBuilder: (Context, index) {
-                                                AudioModel item = controller
-                                                    .audioSoundList[index];
-                                                return Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 13,
-                                                          right: 13),
-                                                  child: Container(
-                                                      height:
-                                                          Get.height * 0.047,
-                                                      width: Get.width * 0.8,
-                                                      decoration: BoxDecoration(
-                                                          border: Border(
-                                                              bottom: BorderSide(
-                                                                  color: AppColors
-                                                                      .whitecolor,
-                                                                  width: 2))),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceEvenly,
-                                                        children: [
-                                                          Obx(() =>
-                                                              GestureDetector(
-                                                                child: Icon(
-                                                                  controller.currentlyPlayingIndex.value ==
-                                                                              index &&
-                                                                          controller
-                                                                              .isPlaying.value
-                                                                      ? Icons
-                                                                          .pause
-                                                                      : Icons
-                                                                          .play_arrow,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                onTap:
-                                                                    () async {
-                                                                  controller.play(
-                                                                      index,
-                                                                      '${AppUrl.audioPath + item.filePath}');
-                                                                },
-                                                              )),
-                                                          Text(
-                                                            item.title,
-                                                            style: TextStyle(
+                                () => controller.isLoading.value
+                                    ? Center(
+                                        child: CircularProgressIndicator(
+                                          color: AppColors.primaryColor,
+                                        ),
+                                      )
+                                    : controller.audioSoundList.isEmpty
+                                        ? const Center(
+                                            child: Text('List is Empty..'),
+                                          )
+                                        : ListView.builder(
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: controller
+                                                .audioSoundList.length,
+                                            itemBuilder: (Context, index) {
+                                              AudioModel item = controller
+                                                  .audioSoundList[index];
+                                              return Padding(
+                                                padding:
+                                                    const EdgeInsets.only(
+                                                        left: 13,
+                                                        right: 13),
+                                                child: Container(
+                                                    height:
+                                                        Get.height * 0.05,
+                                                    width: Get.width * 0.8,
+                                                    decoration: BoxDecoration(
+                                                        border: Border(
+                                                            bottom: BorderSide(
                                                                 color: AppColors
                                                                     .whitecolor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800),
-                                                          )
-                                                          // ),
-                                                          // Text(
-                                                          //   item.time,
-                                                          //   style: TextStyle(
-                                                          //       color: AppColors
-                                                          //           .whitecolor,
-                                                          //       fontWeight:
-                                                          //           FontWeight
-                                                          //               .w800),
-                                                          // ),
-                                                          // Text(
-                                                          //   "${item.count} treats",
-                                                          //   style: TextStyle(
-                                                          //       color: AppColors
-                                                          //           .primaryColor,
-                                                          //       fontWeight:
-                                                          //           FontWeight
-                                                          //               .w800),
-                                                          // ),
-                                                          // item.type == 'free'
-                                                          //     ? GestureDetector(
-                                                          //         onTap: () {
-                                                          //           controller
-                                                          //               .postMyLibrary(
-                                                          //                   item.id);
-                                                          //         },
-                                                          //         child: Icon(
-                                                          //           Icons
-                                                          //               .cloud_download_outlined,
-                                                          //           color: AppColors
-                                                          //               .whitecolor,
-                                                          //           size: 30,
-                                                          //         ),
-                                                          //       )
-                                                          //     : Container(
-                                                          //         padding: const EdgeInsets
-                                                          //             .symmetric(
-                                                          //             horizontal:
-                                                          //                 10,
-                                                          //             vertical:
-                                                          //                 5),
-                                                          //         decoration: BoxDecoration(
-                                                          //             borderRadius:
-                                                          //                 BorderRadius.circular(
-                                                          //                     15),
-                                                          //             color: Colors
-                                                          //                 .red),
-                                                          //         child:
-                                                          //             const Text(
-                                                          //           'buy',
-                                                          //           style: TextStyle(
-                                                          //               color: Colors
-                                                          //                   .white,
-                                                          //               fontWeight:
-                                                          //                   FontWeight.normal),
-                                                          //         ),
-                                                          //       )
-                                                        ],
-                                                      )),
-                                                );
-                                              }),
-                                ),
+                                                                width: 2))),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceAround,
+                                                      children: [
+                                                        Obx(() =>
+                                                            GestureDetector(
+                                                              child: Icon(
+                                                                controller.currentlyPlayingIndex.value ==
+                                                                            index &&
+                                                                        controller
+                                                                            .isPlaying.value
+                                                                    ? Icons
+                                                                        .pause
+                                                                    : Icons
+                                                                        .play_arrow,
+                                                                color: Colors
+                                                                    .white,size: 35,
+                                                              ),
+                                                              onTap:
+                                                                  () async {
+                                                                controller.play(
+                                                                    index,
+                                                                    '${AppUrl.audioPath + item.filePath}');
+                                                              },
+                                                            )),
+                                                        Text(
+                                                          item.title,
+                                                          style: TextStyle(
+                                                              color: AppColors
+                                                                  .whitecolor,
+                                                                  fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w800),
+                                                        )
+                                                        // ),
+                                                        // Text(
+                                                        //   item.time,
+                                                        //   style: TextStyle(
+                                                        //       color: AppColors
+                                                        //           .whitecolor,
+                                                        //       fontWeight:
+                                                        //           FontWeight
+                                                        //               .w800),
+                                                        // ),
+                                                        // Text(
+                                                        //   "${item.count} treats",
+                                                        //   style: TextStyle(
+                                                        //       color: AppColors
+                                                        //           .primaryColor,
+                                                        //       fontWeight:
+                                                        //           FontWeight
+                                                        //               .w800),
+                                                        // ),
+                                                        // item.type == 'free'
+                                                        //     ? GestureDetector(
+                                                        //         onTap: () {
+                                                        //           controller
+                                                        //               .postMyLibrary(
+                                                        //                   item.id);
+                                                        //         },
+                                                        //         child: Icon(
+                                                        //           Icons
+                                                        //               .cloud_download_outlined,
+                                                        //           color: AppColors
+                                                        //               .whitecolor,
+                                                        //           size: 30,
+                                                        //         ),
+                                                        //       )
+                                                        //     : Container(
+                                                        //         padding: const EdgeInsets
+                                                        //             .symmetric(
+                                                        //             horizontal:
+                                                        //                 10,
+                                                        //             vertical:
+                                                        //                 5),
+                                                        //         decoration: BoxDecoration(
+                                                        //             borderRadius:
+                                                        //                 BorderRadius.circular(
+                                                        //                     15),
+                                                        //             color: Colors
+                                                        //                 .red),
+                                                        //         child:
+                                                        //             const Text(
+                                                        //           'buy',
+                                                        //           style: TextStyle(
+                                                        //               color: Colors
+                                                        //                   .white,
+                                                        //               fontWeight:
+                                                        //                   FontWeight.normal),
+                                                        //         ),
+                                                        //       )
+                                                      ],
+                                                    )),
+                                              );
+                                            }),
                               ),
                             )
                     ],
