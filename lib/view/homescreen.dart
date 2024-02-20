@@ -48,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Customhead(),
               SizedBox(height: Get.height * 0.025),
-
               Container(
                 height: Get.height * 0.34,
                 width: Get.width * 0.85,
