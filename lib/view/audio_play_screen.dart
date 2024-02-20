@@ -364,6 +364,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                           topLeft: Radius.circular(30),
                           topRight: Radius.circular(30))),
                   child: Column(
+                   
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -593,9 +594,9 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                                                               fontWeight: FontWeight.w600,
                                                                               fontSize: 20)),
                                                                       Text(
-                                                                        "Audio length: ${recordingPath.audioLength}",
+                                                                        "${recordingPath.audioLength}",
                                                                         style:
-                                                                            TextStyle(color: AppColors.whitecolor),
+                                                                            TextStyle(color: AppColors.whitecolor,fontSize: 17),
                                                                       ),
                                                                       GestureDetector(
                                                                           onTap:
