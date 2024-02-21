@@ -4,9 +4,7 @@ import 'package:squeak/Local%20Storage/global_variable.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
 import 'package:gradient_slider/gradient_slider.dart';
-import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/controller/profile_controller.dart';
-import 'package:squeak/view/login_screen.dart';
 
 import '../App_URL/apiurl.dart';
 import '../components/colors.dart';
@@ -14,6 +12,7 @@ import '../components/custom_playbutton.dart';
 import 'package:perfect_volume_control/perfect_volume_control.dart';
 import '../components/snakbar.dart';
 import '../controller/audio_controller.dart';
+
 import 'video_thum.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -25,7 +24,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   AudioController controller = Get.put(AudioController());
-  ProfileController newcontroller=Get.put(ProfileController());
+  ProfileController newcontroller = Get.put(ProfileController());
 
   late List<bool> isPlayingList;
   final RxInt currentAudioIndex = 0.obs;
@@ -55,26 +54,29 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: Get.height * 0.025),
 
               Container(
-                height: Get.height * 0.34,
-                width: Get.width * 0.85,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(AppAssets.dog), fit: BoxFit.fill)),
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 15.25, left: 1.7),
-                    child: Obx(() =>    CircleAvatar(
-                      
-                      radius: 119.99,
-                      backgroundImage: newcontroller.userDataList.value.profile != null?Image.network(AppUrl.imageUrl +
-                                                  newcontroller.userDataList.value
-                                                      .profile!).image:null,
-                      backgroundColor: Colors.transparent,
+                  height: Get.height * 0.34,
+                  width: Get.width * 0.85,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(AppAssets.dog), fit: BoxFit.fill)),
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 15.25, left: 1.7),
+                      child: Obx(
+                        () => CircleAvatar(
+                          radius: 119.99,
+                          backgroundImage:
+                              newcontroller.userDataList.value.profile != null
+                                  ? Image.network(AppUrl.imageUrl +
+                                          newcontroller
+                                              .userDataList.value.profile!)
+                                      .image
+                                  : null,
+                          backgroundColor: Colors.transparent,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                )
-              ),
+                  )),
               SizedBox(height: Get.height * 0.022),
               Text(
                 "Volume",

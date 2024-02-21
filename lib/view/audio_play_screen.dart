@@ -1,11 +1,12 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squeak/Local%20Storage/global_variable.dart';
+
 import 'package:squeak/components/custom.dart';
+import 'package:squeak/components/snakbar.dart';
 import 'package:squeak/controller/record_controller.dart';
 import 'package:squeak/models/record_model.dart';
-import 'package:squeak/view/menu.dart';
-import 'package:squeak/view/purchase.dart';
+
 import '../App_URL/apiurl.dart';
 import '../components/app_assets.dart';
 import '../components/colors.dart';
@@ -14,15 +15,14 @@ import '../controller/audio_controller.dart';
 import '../models/audio_model.dart';
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:get/get.dart';
+
 
 import 'package:intl/intl.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:squeak/components/colors.dart';
-import 'package:squeak/models/audio_model.dart';
+
 
 class AudioPlayScreen extends StatefulWidget {
   const AudioPlayScreen({super.key});
@@ -171,13 +171,15 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
   void initState() {
     super.initState();
     controller.getAudioData();
-    controller.getMylibraryData();
+    // controller.audioPlayer;
+    // controller.getMylibraryData();
     controllerRecord.GetRecords();
 
     _initialize();
   }
 
   _initialize() async {
+    
     _recordingSession = FlutterSoundRecorder();
     _recordingPlayer = FlutterSoundPlayer();
     await _recordingSession.openRecorder();
@@ -193,6 +195,10 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
   void dispose() {
     _recordingSession.closeRecorder();
     _recordingPlayer.closePlayer();
+    // controller.audioPlayer.dispose();
+    
+    
+    
     super.dispose();
   }
 
@@ -304,6 +310,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
         // appBar: AppBar(
         //   title: Text('My Screen'),
         // ),
@@ -320,41 +327,112 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
               children: [
               Customhead(),
               SizedBox(height: Get.height * 0.02),
+              // Obx(() => CustonPlayButton(
+              //       playIcon: Icon(
+              //           controller.isPlaying.value
+              //               ? Icons.pause
+              //               : Icons.play_arrow,
+              //           size: 42,
+              //           color: AppColors.buttoncolor),
+              //       playTap: () async {
+              //         print('object123');
+              //         print(controller.isPlaying.value);
+              //         if (controller.isPlaying.value) {
+              //           controller.pauseAudio();
+              //         } else {
+              //           controller.playAudio(
+              //               '${AppUrl.audioPath + controller.audioUrlsList[0]}');
+              //         }
+              //       },
+              //       previousTap: () {},
+              //       nextTap: () {
+              //         // if (currentAudioIndex.value <
+              //         //     controller.audioUrlsList.length - 1) {
+              //         //   print('objectNext');
+              //         //   // If there is a next audio URL in the list, play it
+              //         //   currentAudioIndex.value++;
+              //         //   controller.playAudio(
+              //         //       '${AppUrl.audioPath + controller.audioUrlsList[currentAudioIndex.value]}');
+              //         // } else {
+              //         //   print('objectNextNot');
+              //         //   // If we're at the end of the list, loop back to the beginning
+              //         //   currentAudioIndex.value = 0;
+              //         //   controller.playAudio(
+              //         //       '${AppUrl.audioPath + controller.audioUrlsList[0]}');
+              //         // }
+              //       },
+              //     )),
               Obx(() => CustonPlayButton(
-                    playIcon: Icon(
-                        controller.isPlaying.value
-                            ? Icons.pause
-                            : Icons.play_arrow,
-                        size: 42,
-                        color: AppColors.buttoncolor),
-                    playTap: () async {
-                      print('object123');
-                      print(controller.isPlaying.value);
-                      if (controller.isPlaying.value) {
-                        controller.pauseAudio();
-                      } else {
-                        controller.playAudio(
-                            '${AppUrl.audioPath + controller.audioUrlsList[0]}');
-                      }
-                    },
-                    previousTap: () {},
-                    nextTap: () {
-                      // if (currentAudioIndex.value <
-                      //     controller.audioUrlsList.length - 1) {
-                      //   print('objectNext');
-                      //   // If there is a next audio URL in the list, play it
-                      //   currentAudioIndex.value++;
-                      //   controller.playAudio(
-                      //       '${AppUrl.audioPath + controller.audioUrlsList[currentAudioIndex.value]}');
-                      // } else {
-                      //   print('objectNextNot');
-                      //   // If we're at the end of the list, loop back to the beginning
-                      //   currentAudioIndex.value = 0;
-                      //   controller.playAudio(
-                      //       '${AppUrl.audioPath + controller.audioUrlsList[0]}');
-                      // }
-                    },
-                  )),
+                        playIcon: Icon(
+                            controller.isPlaying.value
+                                ? Icons.pause
+                                : Icons.play_arrow,
+                            size: 42,
+                            color: AppColors.buttoncolor),
+                        playTap: () async {
+                          print('object123');
+                          print(controller.isPlaying.value);
+                          if (controller.isPlaying.value) {
+                            controller.pauseAudio();
+                          } else {
+                            controller.playAudio(
+                                '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}');
+                          }
+                        },
+                        previousTap: () {
+                      
+                          if (controller.audioSoundList.isNotEmpty) {
+                            print(controller.audioSoundList);
+                            if (currentAudioIndex.value > 0) {
+                              // If there is a previous audio URL in the list, play it
+                              print('Previous One');
+                              currentAudioIndex.value--;
+                              print(currentAudioIndex.value);
+
+                              controller.playAudio(
+                                '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}',
+                              );
+                              print('${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}');
+                              
+                            } else {
+                              print('Previous Two');
+                              // If we're at the beginning of the list, loop to the end
+                              currentAudioIndex.value =
+                                  controller.audioSoundList.length - 1;
+                              controller.playAudio(
+                                '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}',
+                              );
+                            }
+                          } else {
+                            showInSnackBar('Audio not available',
+                                color: Colors.red);
+                          }
+                        },
+                        nextTap: () {
+                          if (controller.audioSoundList.isNotEmpty) {
+                            if (currentAudioIndex.value <
+                                controller.audioSoundList.length - 1) {
+                              print('Next One');
+                              // If there is a next audio URL in the list, play it
+                              currentAudioIndex.value++;
+                              print(currentAudioIndex.value);
+                              controller.playAudio(
+                                '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}',
+                              );
+                            } else {
+                              print('Next Two');
+                              // If we're at the end of the list, loop back to the beginning
+                              currentAudioIndex.value = 0;
+                              controller.playAudio(
+                                '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}',
+                              );
+                            }
+                          } else {
+                            showInSnackBar('audio not available',
+                                color: Colors.red);
+                          }
+                        },
+                      )),
               Expanded(
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 15),
