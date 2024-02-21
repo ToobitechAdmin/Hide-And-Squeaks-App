@@ -128,7 +128,7 @@ class _SettingScreenState extends State<SettingScreen> {
               style: TextStyle(
                   fontSize: 37,
                   fontWeight: FontWeight.w700,
-                  color:AppColors.primaryColor),
+                  color: AppColors.primaryColor),
             ),
             SizedBox(
               height: Get.height * 0.28,
