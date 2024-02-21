@@ -22,6 +22,7 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: Colors.black,
       body: Container(
         height: Get.height * 1,
         width: Get.width * 1,
@@ -39,7 +40,7 @@ class _MenuScreenState extends State<MenuScreen> {
             children: [
               Customhead(),
               SizedBox(
-                height: Get.height * 0.057,
+                height: Get.height * 0.1,
               ),
               Padding(
                 padding: EdgeInsets.only(left: 10, right: 10),

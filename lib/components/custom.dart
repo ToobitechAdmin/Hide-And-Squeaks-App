@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/view/homescreen.dart';
 // import 'package:squeak/models/dumymodel5.dart';
-import 'package:squeak/view/purchase.dart';
+
 import 'package:squeak/view/menu.dart';
 import 'colors.dart';
 
 class Customhead extends StatelessWidget {
+  const Customhead({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(

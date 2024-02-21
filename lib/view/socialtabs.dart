@@ -29,8 +29,13 @@ class _SocialTabScreenState extends State<SocialTabScreen>
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Title:${number.title} "),
-          content: Text("Do you want to delete this video ?"),
+          backgroundColor: Colors.black,
+           shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    side: BorderSide(color:AppColors.whitecolor,width: 1), 
+                  ),
+          title: Center(child: Text("${number.title} ",style: TextStyle(color: AppColors.whitecolor,fontSize: 24),)),
+          content: Text("Do you want to delete this video ?",style: TextStyle(color: AppColors.whitecolor,fontSize: 16.5),),
           actions: [
             TextButton(
               onPressed: () {
@@ -40,7 +45,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
               },
               child: Text(
                 "OK",
-                style: TextStyle(color: AppColors.primaryColor),
+                style: TextStyle(color: AppColors.primaryColor,fontSize: 20),
               ),
             ),
           ],

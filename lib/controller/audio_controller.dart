@@ -26,9 +26,11 @@ class AudioController extends GetxController {
 
   @override
   void onInit() {
+   
     audioPlayer.onPositionChanged.listen((position) {
       _position.value = position;
     });
+   
 
     audioPlayer.onDurationChanged.listen((duration) {
       _duration.value = duration;
@@ -48,6 +50,8 @@ class AudioController extends GetxController {
   @override
   void onClose() {
     player.dispose();
+    // audioPlayer.dispose();
+
     super.onClose();
   }
 
@@ -80,6 +84,7 @@ class AudioController extends GetxController {
   }
 
   void playAudio(String url) async {
+    print(url);
     try {
       isPlaying.value = true;
       await audioPlayer.play(UrlSource(url));
@@ -144,6 +149,8 @@ class AudioController extends GetxController {
           for (var item in data) {
             AudioModel audioModel = AudioModel.fromJson(item);
             audioSoundList.add(audioModel);
+            print( "${AppUrl.audioPath + item["file_path"]}");
+           
             print('store');
           }
 

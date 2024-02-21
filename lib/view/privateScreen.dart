@@ -77,6 +77,7 @@ class _PrivateScreenState extends State<PrivateScreen> {
     
   
     return Scaffold(
+       backgroundColor: Colors.black,
       body: SafeArea(
           child: Container(
         height: Get.height * 1,

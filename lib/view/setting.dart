@@ -29,9 +29,14 @@ class _SettingScreenState extends State<SettingScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.black,
+           shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    side: BorderSide(color:AppColors.whitecolor,width: 1), // Border color
+                  ),
           title: Text(
             "Do you want to sign out?",
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 20,color: AppColors.whitecolor),
           ),
           actions: [
             Padding(
@@ -73,6 +78,7 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: Colors.black,
       body: Container(
         height: Get.height * 1,
         width: Get.width * 1,

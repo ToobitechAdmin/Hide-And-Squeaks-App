@@ -109,7 +109,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     // DateTime currentDate = DateTime.now();
 
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SafeArea(
+        
+      
+
         child: Container(
                 height: Get.height * 1,
                 width: Get.width * 1,
@@ -227,7 +231,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                             .toString()));
         
                                 setState(() {
-                                  widget.comments.insert(0, newComment);
+                                  widget.comments.add(newComment);
                                 });
                                 commentController.clear();
                               } else {

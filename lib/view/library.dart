@@ -18,6 +18,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: Colors.black,
       body: SafeArea(
         child: Container(
           height: Get.height * 1,

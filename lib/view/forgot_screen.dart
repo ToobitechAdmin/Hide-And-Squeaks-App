@@ -36,6 +36,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: Colors.black,
         body: Container(
       height: Get.height * 1,
       width: Get.width * 1,

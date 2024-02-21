@@ -30,6 +30,7 @@ class _UploadScreenState extends State<UploadScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: Colors.black,
       body: Container(
         height: Get.height * 1,
         width: Get.width * 1,
@@ -38,6 +39,7 @@ class _UploadScreenState extends State<UploadScreen> {
                 image: AssetImage(AppAssets.backgroundmain), fit: BoxFit.fill)),
         child: SingleChildScrollView(
           child: Column(
+            
             children: [
               Column(
                 children: [
