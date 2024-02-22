@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:squeak/components/colors.dart';
 import '../App_URL/apiurl.dart';
 import '../Local Storage/global_variable.dart';
-import '../components/snakbar.dart';
+import '../components/custom_snakbar.dart';
 import '../global/alertbox.dart';
 import '../models/audio_model.dart';
 
@@ -50,8 +50,6 @@ class AudioController extends GetxController {
   void onClose() {
     player.dispose();
     audioPlayer.dispose();
- 
-
     super.onClose();
   }
 

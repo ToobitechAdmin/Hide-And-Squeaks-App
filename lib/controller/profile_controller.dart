@@ -7,10 +7,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:squeak/App_URL/apiurl.dart';
 import 'package:squeak/Local%20Storage/global_variable.dart';
 import 'package:squeak/components/colors.dart';
-import 'package:squeak/components/snakbar.dart';
 import 'package:squeak/models/user_model.dart';
 import 'package:squeak/global/alertbox.dart';
 import 'package:squeak/view/homescreen.dart';
+
+import '../components/custom_snakbar.dart';
 
 class ProfileController extends GetxController {
   final Rx<File?> image = Rx<File?>(null);

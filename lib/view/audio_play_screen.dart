@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:squeak/components/customTextField.dart';
 
 import 'package:squeak/components/custom_appbar.dart';
-import 'package:squeak/components/snakbar.dart';
 import 'package:squeak/controller/record_controller.dart';
 import 'package:squeak/models/record_model.dart';
 
@@ -11,6 +10,7 @@ import '../App_URL/apiurl.dart';
 import '../components/app_assets.dart';
 import '../components/colors.dart';
 import '../components/custom_playbutton.dart';
+import '../components/custom_snakbar.dart';
 import '../controller/audio_controller.dart';
 import '../models/audio_model.dart';
 import 'dart:async';
@@ -379,8 +379,10 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                         if (controller.isPlaying.value) {
                           controller.pauseAudio();
                         } else {
-                          controller.playAudio(
-                              '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}');
+                          controller.playAudio(AppUrl.audioPath +
+                              controller.audioSoundList[currentAudioIndex.value]
+                                  .filePath
+                                  .toString());
                         }
                       },
                       previousTap: () {
@@ -393,17 +395,28 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                             print(currentAudioIndex.value);
 
                             controller.playAudio(
-                              '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}',
+                              AppUrl.audioPath +
+                                  controller
+                                      .audioSoundList[currentAudioIndex.value]
+                                      .filePath
+                                      .toString(),
                             );
-                            print(
-                                '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}');
+                            print(AppUrl.audioPath +
+                                controller
+                                    .audioSoundList[currentAudioIndex.value]
+                                    .filePath
+                                    .toString());
                           } else {
                             print('Previous Two');
                             // If we're at the beginning of the list, loop to the end
                             currentAudioIndex.value =
                                 controller.audioSoundList.length - 1;
                             controller.playAudio(
-                              '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}',
+                              AppUrl.audioPath +
+                                  controller
+                                      .audioSoundList[currentAudioIndex.value]
+                                      .filePath
+                                      .toString(),
                             );
                           }
                         } else {
@@ -420,14 +433,22 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                             currentAudioIndex.value++;
                             print(currentAudioIndex.value);
                             controller.playAudio(
-                              '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}',
+                              AppUrl.audioPath +
+                                  controller
+                                      .audioSoundList[currentAudioIndex.value]
+                                      .filePath
+                                      .toString(),
                             );
                           } else {
                             print('Next Two');
                             // If we're at the end of the list, loop back to the beginning
                             currentAudioIndex.value = 0;
                             controller.playAudio(
-                              '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}',
+                              AppUrl.audioPath +
+                                  controller
+                                      .audioSoundList[currentAudioIndex.value]
+                                      .filePath
+                                      .toString(),
                             );
                           }
                         } else {
@@ -457,7 +478,8 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                               },
                               child: Container(
                                 width: Get.width * 0.45,
-                                padding: const EdgeInsets.symmetric(vertical: 20),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
                                 decoration: BoxDecoration(
                                     color: isCurrent
                                         ? Colors.black
@@ -485,7 +507,8 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                               },
                               child: Container(
                                 width: Get.width * 0.45,
-                                padding: const EdgeInsets.symmetric(vertical: 20),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
                                 decoration: BoxDecoration(
                                     color: isCurrent
                                         ? const Color.fromARGB(255, 20, 20, 20)
@@ -637,7 +660,8 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                                                       const BoxDecoration(),
                                                                   child:
                                                                       Container(
-                                                                    margin: const EdgeInsets.symmetric(
+                                                                    margin: const EdgeInsets
+                                                                        .symmetric(
                                                                         horizontal:
                                                                             15),
                                                                     decoration:
@@ -668,17 +692,14 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                                                               color: isCurrentlyPlaying ? AppColors.primaryColor : AppColors.pinkcolor,
                                                                             )),
                                                                         SizedBox(
-                                                                          width: Get.width*0.5,
+                                                                          width:
+                                                                              Get.width * 0.5,
                                                                           child: Text(
-                                                                              recordingPath
-                                                                                  .title!,
-                                                                                  overflow: TextOverflow.ellipsis,
-                                                                                  softWrap: false,
-                                                                                  maxLines: 1,
-                                                                              style: TextStyle(
-                                                                                  color: AppColors.primaryColor,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                  fontSize: 20)),
+                                                                              recordingPath.title!,
+                                                                              overflow: TextOverflow.ellipsis,
+                                                                              softWrap: false,
+                                                                              maxLines: 1,
+                                                                              style: TextStyle(color: AppColors.primaryColor, fontWeight: FontWeight.w600, fontSize: 20)),
                                                                         ),
                                                                         Text(
                                                                           "${recordingPath.audioLength}",
@@ -719,7 +740,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                         )
                                       : controller.audioSoundList.isEmpty
                                           ? const Center(
-                                              child: Text('List is Empty..'),
+                                              child: Text('List is Empty..',style: TextStyle(fontSize: 15),),
                                             )
                                           : ListView.builder(
                                               itemCount: controller
@@ -732,7 +753,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                                       const EdgeInsets.only(
                                                           left: 13, right: 13),
                                                   child: Container(
-                                                      height: Get.height * 0.05,
+                                                      height: Get.height * 0.06,
                                                       width: Get.width * 0.8,
                                                       decoration: BoxDecoration(
                                                           border: Border(
@@ -747,37 +768,51 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                                         children: [
                                                           Obx(() =>
                                                               GestureDetector(
-                                                                child: Icon(
-                                                                  controller.currentlyPlayingIndex
-                                                                                  .value ==
-                                                                              index &&
-                                                                          controller
-                                                                              .isPlaying
-                                                                              .value
-                                                                      ? Icons
-                                                                          .pause
-                                                                      : Icons
-                                                                          .play_arrow,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  size: 35,
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets.only(left: 20),
+                                                                  child: Icon(
+                                                                    controller.currentlyPlayingIndex
+                                                                                    .value ==
+                                                                                index &&
+                                                                            controller
+                                                                                .isPlaying
+                                                                                .value
+                                                                        ? Icons
+                                                                            .pause
+                                                                        : Icons
+                                                                            .play_arrow,
+                                                                    color: Colors
+                                                                        .white,
+                                                                    size: 35,
+                                                                  ),
                                                                 ),
                                                                 onTap:
                                                                     () async {
                                                                   controller.play(
                                                                       index,
-                                                                      '${AppUrl.audioPath + item.filePath}');
+                                                                      AppUrl.audioPath +
+                                                                          item.filePath);
                                                                 },
                                                               )),
-                                                          Text(
-                                                            item.title,
-                                                            style: TextStyle(
-                                                                color: AppColors
-                                                                    .whitecolor,
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800),
+                                                          SizedBox(
+                                                            width:
+                                                                Get.width * 0.5,
+                                                            child: Center(
+                                                              child: Text(
+                                                                item.title,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                softWrap: false,
+                                                                style: TextStyle(
+                                                                    color: AppColors
+                                                                        .whitecolor,
+                                                                    fontSize: 18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w800),
+                                                              ),
+                                                            ),
                                                           )
                                                           // ),
                                                           // Text(

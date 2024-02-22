@@ -8,7 +8,7 @@ import '../App_URL/apiurl.dart';
 import '../components/colors.dart';
 import '../components/custom_playbutton.dart';
 import 'package:perfect_volume_control/perfect_volume_control.dart';
-import '../components/snakbar.dart';
+import '../components/custom_snakbar.dart';
 import '../controller/audio_controller.dart';
 
 class HomeScreen extends StatefulWidget {

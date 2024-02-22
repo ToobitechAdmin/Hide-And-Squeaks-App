@@ -12,7 +12,7 @@ import 'package:squeak/view/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import '../App_URL/apiurl.dart';
 import '../Local Storage/global_variable.dart';
-import '../components/snakbar.dart';
+import '../components/custom_snakbar.dart';
 import '../global/alertbox.dart';
 
 class VideoController extends GetxController {
@@ -162,6 +162,7 @@ class VideoController extends GetxController {
                     totalLikes: videoData["likes_count"],
                     totalComments: videoData["comments_count"],
                   ));
+                  // videoListprivate.reversed.toList();
             }
             // print(videoListpublic.length);
           }
@@ -250,10 +251,14 @@ class VideoController extends GetxController {
           'video_id': userid.toString(),
         },
       );
-      final dynamic responseData = json.decode(response.body);
+      final Map<String,dynamic> responseData = json.decode(response.body);
 
       if (response.statusCode == 200) {
         print("data:$responseData");
+        
+        String profileImagePath = responseData['data']['video']['user']['profile'];
+        print(profileImagePath);
+        // print("user_profile: ${responseData["data"]["video"]["user"]["profile"]}");
 
         // print("user_id: ${responseData["data"]["video"]["user_id"]}");
         // print("id: ${responseData["data"]["video"]["id"]}");
@@ -269,7 +274,7 @@ class VideoController extends GetxController {
         List<Comment> comments =
             (responseData['data']['video']['comments'] as List)
                 .map((commentJson) => Comment.fromJson(commentJson))
-                .toList();
+                .toList().reversed.toList() ;
 
         var videoViewData = VideoModel(
             id: responseData["data"]["video"]["id"],
@@ -282,8 +287,10 @@ class VideoController extends GetxController {
             totalLikes: responseData["data"]["total_likes"],
             totalComments: responseData["data"]["total_comments"],
             totalViews: responseData["data"]["total_views"],
-            userLikedVideo: responseData["data"]["userLikedVideo"]);
-
+            userLikedVideo: responseData["data"]["userLikedVideo"],
+            user_profile: AppUrl.imageUrl+profileImagePath.toString()
+           
+            );
         Get.to(VideoPlayerScreen(view: videoViewData, comments: comments));
         viewDataLaoding.value = false;
       } else {

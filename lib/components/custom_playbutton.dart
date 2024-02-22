@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:squeak/view/audio_play_screen.dart';
 
 import 'app_assets.dart';
 import 'colors.dart';
@@ -79,7 +81,7 @@ class CustonPlayButton extends StatelessWidget {
             padding: const EdgeInsets.only(top: 61, left: 1),
             child: GestureDetector(
                 onTap: () {
-                  // Get.to(AudioPlayScreen());
+                  Get.to(AudioPlayScreen());
                 },
                 child: Icon(
                   Icons.format_list_bulleted,

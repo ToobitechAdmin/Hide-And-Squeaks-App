@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/custom_auth.dart';
-import 'package:squeak/components/snakbar.dart';
-
+import '../components/custom_snakbar.dart';
 import '../controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
-
 import '../components/colors.dart';
 
 class OtpScreen extends StatefulWidget {

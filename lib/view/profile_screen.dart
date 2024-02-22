@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/App_URL/apiurl.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/components/snakbar.dart';
 import 'package:squeak/controller/profile_controller.dart';
 import 'package:squeak/models/user_model.dart';
-
 import '../components/colors.dart';
+import '../components/custom_snakbar.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -33,6 +32,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           TextEditingController(text: controller.userDataList.value.petBreed);
     });
   }
+   @override
+  void dispose(){
+    super.dispose();
+    Get.delete<ProfileController>();
+    }
+  
+ 
 
   @override
   Widget build(BuildContext context) {

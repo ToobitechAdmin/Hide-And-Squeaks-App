@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom_video_appbar.dart';
-import 'package:squeak/components/snakbar.dart';
 import 'package:squeak/controller/video_controller.dart';
 import 'package:squeak/models/video_model.dart';
 import '../components/colors.dart';
+import '../components/custom_snakbar.dart';
 
 class UploadScreen extends StatefulWidget {
   const UploadScreen({super.key});

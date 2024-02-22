@@ -69,7 +69,8 @@ class _SocialTabScreenState extends State<SocialTabScreen>
             ],
             indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color(0xff4A330D).withOpacity(0.70) // Indicator color
+                color:
+                    const Color(0xff4A330D).withOpacity(0.70) // Indicator color
                 ),
             labelColor: AppColors.whitecolor,
             labelStyle: const TextStyle(
@@ -206,7 +207,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                                               ],
                                             ),
                                             SizedBox(
-                                              height: Get.height * 0.11,
+                                              height: Get.height * 0.1,
                                             ),
                                             Row(
                                               mainAxisAlignment:
@@ -216,14 +217,21 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                                                 Align(
                                                   alignment:
                                                       Alignment.bottomLeft,
-                                                  child: Text(
-                                                    video.title.toString(),
-                                                    style: TextStyle(
-                                                      color:
-                                                          AppColors.whitecolor,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontSize: 17,
+                                                  child: SizedBox(
+                                                    child: Text(
+                                                      video.title.toString(),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      softWrap: false,
+                                                      style: TextStyle(
+                                                        
+                                                        color: AppColors
+                                                            .whitecolor,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        fontSize: 20,
+                                                        letterSpacing: 1.1
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -303,14 +311,20 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                                                 Align(
                                                   alignment:
                                                       Alignment.bottomLeft,
-                                                  child: Text(
-                                                    video.title.toString(),
-                                                    style: TextStyle(
-                                                      color:
-                                                          AppColors.whitecolor,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontSize: 17,
+                                                  child: SizedBox(
+                                                    width: Get.width * 0.3,
+                                                    child: Text(
+                                                      video.title.toString(),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      softWrap: false,
+                                                      style: TextStyle(
+                                                        color: AppColors
+                                                            .whitecolor,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        fontSize: 17,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),

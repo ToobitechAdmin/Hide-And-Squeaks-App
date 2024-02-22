@@ -1,18 +1,17 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/App_URL/apiurl.dart';
 import 'package:squeak/Local%20Storage/global_variable.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/components/snakbar.dart';
 import 'package:squeak/controller/video_controller.dart';
 import 'package:squeak/models/comment_model.dart';
-import 'package:squeak/models/user_model.dart';
 import 'package:squeak/models/video_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
-
 import '../components/colors.dart';
+import '../components/custom_snakbar.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final VideoModel view;
@@ -38,51 +37,40 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     return formatter.format(dateTime);
   }
 
-  bool isLiked = false;
-
-  VideoPlayerController? _controller;
-
-  bool _isPlaying = false;
-  bool _displayControls = true;
-
-  _initializeController(String videoUrl) async {
-    VideoPlayerController newController =
-        VideoPlayerController.network(videoUrl);
-
-    await newController.initialize();
-    newController.setLooping(true);
-
-    newController.addListener(() {
-      setState(() {
-        _isPlaying = newController.value.isPlaying;
-        if (_isPlaying) {
-          Future.delayed(const Duration(seconds: 5), () {
-            if (newController.value.isPlaying) {
-              setState(() => _displayControls = false);
-            }
-          });
-        }
-      });
-    });
-
-    if (mounted) {
-      setState(() {
-        _controller = newController;
-      });
-    }
-  }
+  late ChewieController _chewieController;
+  late VideoPlayerController videoPlayerController;
 
   @override
   void initState() {
     super.initState();
-
     controller.ViewData(widget.view.id!);
 
-    _initializeController(widget.view.file_path.toString());
-  }
+    videoPlayerController = VideoPlayerController.network(
+      widget.view.file_path.toString(),
+    );
 
-  void _toggleControls() {
-    setState(() => _displayControls = !_displayControls);
+    _chewieController = ChewieController(
+      videoPlayerController: videoPlayerController,
+      autoPlay: true,
+      looping: true,
+      aspectRatio: 100 / 100,
+      allowPlaybackSpeedChanging: true,
+      allowedScreenSleep: false,
+      autoInitialize: true,
+      showControls: true,
+      showOptions: true,
+      cupertinoProgressColors:
+          ChewieProgressColors(bufferedColor: AppColors.primaryColor),
+      placeholder: Container(
+        color: Colors.blueGrey,
+      ),
+      materialProgressColors: ChewieProgressColors(
+        playedColor: AppColors.primaryColor,
+        handleColor: AppColors.whitecolor,
+        backgroundColor: Colors.grey,
+        bufferedColor: Colors.black54,
+      ),
+    );
   }
 
   @override
@@ -109,46 +97,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 Container(
                   height: Get.height * 0.5,
                   width: Get.width * 1,
-                  child: _controller == null
-                      ? Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.primaryColor,
-                          ),
-                        )
-                      : _controller!.value.isInitialized
-                          ? AspectRatio(
-                              aspectRatio: _controller!.value.aspectRatio,
-                              child: Stack(
-                                alignment: Alignment.bottomCenter,
-                                children: <Widget>[
-                                  GestureDetector(
-                                    onTap: _toggleControls,
-                                    child: VideoPlayer(_controller!),
-                                  ),
-                                  _displayControls
-                                      ? _ControlsOverlay(
-                                          controller: _controller!)
-                                      : Container(),
-                                  VideoProgressIndicator(
-                                    _controller!,
-                                    allowScrubbing: true,
-                                    colors: VideoProgressColors(
-                                      playedColor: AppColors.primaryColor,
-                                      bufferedColor: Colors.grey,
-                                      backgroundColor: Colors.black38,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Align(
-                              alignment: Alignment.center,
-                              child: SizedBox(
-                                  height: Get.height * 0.05,
-                                  width: Get.width * 0.1,
-                                  child: CircularProgressIndicator(
-                                      color: AppColors.primaryColor)),
-                            ),
+                  child: Chewie(
+                    controller: _chewieController,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15),
@@ -209,14 +160,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                             id: widget.view.id!,
                                             name: appStorage
                                                 .read("name")
-                                                .toString()
-                                                .toLowerCase(),
+                                                .toString(),
                                             profile: appStorage
                                                 .read("profile")
                                                 .toString()));
 
                                     setState(() {
-                                      widget.comments.add(newComment);
+                                      widget.comments.insert(0, newComment);
                                     });
                                     commentController.clear();
                                   } else {
@@ -235,13 +185,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   const EdgeInsets.symmetric(horizontal: 10),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20.0),
-                                borderSide:
-                                    const BorderSide(color: Colors.white, width: 2.0),
+                                borderSide: const BorderSide(
+                                    color: Colors.white, width: 2.0),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20.0),
-                                borderSide:
-                                    const BorderSide(color: Colors.white, width: 2.0),
+                                borderSide: const BorderSide(
+                                    color: Colors.white, width: 2.0),
                               ),
                               hintStyle: TextStyle(
                                 fontSize: 14,
@@ -311,16 +261,36 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   width: Get.width * 0.57,
                                   height: Get.height * 0.05,
                                   child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      CircleAvatar(
-                                        backgroundColor: AppColors.primaryColor,
-                                        radius: 20,
-                                        child: Icon(
-                                          Icons.person,
-                                          color: AppColors.whitecolor,
-                                          size: 30,
-                                        ),
+                                      Container(
+                                        height: Get.height * 0.05,
+                                        width: Get.width * 0.1,
+                                        decoration: BoxDecoration(
+                                            color: AppColors.textfieldcolor,
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                                image: widget.view
+                                                            .user_profile !=
+                                                        null
+                                                    ? Image.network(widget
+                                                            .view.user_profile
+                                                            .toString())
+                                                        .image
+                                                    : AssetImage(
+                                                        AppAssets.back2),
+                                                fit: BoxFit.fill)),
                                       ),
+                                      // CircleAvatar(
+                                      //   backgroundColor: Colors.transparent,
+                                      //   radius: 25,
+                                      //   backgroundImage: widget.view.user_profile != null? Image.network(widget.view.user_profile.toString()).image:AssetImage(AppAssets.back2) ,
+                                      //   // child: Icon(
+                                      //   //   Icons.person,
+                                      //   //   color: AppColors.whitecolor,
+                                      //   //   size: 30,
+                                      //   // ),
+                                      // ),
                                       SizedBox(
                                         width: Get.height * 0.015,
                                       ),
@@ -338,9 +308,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                                 fontWeight: FontWeight.w500),
                                           ),
                                           Text(
-                                            "Published ${newdate}",
+                                            "Published $newdate",
                                             style: TextStyle(
-                                                fontSize: 12,
+                                                fontSize: 10,
                                                 color: AppColors.whitecolor,
                                                 fontWeight: FontWeight.w500),
                                           ),
@@ -486,17 +456,17 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                                     usercomment.user!.name
                                                         .toString(),
                                                     style: TextStyle(
-                                                        fontSize: 12,
+                                                        fontSize: 14,
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         color: AppColors
                                                             .whitecolor),
                                                   ),
                                                   SizedBox(
-                                                    width: Get.width * 0.015,
+                                                    width: Get.width * 0.03,
                                                   ),
                                                   Text(
-                                                    "${formateddays}",
+                                                    "$formateddays",
                                                     style: TextStyle(
                                                         fontSize: 10,
                                                         fontWeight:
@@ -519,7 +489,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                                 usercomment.comment.toString(),
                                                 style: TextStyle(
                                                     fontSize: 12,
-                                                    fontWeight: FontWeight.w700,
+                                                    fontWeight: FontWeight.w500,
                                                     color:
                                                         AppColors.whitecolor),
                                               )
@@ -546,113 +516,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   @override
   void dispose() {
-    _controller!.dispose();
+    videoPlayerController.dispose();
+    _chewieController.dispose();
     super.dispose();
-  }
-}
-
-class _ControlsOverlay extends StatelessWidget {
-  const _ControlsOverlay({Key? key, required this.controller})
-      : super(key: key);
-
-  final VideoPlayerController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            IconButton(
-              icon: const Icon(
-                Icons.replay_10,
-                size: 35,
-              ),
-              color: AppColors.primaryColor,
-              onPressed: () {
-                final currentPosition = controller.value.position;
-                final newPosition = currentPosition - const Duration(seconds: 10);
-                controller.seekTo(newPosition);
-              },
-            ),
-            GestureDetector(
-              onTap: () {
-                controller.value.isPlaying
-                    ? controller.pause()
-                    : controller.play();
-              },
-              child: Icon(
-                controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-                color: AppColors.primaryColor,
-                size: 75.0,
-              ),
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.forward_10,
-                size: 35,
-              ),
-              color: AppColors.primaryColor,
-              onPressed: () {
-                final currentPosition = controller.value.position;
-                final newPosition = currentPosition + const Duration(seconds: 10);
-                controller.seekTo(newPosition);
-              },
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 75),
-          child: Align(
-            alignment: Alignment.bottomRight,
-            child: IconButton(
-              icon: const Icon(
-                Icons.fullscreen,
-                size: 40,
-              ),
-              color: AppColors.primaryColor,
-              onPressed: () {},
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: VideoTimer(controller: controller),
-        ),
-      ],
-    );
-  }
-}
-
-class VideoTimer extends StatelessWidget {
-  final VideoPlayerController controller;
-
-  VideoTimer({required this.controller});
-
-  String _formatDuration(Duration duration) {
-    return "${duration.inMinutes.remainder(60)}:${(duration.inSeconds.remainder(60)).toString().padLeft(2, '0')}";
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final position = controller.value.position;
-    final duration = controller.value.duration;
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          _formatDuration(position),
-          style: TextStyle(color: AppColors.primaryColor, fontSize: 16),
-        ),
-        Text(
-          _formatDuration(duration),
-          style: TextStyle(color: AppColors.primaryColor, fontSize: 16),
-        ),
-      ],
-    );
   }
 }
 

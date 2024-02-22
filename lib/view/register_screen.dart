@@ -71,8 +71,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if (value == null || value.isEmpty) {
                               return 'Please enter FirstName';
                             }
-                            // You can add more complex email validation logic here if needed
-                            return null; // Return null if the input is valid
+                            
+                            return null;
                           },
                           showSuffixIcon: false,
                         ),

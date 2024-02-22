@@ -21,6 +21,7 @@ class VideoModel {
   String? thumbnail;
   String? updated_at;
   bool? userLikedVideo;
+  String?user_profile;
   
 
 
@@ -44,6 +45,7 @@ class VideoModel {
       this.thumbnail,
       this.updated_at,
       this.userLikedVideo,
+      this.user_profile,
   
       this.video_id});
 
@@ -51,6 +53,7 @@ class VideoModel {
     return VideoModel(
      id: json['id'] as int?,
     user_id: json['user_id'] as int?,
+    user_profile: json["user_profile"] as String? ?? " ",
     file_path: json['file_path'] as String? ?? '',
     title: json['title'] as String? ?? '',
     videotype: json["video_type"] as String? ?? '',
@@ -81,6 +84,7 @@ class VideoModel {
       "user_id":user_id,
       'file_path': file_path,
       'title': title,
+      "user_profiler":user_profile,
       "description": description,
       "created_at": created_at,
       "comments": comments,

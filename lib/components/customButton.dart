@@ -17,7 +17,6 @@ class CustomButton extends StatelessWidget {
         child: Text(
           fieldname,
           style: TextStyle(
-              fontFamily: "Poppins",
               fontSize: 18,
               fontWeight: FontWeight.w600,
               color: AppColors.whitecolor),
