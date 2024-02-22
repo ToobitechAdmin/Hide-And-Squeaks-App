@@ -1,27 +1,19 @@
 import 'dart:convert';
-
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:squeak/components/colors.dart';
 import 'package:path_provider/path_provider.dart';
-
 import 'package:squeak/models/comment_model.dart';
-
 import 'package:squeak/models/video_model.dart';
-import 'package:squeak/view/homescreen.dart';
 import 'package:squeak/view/socialfeed.dart';
-import 'package:squeak/view/upload.dart';
 import 'package:squeak/view/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import '../App_URL/apiurl.dart';
 import '../Local Storage/global_variable.dart';
 import '../components/snakbar.dart';
 import '../global/alertbox.dart';
-import 'package:file_picker/file_picker.dart';
 
 class VideoController extends GetxController {
   var isLoading = false.obs;
@@ -55,11 +47,7 @@ class VideoController extends GetxController {
   RxBool uploading = false.obs;
 
   postVideo(VideoModel videodata) async {
-    // if (videodata.videotype!.length < 1) {
-    //   showInSnackBar("Kindly select video Public Or Private",
-    //       color: AppColors.errorcolor);
-    //   return;
-    // }
+  
     print(videodata.title);
     print(videodata.description);
     print(videodata.videotype);
@@ -103,7 +91,7 @@ class VideoController extends GetxController {
         if (thumbnailFile.value != null) {
           thumbnailFile.value = null;
         }
-        Get.to(HomeScreen());
+        
 
         {
           print(" ${responseData['message']}");
@@ -265,19 +253,19 @@ class VideoController extends GetxController {
       final dynamic responseData = json.decode(response.body);
 
       if (response.statusCode == 200) {
-        print("data:${responseData}");
+        print("data:$responseData");
 
-        print("user_id: ${responseData["data"]["video"]["user_id"]}");
-        print("id: ${responseData["data"]["video"]["id"]}");
-        print("created_at: ${responseData["data"]["video"]["created_at"]}");
-        print("Totalviews: ${responseData["data"]["total_views"]}");
-        print("TotalLikes: ${responseData["data"]["total_likes"]}");
-        print("isUserLikedVideo: ${responseData["data"]["userLikedVideo"]}");
-        print("TotalComments: ${responseData["data"]["total_comments"]}");
-        print(
-            "thumbpath: ${AppUrl.imageUrl + responseData["data"]["video"]["thumbnail_path"]}");
-        print(
-            "Filepath: ${AppUrl.videoURL + responseData["data"]["video"]["file_path"]}");
+        // print("user_id: ${responseData["data"]["video"]["user_id"]}");
+        // print("id: ${responseData["data"]["video"]["id"]}");
+        // print("created_at: ${responseData["data"]["video"]["created_at"]}");
+        // print("Totalviews: ${responseData["data"]["total_views"]}");
+        // print("TotalLikes: ${responseData["data"]["total_likes"]}");
+        // print("isUserLikedVideo: ${responseData["data"]["userLikedVideo"]}");
+        // print("TotalComments: ${responseData["data"]["total_comments"]}");
+        // print(
+        //     "thumbpath: ${AppUrl.imageUrl + responseData["data"]["video"]["thumbnail_path"]}");
+        // print(
+        //     "Filepath: ${AppUrl.videoURL + responseData["data"]["video"]["file_path"]}");
         List<Comment> comments =
             (responseData['data']['video']['comments'] as List)
                 .map((commentJson) => Comment.fromJson(commentJson))
@@ -336,7 +324,7 @@ class VideoController extends GetxController {
     }
   }
 
-  var likeCheck = "".obs;
+
   postLike(videoId) async {
     String currentToken = appStorage.read('userToken');
     try {

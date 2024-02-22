@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:squeak/components/customTextField.dart';
+import 'package:squeak/components/custom_auth.dart';
 import 'package:squeak/components/snakbar.dart';
 
 import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/components/custom.dart';
+import 'package:squeak/components/custom_appbar.dart';
 
 import '../components/colors.dart';
 
@@ -20,31 +22,13 @@ class PasswordScreen extends StatefulWidget {
 class _PasswordScreenState extends State<PasswordScreen> {
   AuthController controller = Get.put(AuthController());
   final GlobalKey<FormState> _formKey5 = GlobalKey<FormState>();
-  TextEditingController _newPasswordController = TextEditingController();
-  TextEditingController _reEnterPasswordController = TextEditingController();
-
-  String? validateNewPassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your password';
-    } else if (value.length <= 4) {
-      return "Passsword Must greater than or equal to 4 ";
-    }
-    return null;
-  }
-
-  String? validateReEnterPassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your password';
-    } else if (value.length <= 4) {
-      return "Passsword Must greater than or equal to 4 ";
-    }
-    return null;
-  }
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController reEnterPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: Colors.black,
+      backgroundColor: Colors.black,
       body: Container(
         height: Get.height * 1,
         width: Get.width * 1,
@@ -80,15 +64,29 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     children: [
                       CustomTextField(
                         hinttext: "Enter New Password",
-                        controller: _newPasswordController,
-                        validator: validateNewPassword,
+                        controller: newPasswordController,
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your password';
+                          } else if (value.length <= 4) {
+                            return "Passsword Must greater than or equal to 4 ";
+                          }
+                          return null;
+                        },
                         showSuffixIcon: true,
                       ),
                       SizedBox(height: Get.height * 0.016),
                       CustomTextField(
                         hinttext: "Re-Enter Password",
-                        controller: _reEnterPasswordController,
-                        validator: validateReEnterPassword,
+                        controller: reEnterPasswordController,
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your password';
+                          } else if (value.length <= 4) {
+                            return "Passsword Must greater than or equal to 4 ";
+                          }
+                          return null;
+                        },
                         showSuffixIcon: true,
                       )
                     ],
@@ -99,13 +97,14 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 GestureDetector(
                   onTap: () {
                     if (_formKey5.currentState?.validate() ?? false) {
-                      if (_newPasswordController.text ==
-                          _reEnterPasswordController.text) {
+                      if (newPasswordController.text ==
+                          reEnterPasswordController.text) {
                         controller.updatePassword(
-                            widget.userEmail, _newPasswordController.text);
+                            widget.userEmail, newPasswordController.text);
                       } else {
-                      
-                        showInSnackBar('Password Mismatch New Password and Re-entered Password do not match',color: AppColors.errorcolor);
+                        showInSnackBar(
+                            'Password Mismatch New Password and Re-entered Password do not match',
+                            color: AppColors.errorcolor);
                       }
                     }
                   },

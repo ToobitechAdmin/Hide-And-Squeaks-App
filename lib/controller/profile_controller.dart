@@ -47,7 +47,7 @@ class ProfileController extends GetxController {
             ..headers['Accept'] = 'application/json'
             ..fields['pet_name'] = model.petName!
             ..fields['pet_breed'] = model.petBreed!;
-             List<http.MultipartFile> files = [];
+      List<http.MultipartFile> files = [];
 
       if (model.profile != null) {
         files.add(await http.MultipartFile.fromPath(
@@ -55,7 +55,7 @@ class ProfileController extends GetxController {
           model.profile!,
         ));
       }
-       request.files.addAll(files);
+      request.files.addAll(files);
 
       var response = await request.send();
       final Map<String, dynamic> responseData =
@@ -70,7 +70,7 @@ class ProfileController extends GetxController {
         if (responseData['success'] == true) {
           print(responseData);
 
-          print("Response: ${responseData}");
+          print("Response: $responseData");
           Get.to(HomeScreen());
         } else {
           print(" ${responseData['message']}");

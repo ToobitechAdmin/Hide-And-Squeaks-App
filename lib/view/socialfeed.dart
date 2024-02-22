@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/components/custom.dart';
-import 'package:squeak/view/socialtabs.dart';
+import 'package:squeak/components/custom_appbar.dart';
+import 'package:squeak/view/social_screen.dart';
 
 import '../components/colors.dart';
 
@@ -30,7 +30,7 @@ class _SocialScreenState extends State<SocialScreen> {
       )),
       child: Column(
         children: [
-          Customhead(),
+          CustomAppBar(),
           SizedBox(
             height: Get.height * 0.025,
           ),

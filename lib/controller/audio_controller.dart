@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:squeak/components/colors.dart';
 import '../App_URL/apiurl.dart';
 import '../Local Storage/global_variable.dart';
 import '../components/snakbar.dart';
@@ -12,7 +12,6 @@ import '../models/audio_model.dart';
 
 class AudioController extends GetxController {
   List<AudioModel> audioSoundList = [];
-
   List<String> audioUrlsList = [];
   List<AudioModel> getMyLibraryList = [];
   var isLoading = false.obs;
@@ -50,7 +49,8 @@ class AudioController extends GetxController {
   @override
   void onClose() {
     player.dispose();
-    // audioPlayer.dispose();
+    audioPlayer.dispose();
+ 
 
     super.onClose();
   }
@@ -108,7 +108,7 @@ class AudioController extends GetxController {
 
   getAudioData() async {
     String currentToken = appStorage.read('userToken');
-    // 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzgxYjA5Nzg5NzY1NWI3NTZkOTVjNDE0YzQ0MmNjNDc2YWUwOTVlMDNkZTY5Njk2OWFiOTFlMjFhYWRiYzEwZmFjMmVhODBlNjdjOTRmNDYiLCJpYXQiOjE3MDQyMzQ4ODEuOTUwMjM4OTQzMDk5OTc1NTg1OTM3NSwibmJmIjoxNzA0MjM0ODgxLjk1MDI0MTA4ODg2NzE4NzUsImV4cCI6MTczNTg1NzI4MS45NDY4NTQxMTQ1MzI0NzA3MDMxMjUsInN1YiI6IjIxIiwic2NvcGVzIjpbXX0.W_hs_C9UkIUBKNw1KYPzxF2ngvtp4WmVyrz7hQZbfOJyy_29SSHDpt87v0s4wfAr5vFhw5T9g3hq1hf7PV06bSj9zAUt-jnDyTtbsovo--dU_C6kTFPz9lxvcN-RM9u7Pm0cLRHz-O-_Dy53MllLQCiJ7TV3MwlayRwTe7xpmUYrO3iZVR-kBnFKpTCwN0BoswTOlQbft6NKJs60K-YaubtSMCCc4dBxddXn8GtNt1-aIC5k2Zcy2mrSvVvaPckQK1zdSr-ruALjPDnfQIwoyoK4zD7KbDI0iw7LsKEAVT3BlUwkxD1EeGg1eiRLOf1B72GddJOqbZbWShl-MCv1Hw6QAwQKhDw1inK73s8Mr9G_VUJvcaTjDMh07ZMnRJPrkKSFj-DBhlD6S3rJvp5SDqHpTrIFdlROrDbigOwfswAlrExAA19hc24vJN49OatrVTYhdVJo0deHE0hM7xe3AvUtmcyH5S5xMGJ_tDfORDhYcQLjurixrDunHzyscpo8vlatJZ15A6SN43c1ol5PqwWfoHcYOJifp_vCANRcZv4AXjh7kYd-rD3CvJo2om1AZTOG1jMduIxx_6AcMpltRRVEX4tug2ow-l1pt6R2vTrjK_QYMC4ufB9w5GRC8Zld-gkArWxAD46J1-mHSXa3DZIo0aQgVBJ61CBP9eJp0NY';
+   
     print('inside $currentToken');
     isLoading.value = true;
     try {
@@ -168,7 +168,7 @@ class AudioController extends GetxController {
 
   getMylibraryData() async {
     String currentToken = appStorage.read('userToken');
-    // 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzgxYjA5Nzg5NzY1NWI3NTZkOTVjNDE0YzQ0MmNjNDc2YWUwOTVlMDNkZTY5Njk2OWFiOTFlMjFhYWRiYzEwZmFjMmVhODBlNjdjOTRmNDYiLCJpYXQiOjE3MDQyMzQ4ODEuOTUwMjM4OTQzMDk5OTc1NTg1OTM3NSwibmJmIjoxNzA0MjM0ODgxLjk1MDI0MTA4ODg2NzE4NzUsImV4cCI6MTczNTg1NzI4MS45NDY4NTQxMTQ1MzI0NzA3MDMxMjUsInN1YiI6IjIxIiwic2NvcGVzIjpbXX0.W_hs_C9UkIUBKNw1KYPzxF2ngvtp4WmVyrz7hQZbfOJyy_29SSHDpt87v0s4wfAr5vFhw5T9g3hq1hf7PV06bSj9zAUt-jnDyTtbsovo--dU_C6kTFPz9lxvcN-RM9u7Pm0cLRHz-O-_Dy53MllLQCiJ7TV3MwlayRwTe7xpmUYrO3iZVR-kBnFKpTCwN0BoswTOlQbft6NKJs60K-YaubtSMCCc4dBxddXn8GtNt1-aIC5k2Zcy2mrSvVvaPckQK1zdSr-ruALjPDnfQIwoyoK4zD7KbDI0iw7LsKEAVT3BlUwkxD1EeGg1eiRLOf1B72GddJOqbZbWShl-MCv1Hw6QAwQKhDw1inK73s8Mr9G_VUJvcaTjDMh07ZMnRJPrkKSFj-DBhlD6S3rJvp5SDqHpTrIFdlROrDbigOwfswAlrExAA19hc24vJN49OatrVTYhdVJo0deHE0hM7xe3AvUtmcyH5S5xMGJ_tDfORDhYcQLjurixrDunHzyscpo8vlatJZ15A6SN43c1ol5PqwWfoHcYOJifp_vCANRcZv4AXjh7kYd-rD3CvJo2om1AZTOG1jMduIxx_6AcMpltRRVEX4tug2ow-l1pt6R2vTrjK_QYMC4ufB9w5GRC8Zld-gkArWxAD46J1-mHSXa3DZIo0aQgVBJ61CBP9eJp0NY';
+   
     print('inside $currentToken');
     audioisLoading.value = true;
     try {
@@ -239,7 +239,7 @@ class AudioController extends GetxController {
 
         if (responseData['success'] == true) {
           getMylibraryData();
-          showInSnackBar(responseData["message"], color: Colors.green);
+          showInSnackBar(responseData["message"], color:AppColors.greencolor);
           print(responseData["message"]);
           Get.back();
         } else {
@@ -249,7 +249,7 @@ class AudioController extends GetxController {
       } else {
         final Map<String, dynamic> responseData = json.decode(response.body);
 
-        showInSnackBar(responseData["message"], color: Colors.red);
+        showInSnackBar(responseData["message"], color:AppColors.errorcolor);
         Get.back();
         print("Response: ${responseData["message"]}");
       }
@@ -281,7 +281,7 @@ class AudioController extends GetxController {
 
         if (responseData['success'] == true) {
           getMylibraryData();
-          showInSnackBar(responseData["message"], color: Colors.green);
+          showInSnackBar(responseData["message"], color:AppColors.greencolor);
           print(responseData["message"]);
           Get.back();
         } else {
@@ -291,7 +291,7 @@ class AudioController extends GetxController {
       } else {
         final Map<String, dynamic> responseData = json.decode(response.body);
 
-        showInSnackBar(responseData["message"], color: Colors.red);
+        showInSnackBar(responseData["message"], color: AppColors.errorcolor);
         Get.back();
         print("Response: ${responseData["message"]}");
       }

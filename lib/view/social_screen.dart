@@ -23,37 +23,6 @@ class _SocialTabScreenState extends State<SocialTabScreen>
 
   VideoController controller = Get.put(VideoController());
 
-  void showDeleteBox(BuildContext context,
-      {required int videoId, required VideoModel number}) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.black,
-           shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    side: BorderSide(color:AppColors.whitecolor,width: 1), 
-                  ),
-          title: Center(child: Text("${number.title} ",style: TextStyle(color: AppColors.whitecolor,fontSize: 24),)),
-          content: Text("Do you want to delete this video ?",style: TextStyle(color: AppColors.whitecolor,fontSize: 16.5),),
-          actions: [
-            TextButton(
-              onPressed: () {
-                controller.videoListprivate.remove(number);
-                controller.deleteVideo(videoId);
-                Get.back();
-              },
-              child: Text(
-                "OK",
-                style: TextStyle(color: AppColors.primaryColor,fontSize: 20),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -87,7 +56,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                   width: Get.width * 0.32,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(5)),
-                  child: Tab(text: 'Social Feed'),
+                  child: const Tab(text: 'Social Feed'),
                 ),
               ),
               Container(
@@ -95,24 +64,24 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                 width: Get.width * 0.5,
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                child: Tab(text: 'Private'),
+                child: const Tab(text: 'Private'),
               ),
             ],
             indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Color(0xff4A330D).withOpacity(0.70) // Indicator color
+                color: const Color(0xff4A330D).withOpacity(0.70) // Indicator color
                 ),
             labelColor: AppColors.whitecolor,
-            labelStyle: TextStyle(
+            labelStyle: const TextStyle(
                 fontSize: 18, fontWeight: FontWeight.w800, letterSpacing: 1.25),
-            unselectedLabelStyle: TextStyle(
+            unselectedLabelStyle: const TextStyle(
                 fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 0.85),
             unselectedLabelColor: AppColors.whitecolor,
           ),
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.only(top: 13),
+        padding: const EdgeInsets.only(top: 13),
         child: Container(
           color: Colors.transparent,
           child: TabBarView(
@@ -139,7 +108,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                             : GridView.builder(
                                 itemCount: controller.videoListpublic.length,
                                 gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisSpacing: 20,
                                   mainAxisSpacing: 20,
                                   crossAxisCount: 2,
@@ -154,9 +123,8 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                                       controller.Addview(video.id!);
                                       print("VideoID:${video.id}");
                                       controller.ViewData(video.id!);
-                                      
                                     },
-                                    child:  Container(
+                                    child: Container(
                                       decoration: BoxDecoration(
                                         color: AppColors.textfieldcolor,
                                         borderRadius: BorderRadius.circular(15),
@@ -290,7 +258,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                             : GridView.builder(
                                 itemCount: controller.videoListprivate.length,
                                 gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisSpacing: 20,
                                   mainAxisSpacing: 20,
                                   crossAxisCount: 2,
@@ -387,6 +355,44 @@ class _SocialTabScreenState extends State<SocialTabScreen>
           ),
         ),
       ),
+    );
+  }
+
+  void showDeleteBox(BuildContext context,
+      {required int videoId, required VideoModel number}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(color: AppColors.whitecolor, width: 1),
+          ),
+          title: Center(
+              child: Text(
+            "${number.title} ",
+            style: TextStyle(color: AppColors.whitecolor, fontSize: 24),
+          )),
+          content: Text(
+            "Do you want to delete this video ?",
+            style: TextStyle(color: AppColors.whitecolor, fontSize: 16.5),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                controller.videoListprivate.remove(number);
+                controller.deleteVideo(videoId);
+                Get.back();
+              },
+              child: Text(
+                "OK",
+                style: TextStyle(color: AppColors.primaryColor, fontSize: 20),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

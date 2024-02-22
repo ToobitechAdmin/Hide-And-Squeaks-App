@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/view/menu.dart';
+import 'package:squeak/view/menu_screen.dart';
 import 'package:squeak/view/audio_play_screen.dart';
 import 'package:squeak/view/purchase.dart';
 import '../components/colors.dart';
