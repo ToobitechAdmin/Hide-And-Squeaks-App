@@ -35,134 +35,15 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
   recordController controllerRecord = Get.put(recordController());
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void showDeleteBox(BuildContext context,
-      {required record, required title, required id}) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.black,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            side: BorderSide(
-                color: AppColors.whitecolor, width: 1), // Border color
-          ),
-          title: Center(
-              child: Text(
-            "${title} ",
-            style: TextStyle(color: AppColors.whitecolor, fontSize: 24),
-          )),
-          content: Text(
-            "Do you want to delete this Recording ?",
-            style: TextStyle(color: AppColors.whitecolor, fontSize: 15),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                controllerRecord.recordings.remove(record);
-                controllerRecord.deleterecordings(id);
+ 
 
-                Get.back();
-              },
-              child: Text(
-                "OK",
-                style: TextStyle(color: AppColors.primaryColor),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  saveRecording(BuildContext context, {required audiopath, required timer}) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        TextEditingController recordingNames = TextEditingController();
-        return AlertDialog(
-          backgroundColor: Colors.black,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            side: BorderSide(
-                color: AppColors.whitecolor, width: 1), // Border color
-          ),
-          title: Form(
-            key: _formKey,
-            child: CustomTextField(
-              hinttext: "Recording Title",
-              controller: recordingNames,
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter Your Recording Names';
-                }
-
-                return null;
-              },
-              showSuffixIcon: false,
-            ),
-          ),
-          content: Text(
-            "Do you want to save this Recording ?",
-            style: TextStyle(color: AppColors.primaryColor, fontSize: 15),
-          ),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                    onPressed: () {
-                      setState(() {
-                        recordTimer = '00:00';
-                      });
-                      Get.back();
-                    },
-                    child: Text(
-                      "Cancel",
-                      style: TextStyle(
-                          color: AppColors.primaryColor, fontSize: 20),
-                    )),
-                TextButton(
-                  onPressed: () {
-                    if (_formKey.currentState?.validate() ?? false) {
-                      Get.back();
-                      controllerRecord.postrecoding(RecordModel(
-                          file: pathToAudio,
-                          title: recordingNames.text,
-                          audioLength: recordTimer));
-
-                      setState(() {
-                        controllerRecord.recordings.insert(
-                            0,
-                            RecordModel(
-                              file: pathToAudio,
-                              title: recordingNames.text,
-                              audioLength: recordTimer,
-                            ));
-                        recordTimer = '00:00';
-                      });
-                    }
-                  },
-                  child: Text(
-                    "OK",
-                    style:
-                        TextStyle(color: AppColors.primaryColor, fontSize: 20),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        );
-      },
-    );
-  }
+  
 
   late FlutterSoundRecorder _recordingSession;
   late FlutterSoundPlayer _recordingPlayer;
 
   String recordTimer = '00:00';
   late String pathToAudio;
-  // List to hold recorded audio paths
   bool isRecording = false;
   bool isPlaying = false;
   int? currentIndexPlaying;
@@ -297,21 +178,13 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
     });
   }
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   controller.getAudioData();
-  //   controller.getMylibraryData();
-  // }
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
-        // appBar: AppBar(
-        //   title: Text('My Screen'),
-        // ),
+       
         body: SingleChildScrollView(
           child: Container(
               height: Get.height * 1,
@@ -687,13 +560,15 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                                                             )),
                                                                         SizedBox(
                                                                           width:
-                                                                              Get.width * 0.5,
-                                                                          child: Text(
-                                                                              recordingPath.title!,
-                                                                              overflow: TextOverflow.ellipsis,
-                                                                              softWrap: false,
-                                                                              maxLines: 1,
-                                                                              style: TextStyle(color: AppColors.primaryColor, fontWeight: FontWeight.w600, fontSize: 20)),
+                                                                              Get.width * 0.32,
+                                                                          child: Center(
+                                                                            child: Text(
+                                                                                recordingPath.title!,
+                                                                                overflow: TextOverflow.ellipsis,
+                                                                                softWrap: false,
+                                                                                maxLines: 1,
+                                                                                style: TextStyle(color: AppColors.primaryColor, fontWeight: FontWeight.w600, fontSize: 20)),
+                                                                          ),
                                                                         ),
                                                                         Text(
                                                                           "${recordingPath.audioLength}",
@@ -877,5 +752,125 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                 )
               ])),
         ));
+  }
+   void showDeleteBox(BuildContext context,
+      {required record, required title, required id}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(
+                color: AppColors.whitecolor, width: 1), // Border color
+          ),
+          title: Center(
+              child: Text(
+            "${title} ",
+            style: TextStyle(color: AppColors.whitecolor, fontSize: 24),
+          )),
+          content: Text(
+            "Do you want to delete this Recording ?",
+            style: TextStyle(color: AppColors.whitecolor, fontSize: 15),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                controllerRecord.recordings.remove(record);
+                controllerRecord.deleterecordings(id);
+
+                Get.back();
+              },
+              child: Text(
+                "OK",
+                style: TextStyle(color: AppColors.primaryColor),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+  saveRecording(BuildContext context, {required audiopath, required timer}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController recordingNames = TextEditingController();
+        return AlertDialog(
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(
+                color: AppColors.whitecolor, width: 1), // Border color
+          ),
+          title: Form(
+            key: _formKey,
+            child: CustomTextField(
+              hinttext: "Recording Title",
+              controller: recordingNames,
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter Your Recording Names';
+                }
+
+                return null;
+              },
+              showSuffixIcon: false,
+            ),
+          ),
+          content: Text(
+            "Do you want to save this Recording ?",
+            style: TextStyle(color: AppColors.primaryColor, fontSize: 15),
+          ),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                    onPressed: () {
+                      setState(() {
+                        recordTimer = '00:00';
+                      });
+                      Get.back();
+                    },
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                          color: AppColors.primaryColor, fontSize: 20),
+                    )),
+                TextButton(
+                  onPressed: () {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      Get.back();
+                      controllerRecord.postrecoding(RecordModel(
+                          file: pathToAudio,
+                          title: recordingNames.text,
+                          audioLength: recordTimer));
+
+                      setState(() {
+                        controllerRecord.recordings.insert(
+                            0,
+                            RecordModel(
+                              file: pathToAudio,
+                              title: recordingNames.text,
+                              audioLength: recordTimer,
+                            ));
+                        recordTimer = '00:00';
+                      });
+                    }
+                  },
+                  child: Text(
+                    "OK",
+                    style:
+                        TextStyle(color: AppColors.primaryColor, fontSize: 20),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
   }
 }
