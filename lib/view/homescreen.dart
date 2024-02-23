@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         controller.pauseAudio();
                       } else {
                         controller.playAudio(
-                            '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}');
+                            AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString());
                       }
                     },
                     previousTap: () {
@@ -156,17 +156,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           print(currentAudioIndex.value);
 
                           controller.playAudio(
-                            '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}',
+                            AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString(),
                           );
                           print(
-                              '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}');
+                              AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString());
                         } else {
                           print('Previous Two');
                           // If we're at the beginning of the list, loop to the end
                           currentAudioIndex.value =
                               controller.audioSoundList.length - 1;
                           controller.playAudio(
-                            '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}',
+                            AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString(),
                           );
                         }
                       } else {
@@ -183,14 +183,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           currentAudioIndex.value++;
                           print(currentAudioIndex.value);
                           controller.playAudio(
-                            '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}',
+                            AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString(),
                           );
                         } else {
                           print('Next Two');
                           // If we're at the end of the list, loop back to the beginning
                           currentAudioIndex.value = 0;
                           controller.playAudio(
-                            '${AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString()}',
+                            AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString(),
                           );
                         }
                       } else {
