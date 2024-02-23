@@ -25,6 +25,13 @@ class _UploadScreenState extends State<UploadScreen> {
   TextEditingController descriptionController = TextEditingController();
 
   @override
+  void dispose() {
+    super.dispose();
+    titleController.clear();
+    descriptionController.clear();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
@@ -89,22 +96,21 @@ class _UploadScreenState extends State<UploadScreen> {
                       ),
                       decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 3.5, vertical: 7),
+                              horizontal: 5, vertical: 10),
                           hintText: "Enter Title of Your Video",
-                          border: InputBorder.none, // Set the border to none
+                          border: InputBorder.none,
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: AppColors.whitecolor, width: 2)),
+                                  color: AppColors.whitecolor, width: 1)),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                                color: AppColors.whitecolor,
-                                width: 2), // Change color as needed
+                                color: AppColors.whitecolor.withOpacity(0.7), width: 1),
                           ),
                           focusColor: Colors.transparent,
                           hintStyle: TextStyle(
-                            fontSize: 17,
+                            fontSize: 14,
                             color: AppColors.whitecolor.withOpacity(0.5),
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.normal,
                           ),
                           constraints: BoxConstraints.tightFor(
                               height: Get.height * 0.035)),
@@ -132,22 +138,21 @@ class _UploadScreenState extends State<UploadScreen> {
                       ),
                       decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 3.5, vertical: 7),
+                              horizontal: 4, vertical: 10),
                           hintText: "Enter Description of Your Video",
-                          border: InputBorder.none, 
+                          border: InputBorder.none,
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: AppColors.whitecolor, width: 2)),
+                                  color: AppColors.whitecolor, width: 1)),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                                color: AppColors.whitecolor,
-                                width: 2), 
+                                color: AppColors.whitecolor.withOpacity(0.7), width: 1),
                           ),
                           focusColor: Colors.transparent,
                           hintStyle: TextStyle(
-                            fontSize: 17,
+                            fontSize: 14,
                             color: AppColors.whitecolor.withOpacity(0.5),
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.normal,
                           ),
                           constraints: BoxConstraints.tightFor(
                               height: Get.height * 0.035)),
@@ -194,8 +199,8 @@ class _UploadScreenState extends State<UploadScreen> {
                                     "Upload Video",
                                     style: TextStyle(
                                         color: AppColors.whitecolor,
-                                        fontSize: 27,
-                                        fontWeight: FontWeight.w800),
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                   SizedBox(
                                     width: Get.width * 0.1,
@@ -237,8 +242,8 @@ class _UploadScreenState extends State<UploadScreen> {
                               thumbnail: controller.thumbnailFile.value!.path,
                               file_path: controller.videofile.value!.path);
                           controller.postVideo(model);
-                          titleController.clear();
-                          descriptionController.clear();
+                          // titleController.clear();
+                          // descriptionController.clear();
                         } else if (controller.videofile.value == null) {
                           showInSnackBar("Select a video to upload",
                               color: AppColors.errorcolor);

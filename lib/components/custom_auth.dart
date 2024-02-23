@@ -6,7 +6,7 @@ class CustomAuth extends StatelessWidget {
   final String assetpath;
   final VoidCallback onTap;
 
-  CustomAuth({required this.assetpath, required this.onTap});
+  const CustomAuth({super.key, required this.assetpath, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +22,8 @@ class CustomAuth extends StatelessWidget {
 }
 
 class CustomContainer extends StatelessWidget {
+  const CustomContainer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(

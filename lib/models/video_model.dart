@@ -1,7 +1,7 @@
 
 
 
-import 'package:squeak/Local%20Storage/global_variable.dart';
+
 
 class VideoModel {
   int? id;

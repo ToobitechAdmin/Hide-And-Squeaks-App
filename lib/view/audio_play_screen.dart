@@ -360,7 +360,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                         color: isCurrent
                                             ? AppColors.whitecolor
                                             : AppColors.primaryColor,
-                                        fontSize: isCurrent ? 18 : 20,
+                                        fontSize: isCurrent ? 16 : 18,
                                         fontWeight: FontWeight.w700),
                                   ),
                                 ),
@@ -389,7 +389,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                         color: isCurrent
                                             ? AppColors.primaryColor
                                             : AppColors.whitecolor,
-                                        fontSize: isCurrent ? 20 : 18,
+                                        fontSize: isCurrent ? 18 : 16,
                                         fontWeight: FontWeight.w700),
                                   ),
                                 ),
@@ -401,10 +401,11 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                             ? Expanded(
                                 child: Obx(() => Column(
                                       children: [
+                                        SizedBox(height: Get.height*0.02,),
                                         Text(
                                           recordTimer,
                                           style: TextStyle(
-                                              fontSize: 32,
+                                              fontSize: 25,
                                               color: AppColors.primaryColor),
                                         ),
                                         const SizedBox(height: 20),
@@ -430,7 +431,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                                   child: Text(
                                                     "Record",
                                                     style: TextStyle(
-                                                        fontSize: 20,
+                                                        fontSize: 17,
                                                         color: AppColors
                                                             .whitecolor,
                                                         fontWeight:
@@ -455,7 +456,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                                   child: Text(
                                                     "Stop",
                                                     style: TextStyle(
-                                                        fontSize: 20,
+                                                        fontSize: 17,
                                                         color: AppColors
                                                             .whitecolor,
                                                         fontWeight:
@@ -534,7 +535,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                                                     decoration:
                                                                         BoxDecoration(
                                                                             border:
-                                                                                Border(bottom: BorderSide(color: AppColors.whitecolor))),
+                                                                                Border(bottom: BorderSide(color: AppColors.whitecolor.withOpacity(0.7)))),
                                                                     child: Row(
                                                                       mainAxisAlignment:
                                                                           MainAxisAlignment
@@ -555,26 +556,24 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                                                             child:
                                                                                 Icon(
                                                                               isCurrentlyPlaying ? Icons.pause : Icons.play_arrow,
-                                                                              size: 35,
+                                                                              size: 30,
                                                                               color: isCurrentlyPlaying ? AppColors.primaryColor : AppColors.pinkcolor,
                                                                             )),
                                                                         SizedBox(
                                                                           width:
                                                                               Get.width * 0.32,
-                                                                          child: Center(
-                                                                            child: Text(
-                                                                                recordingPath.title!,
-                                                                                overflow: TextOverflow.ellipsis,
-                                                                                softWrap: false,
-                                                                                maxLines: 1,
-                                                                                style: TextStyle(color: AppColors.primaryColor, fontWeight: FontWeight.w600, fontSize: 20)),
-                                                                          ),
+                                                                          child: Text(
+                                                                              recordingPath.title!,
+                                                                              overflow: TextOverflow.ellipsis,
+                                                                              softWrap: false,
+                                                                              maxLines: 1,
+                                                                              style: TextStyle(color: AppColors.primaryColor, fontWeight: FontWeight.w600, fontSize: 18)),
                                                                         ),
                                                                         Text(
                                                                           "${recordingPath.audioLength}",
                                                                           style: TextStyle(
                                                                               color: AppColors.whitecolor,
-                                                                              fontSize: 17),
+                                                                              fontSize: 14),
                                                                         ),
                                                                         GestureDetector(
                                                                             onTap:
@@ -628,12 +627,12 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                                           border: Border(
                                                               bottom: BorderSide(
                                                                   color: AppColors
-                                                                      .whitecolor,
-                                                                  width: 2))),
+                                                                      .whitecolor.withOpacity(0.7),
+                                                                  width: 1))),
                                                       child: Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
-                                                                .spaceAround,
+                                                                .start,
                                                         children: [
                                                           Obx(() =>
                                                               GestureDetector(
@@ -652,7 +651,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                                                             .play_arrow,
                                                                     color: Colors
                                                                         .white,
-                                                                    size: 35,
+                                                                    size: 30,
                                                                   ),
                                                                 ),
                                                                 onTap:
@@ -665,7 +664,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                                               )),
                                                           SizedBox(
                                                             width:
-                                                                Get.width * 0.5,
+                                                                Get.width * 0.3,
                                                             child: Center(
                                                               child: Text(
                                                                 item.title,
@@ -679,7 +678,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                                                     fontSize: 18,
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .w800),
+                                                                            .w600),
                                                               ),
                                                             ),
                                                           )
@@ -767,7 +766,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
           ),
           title: Center(
               child: Text(
-            "${title} ",
+            "$title ",
             style: TextStyle(color: AppColors.whitecolor, fontSize: 24),
           )),
           content: Text(

@@ -53,7 +53,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       videoPlayerController: videoPlayerController,
       autoPlay: true,
       looping: true,
-      aspectRatio: Get.height / Get.height,
+      aspectRatio: 100/100,
       allowPlaybackSpeedChanging: true,
       allowedScreenSleep: false,
       autoInitialize: true,
@@ -62,7 +62,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       cupertinoProgressColors:
           ChewieProgressColors(bufferedColor: AppColors.primaryColor),
       placeholder: Container(
-        color: Colors.blueGrey,
+        color: Color(0xff3f3f3f),
       ),
       materialProgressColors: ChewieProgressColors(
         playedColor: AppColors.primaryColor,
@@ -125,7 +125,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                 child: Text(
                                   "Share",
                                   style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 18,
                                       color: AppColors.whitecolor,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -180,7 +180,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   size: 25,
                                 ),
                               ),
-                              hintText: "Comment",
+                              hintText: "Comment ...",
                               contentPadding:
                                   const EdgeInsets.symmetric(horizontal: 10),
                               enabledBorder: OutlineInputBorder(
@@ -194,8 +194,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                     color: Colors.white, width: 2.0),
                               ),
                               hintStyle: TextStyle(
-                                fontSize: 14,
-                                color: AppColors.whitecolor,
+                                fontSize: 12,
+                                color: AppColors.whitecolor.withOpacity(0.8),
                                 fontWeight: FontWeight.w400,
                               ),
                               constraints: BoxConstraints.tightFor(
@@ -311,8 +311,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                             "Published $newdate",
                                             style: TextStyle(
                                                 fontSize: 10,
-                                                color: AppColors.whitecolor,
-                                                fontWeight: FontWeight.w500),
+                                                color: AppColors.whitecolor.withOpacity(0.8),
+                                                fontWeight: FontWeight.normal),
                                           ),
                                         ],
                                       )
@@ -420,16 +420,16 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                 print(formateddays);
 
                                 return Container(
-                                  height: Get.height * 0.06,
+                                  height: Get.height * 0.065,
                                   width: Get.width * 0.95,
                                   decoration: BoxDecoration(
                                       border: Border(
                                           bottom: BorderSide(
-                                              color: AppColors.whitecolor,
-                                              width: 1.5))),
+                                              color: AppColors.whitecolor.withOpacity(0.7),
+                                              width: 1))),
                                   child: Center(
                                     child: Padding(
-                                      padding: const EdgeInsets.only(bottom: 7),
+                                      padding: const EdgeInsets.all(5),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
@@ -485,13 +485,19 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                                   )
                                                 ],
                                               ),
-                                              Text(
-                                                usercomment.comment.toString(),
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w100,
-                                                    color:
-                                                        AppColors.whitecolor),
+                                              SizedBox(
+                                                width: Get.width*0.7,
+                                                child: Text(
+                                                  
+                                                  usercomment.comment.toString(),
+                                                  overflow: TextOverflow.ellipsis,
+                                                  softWrap: false,
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w100,
+                                                      color:
+                                                          AppColors.whitecolor.withOpacity(0.8)),
+                                                ),
                                               )
                                             ],
                                           )

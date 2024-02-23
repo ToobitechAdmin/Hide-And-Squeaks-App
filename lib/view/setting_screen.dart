@@ -109,7 +109,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     child: Text(
                       "Bluetooth",
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 22,
                           fontWeight: FontWeight.w600,
                           color: AppColors.whitecolor),
                     ),
@@ -143,7 +143,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     child: Text(
                       "Legal",
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 22,
                           fontWeight: FontWeight.w600,
                           color: AppColors.whitecolor),
                     ),
@@ -177,7 +177,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     child: Text(
                       "Profile",
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 22,
                           fontWeight: FontWeight.w600,
                           color: AppColors.whitecolor),
                     ),
@@ -213,7 +213,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     child: Text(
                       "Sign Out",
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 22,
                           fontWeight: FontWeight.w600,
                           color: AppColors.whitecolor),
                     ),

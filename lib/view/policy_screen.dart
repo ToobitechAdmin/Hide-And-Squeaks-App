@@ -55,8 +55,8 @@ class _TextScreenState extends State<TextScreen> {
                    controller.para.value.toString(),
                     textAlign: TextAlign.justify,
                     style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
                         color:AppColors.whitecolor,
                         height: 1.45),
                   ),)
