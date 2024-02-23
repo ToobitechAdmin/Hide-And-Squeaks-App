@@ -17,7 +17,7 @@ void showInSnackBar(String value,
         style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontFamily: 'Poppins'),
+           ),
       ),
     ),
     dismissDirection: DismissDirection.up,

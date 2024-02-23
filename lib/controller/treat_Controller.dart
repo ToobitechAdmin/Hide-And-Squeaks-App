@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/App_URL/apiurl.dart';
 import 'package:squeak/Local%20Storage/global_variable.dart';
-
 import 'package:http/http.dart' as http;
 import 'package:squeak/components/colors.dart';
-import 'package:squeak/components/snakbar.dart';
+import '../components/custom_snakbar.dart';
 import '../models/treatmodel.dart';
 
 class treatController extends GetxController {
@@ -16,6 +15,8 @@ class treatController extends GetxController {
   var isLoadingbalance = false.obs;
 
   List<TreatModel> treatList = <TreatModel>[].obs;
+
+  
   fetchTreats() async {
     isLoading.value = true;
     String currentToken = appStorage.read('userToken');

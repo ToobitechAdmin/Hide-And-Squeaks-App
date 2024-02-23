@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -8,10 +7,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:squeak/App_URL/apiurl.dart';
 import 'package:squeak/Local%20Storage/global_variable.dart';
 import 'package:squeak/components/colors.dart';
-import 'package:squeak/components/snakbar.dart';
 import 'package:squeak/models/user_model.dart';
 import 'package:squeak/global/alertbox.dart';
 import 'package:squeak/view/homescreen.dart';
+
+import '../components/custom_snakbar.dart';
 
 class ProfileController extends GetxController {
   final Rx<File?> image = Rx<File?>(null);
@@ -48,7 +48,7 @@ class ProfileController extends GetxController {
             ..headers['Accept'] = 'application/json'
             ..fields['pet_name'] = model.petName!
             ..fields['pet_breed'] = model.petBreed!;
-             List<http.MultipartFile> files = [];
+      List<http.MultipartFile> files = [];
 
       if (model.profile != null) {
         files.add(await http.MultipartFile.fromPath(
@@ -56,7 +56,7 @@ class ProfileController extends GetxController {
           model.profile!,
         ));
       }
-       request.files.addAll(files);
+      request.files.addAll(files);
 
       var response = await request.send();
       final Map<String, dynamic> responseData =
@@ -71,7 +71,7 @@ class ProfileController extends GetxController {
         if (responseData['success'] == true) {
           print(responseData);
 
-          print("Response: ${responseData}");
+          print("Response: $responseData");
           Get.to(HomeScreen());
         } else {
           print(" ${responseData['message']}");

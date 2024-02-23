@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squeak/components/snakbar.dart';
-
+import 'package:squeak/components/custom_auth.dart';
+import '../components/custom_snakbar.dart';
 import '../controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/components/custom.dart';
-
 import '../components/colors.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -26,8 +24,8 @@ class _OtpScreenState extends State<OtpScreen> {
 
   List<TextEditingController> otpControllers =
       List.generate(4, (index) => TextEditingController());
- 
 
+  @override
   void dispose() {
     for (var controller in otpControllers) {
       controller.dispose();
@@ -41,6 +39,7 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Container(
         height: Get.height * 1,
         width: Get.width * 1,
@@ -75,9 +74,8 @@ class _OtpScreenState extends State<OtpScreen> {
                     4,
                     (index) => Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(left: 15, right: 15),
+                        padding: const EdgeInsets.only(left: 15, right: 15),
                         child: TextFormField(
-                         
                           controller: otpControllers[index],
                           focusNode: focusNodes[index],
                           maxLength: 1,
@@ -89,17 +87,15 @@ class _OtpScreenState extends State<OtpScreen> {
                             fontSize: 17,
                           ),
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 15, horizontal: 15),
                             filled: true,
                             fillColor: AppColors.textfieldcolor,
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.transparent),
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.transparent),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent),
                             ),
                             focusColor: Colors.transparent,
                             hintStyle: TextStyle(
@@ -130,13 +126,13 @@ class _OtpScreenState extends State<OtpScreen> {
                   onTap: () {
                     if (otpControllers
                         .any((controller) => controller.text.isEmpty)) {
-                      showInSnackBar("Please Fill all OTP Fields",color: AppColors.errorcolor);
+                      showInSnackBar("Please Fill all OTP Fields",
+                          color: AppColors.errorcolor);
                       return;
+                    } else {
+                      controller.verifyOtpAndNavigate(
+                          otpControllers, widget.receivedOtp, widget.userEmail);
                     }
-                    else{
-
-                    controller.verifyOtpAndNavigate(
-                        otpControllers, widget.receivedOtp, widget.userEmail);}
                   },
                   child: Container(
                     height: Get.height * 0.067,

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/components/custom.dart';
-import 'package:squeak/view/appstore.dart';
-import 'package:squeak/view/profile.dart';
-import 'package:squeak/view/setting.dart';
+import 'package:squeak/components/custom_appbar.dart';
+import 'package:squeak/components/custom_menu_btn.dart';
+import 'package:squeak/view/profile_screen.dart';
+import 'package:squeak/view/setting_screen.dart';
 import 'package:squeak/view/socialfeed.dart';
-import 'package:squeak/view/policy.dart';
-import 'package:squeak/view/upload.dart';
+import 'package:squeak/view/policy_screen.dart';
+import 'package:squeak/view/video_upload_screen.dart';
 import '../components/colors.dart';
 import 'audio_play_screen.dart';
 
@@ -22,6 +22,7 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: Colors.black,
       body: Container(
         height: Get.height * 1,
         width: Get.width * 1,
@@ -37,9 +38,9 @@ class _MenuScreenState extends State<MenuScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Customhead(),
+              CustomAppBar(),
               SizedBox(
-                height: Get.height * 0.057,
+                height: Get.height * 0.1,
               ),
               Padding(
                 padding: EdgeInsets.only(left: 10, right: 10),
@@ -53,21 +54,21 @@ class _MenuScreenState extends State<MenuScreen> {
                             onTap: () {
                               Get.to(AudioPlayScreen());
                             },
-                            child: CustomSettings(
+                            child: CustomMenuBtn(
                                 library: "Sound\nLibrary",
                                 settingimage: AppAssets.settings1)),
                         GestureDetector(
                             onTap: () {
                               Get.to(UploadScreen());
                             },
-                            child: CustomSettings(
+                            child: CustomMenuBtn(
                                 library: "Video\nUpload",
                                 settingimage: AppAssets.settings2)),
                                 GestureDetector(
                         onTap: () {
                           Get.to(SettingScreen());
                         },
-                        child: CustomSettings(
+                        child: CustomMenuBtn(
                             library: "Settings",
                             settingimage: AppAssets.settings7)),
                         // GestureDetector(
@@ -89,21 +90,21 @@ class _MenuScreenState extends State<MenuScreen> {
                             onTap: () {
                               Get.to(ProfileScreen());
                             },
-                            child: CustomSettings(
+                            child: CustomMenuBtn(
                                 library: "Profile\nSetup",
                                 settingimage: AppAssets.settings4)),
                         GestureDetector(
                             onTap: () {
                               Get.to(SocialScreen());
                             },
-                            child: CustomSettings(
+                            child: CustomMenuBtn(
                                 library: "Social\nFeed",
                                 settingimage: AppAssets.settings5)),
                         GestureDetector(
                             onTap: () {
                               Get.to(TextScreen());
                             },
-                            child: CustomSettings(
+                            child: CustomMenuBtn(
                                 library: "Safety\nInformation",
                                 settingimage: AppAssets.settings6)),
                       ],

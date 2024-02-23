@@ -4,9 +4,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:squeak/App_URL/apiurl.dart';
 import 'package:squeak/Local%20Storage/global_variable.dart';
-import 'package:squeak/components/snakbar.dart';
 import 'package:squeak/global/alertbox.dart';
-import 'package:squeak/view/OTP.dart';
+import 'package:squeak/view/OTP_screen.dart';
 import 'package:squeak/view/homescreen.dart';
 import 'package:squeak/view/password_screen.dart';
 import 'package:squeak/view/login_screen.dart';
@@ -15,22 +14,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
-class AuthController extends GetxController {
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  GoogleSignIn _googleSignIn = GoogleSignIn();
+import '../components/custom_snakbar.dart';
 
+class AuthController extends GetxController {
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  GoogleSignIn googleSignIn = GoogleSignIn();
   Rx<User?> user = Rx<User?>(null);
 
   @override
   void onInit() {
     super.onInit();
-    user.bindStream(_auth.authStateChanges());
+    user.bindStream(auth.authStateChanges());
   }
 
   signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
+          await googleSignIn.signIn();
 
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication =
@@ -42,7 +43,7 @@ class AuthController extends GetxController {
         );
 
         UserCredential userCredential =
-            await _auth.signInWithCredential(credential);
+            await auth.signInWithCredential(credential);
         //  showDialogue();
 
         User? currentUser = FirebaseAuth.instance.currentUser;
@@ -71,7 +72,6 @@ class AuthController extends GetxController {
                 userFirstName, userLastName, userEmail, randomPassword);
           }
         }
-
         isUserRegistered();
       }
     } catch (e) {
@@ -83,14 +83,14 @@ class AuthController extends GetxController {
   }
 
   GoogleSignOut() {
-    _googleSignIn.signOut();
-    _auth.signOut();
+    googleSignIn.signOut();
+    auth.signOut();
     print("Google Log Out");
   }
 
   facebookSignOut() {
     FacebookAuth.instance.logOut();
-    _auth.signOut();
+    auth.signOut();
     print("Facebook Log Out");
   }
 
@@ -154,7 +154,7 @@ class AuthController extends GetxController {
 
     try {
       final response = await http.post(
-        Uri.parse(AppUrl.SignInURL),
+        Uri.parse(AppUrl.signInURL),
         body: {
           "email": email,
           "password": password,
@@ -164,22 +164,24 @@ class AuthController extends GetxController {
       Get.back();
       if (response.statusCode == 200) {
         if (responseData['success'] == true) {
-          print(responseData["data"]["name"]);
           print(responseData);
 
           appStorage.write("userToken", responseData['data']["token"]);
           appStorage.write("name", responseData['data']["name"]);
-
+          appStorage.write("id", responseData['data']["id"]);
           appStorage.write(profile, responseData['data']["profile"]);
-          print(appStorage.read("name"));
-          print(appStorage.read("profile"));
+
+          print("Name ${appStorage.read("name")}");
+          print("Profile: ${appStorage.read("profile")}");
+          print("ID: ${appStorage.read("id")}");
+
 
           print(userToken);
 
-          print(appStorage.read('userToken'));
-          print("Response: ${response.body}");
+          // print(appStorage.read('userToken'));
+          // print("Response: ${response.body}");
 
-          Get.offAll(HomeScreen());
+          Get.offAll(const HomeScreen());
         }
       } else {
         Get.back();
@@ -223,7 +225,7 @@ class AuthController extends GetxController {
           print("SignUp In successful");
           print("Response: ${response.body}");
 
-          Get.offAll(LoginScreen());
+          Get.offAll(const LoginScreen());
         }
       } else {
         print("Sign Up error: ${response.statusCode}");
@@ -289,7 +291,7 @@ class AuthController extends GetxController {
         'otp': enteredOtp,
         'email': userEmail,
       });
-      Get.back();
+      
       final Map<String, dynamic> responseData = json.decode(response.body);
       print(enteredOtp);
       print(userEmail);
@@ -303,6 +305,7 @@ class AuthController extends GetxController {
       } else {
         print("${response.body}");
         print('Failed to verify OTP: ${response.statusCode}');
+        Get.back();
 
         showInSnackBar(
             "Error ${response.statusCode} ${responseData['message']}",
@@ -321,7 +324,7 @@ class AuthController extends GetxController {
         'email': email,
         'password': password,
       });
-      Get.back();
+    
       final Map<String, dynamic> responseData = json.decode(response.body);
 
       if (response.statusCode == 200) {
@@ -329,10 +332,10 @@ class AuthController extends GetxController {
         showInSnackBar("Password Updated Successfully",
             color: AppColors.greencolor);
 
-        Get.offAll(() => LoginScreen());
+        Get.offAll(() => const LoginScreen());
       } else {
         print(
-            'Failed to update password: ${response.statusCode} ${responseData["message"]}');
+            'Failed to update password: $response.statusCode ${responseData["message"]}');
         Get.back();
       }
     } catch (error) {

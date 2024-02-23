@@ -1,16 +1,11 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:squeak/App_URL/apiurl.dart';
 import 'package:squeak/Local%20Storage/global_variable.dart';
 import 'package:squeak/components/colors.dart';
-import 'package:squeak/components/snakbar.dart';
-import 'package:squeak/global/alertbox.dart';
-import 'package:squeak/models/audio_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:squeak/models/record_model.dart';
+import '../components/custom_snakbar.dart';
 
 class recordController extends GetxController {
   var isLoading = true.obs;
@@ -35,6 +30,7 @@ class recordController extends GetxController {
             ));
 
       var response = await request.send();
+      
       String responseBody = await response.stream.bytesToString();
       final Map<String, dynamic> responseData = json.decode(responseBody);
 

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/view/menu.dart';
+import 'package:squeak/view/menu_screen.dart';
 import 'package:squeak/view/audio_play_screen.dart';
-import 'package:squeak/view/purchase.dart';
 import '../components/colors.dart';
 import '../components/custom_playbutton.dart';
 
@@ -18,6 +17,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Container(
           height: Get.height * 1,

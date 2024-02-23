@@ -1,7 +1,6 @@
-import 'dart:convert';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
+
+
 
 
 class VideoModel {
@@ -21,6 +20,8 @@ class VideoModel {
   String? thumbnail;
   String? updated_at;
   bool? userLikedVideo;
+  String?user_profile;
+  String?user_name;
   
 
 
@@ -44,13 +45,17 @@ class VideoModel {
       this.thumbnail,
       this.updated_at,
       this.userLikedVideo,
+      this.user_profile,
+      this.user_name,
   
       this.video_id});
 
   factory VideoModel.fromJson(Map<String, dynamic> json) {
     return VideoModel(
-     id: json['id'] as int?,
+    id: json['id'] as int?,
+    user_name: json["name"],
     user_id: json['user_id'] as int?,
+    user_profile: json["user_profile"] as String? ?? " ",
     file_path: json['file_path'] as String? ?? '',
     title: json['title'] as String? ?? '',
     videotype: json["video_type"] as String? ?? '',
@@ -81,6 +86,7 @@ class VideoModel {
       "user_id":user_id,
       'file_path': file_path,
       'title': title,
+      "user_profiler":user_profile,
       "description": description,
       "created_at": created_at,
       "comments": comments,

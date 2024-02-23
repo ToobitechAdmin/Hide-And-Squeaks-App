@@ -1,14 +1,11 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/components/custom.dart';
-import 'package:squeak/components/snakbar.dart';
+import 'package:squeak/components/custom_video_appbar.dart';
 import 'package:squeak/controller/video_controller.dart';
 import 'package:squeak/models/video_model.dart';
-
 import '../components/colors.dart';
+import '../components/custom_snakbar.dart';
 
 class UploadScreen extends StatefulWidget {
   const UploadScreen({super.key});
@@ -22,14 +19,22 @@ class _UploadScreenState extends State<UploadScreen> {
 
   bool isChecked = false;
   bool isChecked2 = false;
-  String privacyOption = "";
+  String privacyOption = " ";
 
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
-  
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    titleController.clear();
+    descriptionController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Container(
         height: Get.height * 1,
         width: Get.width * 1,
@@ -59,16 +64,16 @@ class _UploadScreenState extends State<UploadScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 40),
-                        child: CustomBar(midtext: "Upload"),
+                        padding: const EdgeInsets.only(top: 40),
+                        child: CustomVideoAppbar(midtext: "Upload"),
                       )
                     ],
                   ),
                 ],
               ),
               Padding(
-                padding:
-                    EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                padding: const EdgeInsets.only(
+                    left: 20, right: 20, top: 10, bottom: 10),
                 child: Column(
                   children: [
                     Align(
@@ -82,8 +87,7 @@ class _UploadScreenState extends State<UploadScreen> {
                       ),
                     ),
                     TextFormField(
-                      controller: _titleController,
-                     
+                      controller: titleController,
                       textAlign: TextAlign.start,
                       cursorColor: AppColors.whitecolor,
                       style: TextStyle(
@@ -91,23 +95,22 @@ class _UploadScreenState extends State<UploadScreen> {
                         fontSize: 17,
                       ),
                       decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 3.5, vertical: 7),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 10),
                           hintText: "Enter Title of Your Video",
-                          border: InputBorder.none, // Set the border to none
+                          border: InputBorder.none,
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: AppColors.whitecolor, width: 2)),
+                                  color: AppColors.whitecolor, width: 1)),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                                color: AppColors.whitecolor,
-                                width: 2), // Change color as needed
+                                color: AppColors.whitecolor.withOpacity(0.7), width: 1),
                           ),
                           focusColor: Colors.transparent,
                           hintStyle: TextStyle(
-                            fontSize: 17,
+                            fontSize: 14,
                             color: AppColors.whitecolor.withOpacity(0.5),
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.normal,
                           ),
                           constraints: BoxConstraints.tightFor(
                               height: Get.height * 0.035)),
@@ -126,8 +129,7 @@ class _UploadScreenState extends State<UploadScreen> {
                       ),
                     ),
                     TextFormField(
-                      controller: _descriptionController,
-                    
+                      controller: descriptionController,
                       textAlign: TextAlign.start,
                       cursorColor: AppColors.whitecolor,
                       style: TextStyle(
@@ -135,23 +137,22 @@ class _UploadScreenState extends State<UploadScreen> {
                         fontSize: 17,
                       ),
                       decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 3.5, vertical: 7),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 4, vertical: 10),
                           hintText: "Enter Description of Your Video",
-                          border: InputBorder.none, // Set the border to none
+                          border: InputBorder.none,
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: AppColors.whitecolor, width: 2)),
+                                  color: AppColors.whitecolor, width: 1)),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                                color: AppColors.whitecolor,
-                                width: 2), // Change color as needed
+                                color: AppColors.whitecolor.withOpacity(0.7), width: 1),
                           ),
                           focusColor: Colors.transparent,
                           hintStyle: TextStyle(
-                            fontSize: 17,
+                            fontSize: 14,
                             color: AppColors.whitecolor.withOpacity(0.5),
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.normal,
                           ),
                           constraints: BoxConstraints.tightFor(
                               height: Get.height * 0.035)),
@@ -163,7 +164,7 @@ class _UploadScreenState extends State<UploadScreen> {
                       onTap: () {
                         setState(() {});
                         print("pick video");
-                
+
                         controller.pickVideo();
                       },
                       child: Stack(children: [
@@ -171,7 +172,7 @@ class _UploadScreenState extends State<UploadScreen> {
                           height: Get.height * 0.1,
                           width: Get.width * 0.89,
                           decoration:
-                              BoxDecoration(color: Colors.transparent),
+                              const BoxDecoration(color: Colors.transparent),
                         ),
                         Positioned(
                           right: 0,
@@ -198,14 +199,14 @@ class _UploadScreenState extends State<UploadScreen> {
                                     "Upload Video",
                                     style: TextStyle(
                                         color: AppColors.whitecolor,
-                                        fontSize: 27,
-                                        fontWeight: FontWeight.w800),
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                   SizedBox(
                                     width: Get.width * 0.1,
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(right: 15),
+                                    padding: const EdgeInsets.only(right: 15),
                                     child: Icon(
                                       Icons.file_upload_outlined,
                                       size: 50,
@@ -229,35 +230,34 @@ class _UploadScreenState extends State<UploadScreen> {
                         print("Privacy:  ${privacyOption}");
                         print(
                             "Thumbnailpath ${controller.thumbnailFile.value}");
-                
-                       
-                          if (controller.videofile.value != null&& _titleController.text.isNotEmpty && _descriptionController.text.isNotEmpty&& privacyOption.length>2 ) {
-                            var model = VideoModel(
-                                title: _titleController.text,
-                                description: _descriptionController.text,
-                                videotype: privacyOption,
-                                thumbnail:
-                                    controller.thumbnailFile.value!.path,
-                                file_path: controller.videofile.value!.path);
-                            controller.postVideo(model);
-                            _titleController.clear();
-                            _descriptionController.clear();
-                          } else if (controller.videofile.value == null) {
-                            showInSnackBar("Select a video to upload",
-                                color: AppColors.errorcolor);
-                          } else if(_titleController.text.isEmpty) {
-                            showInSnackBar("Enter Video Title",
-                                color: AppColors.errorcolor);
-                        
-                          }
-                          else if(_descriptionController.text.isEmpty) {
-                            showInSnackBar("Enter Video Descriptiion",color: AppColors.errorcolor);
-                          }
-                          else{
-                            showInSnackBar("Select Video Type Private or Public",color: AppColors.errorcolor);
-                          }
-                        },
-                      
+
+                        if (controller.videofile.value != null &&
+                            titleController.text.isNotEmpty &&
+                            descriptionController.text.isNotEmpty &&
+                            privacyOption.length > 2) {
+                          var model = VideoModel(
+                              title: titleController.text,
+                              description: descriptionController.text,
+                              videotype: privacyOption,
+                              thumbnail: controller.thumbnailFile.value!.path,
+                              file_path: controller.videofile.value!.path);
+                          controller.postVideo(model);
+                          // titleController.clear();
+                          // descriptionController.clear();
+                        } else if (controller.videofile.value == null) {
+                          showInSnackBar("Select a video to upload",
+                              color: AppColors.errorcolor);
+                        } else if (titleController.text.isEmpty) {
+                          showInSnackBar("Enter Video Title",
+                              color: AppColors.errorcolor);
+                        } else if (descriptionController.text.isEmpty) {
+                          showInSnackBar("Enter Video Descriptiion",
+                              color: AppColors.errorcolor);
+                        } else {
+                          showInSnackBar("Select Video Type Private or Public",
+                              color: AppColors.errorcolor);
+                        }
+                      },
                       child: Container(
                         height: Get.height * 0.055,
                         width: Get.width * 0.31,
@@ -304,8 +304,8 @@ class _UploadScreenState extends State<UploadScreen> {
                           width: Get.width * 0.0000001,
                           decoration: BoxDecoration(
                               border: Border(
-                                  right: BorderSide(
-                                      color: AppColors.whitecolor))),
+                                  right:
+                                      BorderSide(color: AppColors.whitecolor))),
                         ),
                         Row(
                           children: [

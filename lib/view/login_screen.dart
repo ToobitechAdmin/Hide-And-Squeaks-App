@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:squeak/components/customButton.dart';
+import 'package:squeak/components/customTextField.dart';
+import 'package:squeak/components/custom_auth.dart';
 import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/components/custom.dart';
-
 import 'package:squeak/view/forgot_screen.dart';
-
 import 'package:squeak/view/register_screen.dart';
-
 import '../components/colors.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -28,23 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailValidator = RegExp(
     r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
   );
-  String? _validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Email is required';
-    } else if (!_emailValidator.hasMatch(value)) {
-      return 'Enter a valid email address';
-    }
-    return null;
-  }
-
-  String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your password';
-    } else if (value.length <= 4) {
-      return "Passsword Must greater than or equal to 4 ";
-    }
-    return null;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,14 +66,28 @@ class _LoginScreenState extends State<LoginScreen> {
                         CustomTextField(
                           hinttext: "Enter Email",
                           controller: emailController,
-                          validator: _validateEmail,
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Email is required';
+                            } else if (!_emailValidator.hasMatch(value)) {
+                              return 'Enter a valid email address';
+                            }
+                            return null;
+                          },
                           showSuffixIcon: false,
                         ),
                         SizedBox(height: Get.height * 0.016),
                         CustomTextField(
                           hinttext: "Enter Password",
                           controller: passwordController,
-                          validator: validatePassword,
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            } else if (value.length <= 4) {
+                              return "Passsword Must greater than or equal to 4 ";
+                            }
+                            return null;
+                          },
                           showSuffixIcon: true,
                         )
                       ],

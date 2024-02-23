@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/App_URL/apiurl.dart';
 import 'package:squeak/controller/video_controller.dart';
-
 import 'package:squeak/components/app_assets.dart';
-
 import 'package:squeak/models/video_model.dart';
 import 'package:squeak/view/privateScreen.dart';
-import 'package:squeak/view/socialfeed.dart';
-
 import '../components/colors.dart';
 
 class SocialTabScreen extends StatefulWidget {
@@ -22,32 +18,6 @@ class _SocialTabScreenState extends State<SocialTabScreen>
   bool isLoadingvideo = true;
 
   VideoController controller = Get.put(VideoController());
-
-  void showDeleteBox(BuildContext context,
-      {required int videoId, required VideoModel number}) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Title:${number.title} "),
-          content: Text("Do you want to delete this video ?"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                controller.videoListprivate.remove(number);
-                controller.deleteVideo(videoId);
-                Get.back();
-              },
-              child: Text(
-                "OK",
-                style: TextStyle(color: AppColors.primaryColor),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   @override
   void initState() {
@@ -78,36 +48,40 @@ class _SocialTabScreenState extends State<SocialTabScreen>
             tabs: [
               Center(
                 child: Container(
-                  height: Get.height * 0.05,
-                  width: Get.width * 0.32,
+                  height: Get.height * 0.052,
+                  width: Get.width * 0.55,
                   decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(5)),
-                  child: Tab(text: 'Social Feed'),
+                  
+                      BoxDecoration(
+                       
+                        borderRadius: BorderRadius.circular(5)),
+                  child: const Tab(text: 'Social Feed'),
                 ),
               ),
               Container(
                 height: Get.height * 0.052,
-                width: Get.width * 0.5,
+                width: Get.width * 0.55,
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                child: Tab(text: 'Private'),
+                child: const Tab(text: 'Private'),
               ),
             ],
             indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Color(0xff4A330D).withOpacity(0.70) // Indicator color
+                color:
+                    const Color(0xff4A330D).withOpacity(0.70)
                 ),
             labelColor: AppColors.whitecolor,
-            labelStyle: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.w800, letterSpacing: 1.25),
-            unselectedLabelStyle: TextStyle(
+            labelStyle: const TextStyle(
+                fontSize: 20, fontWeight: FontWeight.w800, letterSpacing: 1.25),
+            unselectedLabelStyle: const TextStyle(
                 fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 0.85),
             unselectedLabelColor: AppColors.whitecolor,
           ),
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.only(top: 13),
+        padding: const EdgeInsets.only(top: 13),
         child: Container(
           color: Colors.transparent,
           child: TabBarView(
@@ -134,7 +108,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                             : GridView.builder(
                                 itemCount: controller.videoListpublic.length,
                                 gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisSpacing: 20,
                                   mainAxisSpacing: 20,
                                   crossAxisCount: 2,
@@ -149,9 +123,8 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                                       controller.Addview(video.id!);
                                       print("VideoID:${video.id}");
                                       controller.ViewData(video.id!);
-                                      
                                     },
-                                    child:  Container(
+                                    child: Container(
                                       decoration: BoxDecoration(
                                         color: AppColors.textfieldcolor,
                                         borderRadius: BorderRadius.circular(15),
@@ -233,7 +206,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                                               ],
                                             ),
                                             SizedBox(
-                                              height: Get.height * 0.11,
+                                              height: Get.height * 0.1,
                                             ),
                                             Row(
                                               mainAxisAlignment:
@@ -243,14 +216,19 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                                                 Align(
                                                   alignment:
                                                       Alignment.bottomLeft,
-                                                  child: Text(
-                                                    video.title.toString(),
-                                                    style: TextStyle(
-                                                      color:
-                                                          AppColors.whitecolor,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontSize: 17,
+                                                  child: SizedBox(
+                                                    child: Text(
+                                                      video.title.toString(),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      softWrap: false,
+                                                      style: TextStyle(
+                                                          color: AppColors
+                                                              .whitecolor,
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                          fontSize: 20,
+                                                          ),
                                                     ),
                                                   ),
                                                 ),
@@ -285,7 +263,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                             : GridView.builder(
                                 itemCount: controller.videoListprivate.length,
                                 gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisSpacing: 20,
                                   mainAxisSpacing: 20,
                                   crossAxisCount: 2,
@@ -330,14 +308,20 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                                                 Align(
                                                   alignment:
                                                       Alignment.bottomLeft,
-                                                  child: Text(
-                                                    video.title.toString(),
-                                                    style: TextStyle(
-                                                      color:
-                                                          AppColors.whitecolor,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontSize: 17,
+                                                  child: SizedBox(
+                                                    width: Get.width * 0.3,
+                                                    child: Text(
+                                                      video.title.toString(),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      softWrap: false,
+                                                      style: TextStyle(
+                                                        color: AppColors
+                                                            .whitecolor,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                        fontSize: 17,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -382,6 +366,44 @@ class _SocialTabScreenState extends State<SocialTabScreen>
           ),
         ),
       ),
+    );
+  }
+
+  void showDeleteBox(BuildContext context,
+      {required int videoId, required VideoModel number}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(color: AppColors.whitecolor, width: 1),
+          ),
+          title: Center(
+              child: Text(
+            "${number.title} ",
+            style: TextStyle(color: AppColors.whitecolor, fontSize: 24),
+          )),
+          content: Text(
+            "Do you want to delete this video ?",
+            style: TextStyle(color: AppColors.whitecolor, fontSize: 16.5),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                controller.videoListprivate.remove(number);
+                controller.deleteVideo(videoId);
+                Get.back();
+              },
+              child: Text(
+                "OK",
+                style: TextStyle(color: AppColors.primaryColor, fontSize: 20),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
