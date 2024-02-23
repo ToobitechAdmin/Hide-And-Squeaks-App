@@ -53,8 +53,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
         focusColor: Colors.transparent,
         hintStyle: TextStyle(
           fontSize: 17,
-          color: Colors.white,
-          fontWeight: FontWeight.w400,
+          color: Colors.white.withOpacity(0.7) ,
+          fontWeight:FontWeight.w100
+         
         ),
         suffixIcon: widget.showSuffixIcon
             ? IconButton(

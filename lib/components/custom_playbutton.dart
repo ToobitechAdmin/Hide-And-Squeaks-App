@@ -6,6 +6,7 @@ import 'app_assets.dart';
 import 'colors.dart';
 import 'package:app_settings/app_settings.dart';
 
+// ignore: must_be_immutable
 class CustonPlayButton extends StatelessWidget {
   VoidCallback? playTap;
   VoidCallback? nextTap;
@@ -16,12 +17,6 @@ class CustonPlayButton extends StatelessWidget {
       required this.previousTap,
       required this.playIcon,
       required this.nextTap});
-
-
-
-  // void _openBluetoothSettings() {
-  //   AppSettings.openAppSettings(type: AppSettingsType.bluetooth);
-  // }
  
   @override
   Widget build(BuildContext context) {
@@ -81,7 +76,7 @@ class CustonPlayButton extends StatelessWidget {
             padding: const EdgeInsets.only(top: 61, left: 1),
             child: GestureDetector(
                 onTap: () {
-                  Get.to(AudioPlayScreen());
+                  Get.to(const AudioPlayScreen());
                 },
                 child: Icon(
                   Icons.format_list_bulleted,

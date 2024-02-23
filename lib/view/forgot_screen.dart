@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
 import 'package:squeak/components/colors.dart';
 import 'package:squeak/components/customTextField.dart';
 import 'package:squeak/components/custom_auth.dart';
 import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/components/custom_appbar.dart';
-
 import 'package:squeak/view/login_screen.dart';
 
 class ForgotScreen extends StatefulWidget {

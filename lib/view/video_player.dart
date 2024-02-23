@@ -53,7 +53,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       videoPlayerController: videoPlayerController,
       autoPlay: true,
       looping: true,
-      aspectRatio: 100 / 100,
+      aspectRatio: Get.height / Get.height,
       allowPlaybackSpeedChanging: true,
       allowedScreenSleep: false,
       autoInitialize: true,
@@ -301,7 +301,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            widget.view.title!,
+                                            widget.view.user_name!,
                                             style: TextStyle(
                                                 fontSize: 17,
                                                 color: AppColors.whitecolor,
@@ -489,7 +489,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                                 usercomment.comment.toString(),
                                                 style: TextStyle(
                                                     fontSize: 12,
-                                                    fontWeight: FontWeight.w500,
+                                                    fontWeight: FontWeight.w100,
                                                     color:
                                                         AppColors.whitecolor),
                                               )

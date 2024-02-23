@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/App_URL/apiurl.dart';
 import 'package:squeak/controller/video_controller.dart';
-
 import 'package:squeak/components/app_assets.dart';
-
 import 'package:squeak/models/video_model.dart';
 import 'package:squeak/view/privateScreen.dart';
-import 'package:squeak/view/socialfeed.dart';
-
 import '../components/colors.dart';
 
 class SocialTabScreen extends StatefulWidget {
@@ -52,16 +48,19 @@ class _SocialTabScreenState extends State<SocialTabScreen>
             tabs: [
               Center(
                 child: Container(
-                  height: Get.height * 0.05,
-                  width: Get.width * 0.32,
+                  height: Get.height * 0.052,
+                  width: Get.width * 0.55,
                   decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                  
+                      BoxDecoration(
+                       
+                        borderRadius: BorderRadius.circular(5)),
                   child: const Tab(text: 'Social Feed'),
                 ),
               ),
               Container(
                 height: Get.height * 0.052,
-                width: Get.width * 0.5,
+                width: Get.width * 0.55,
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 child: const Tab(text: 'Private'),
@@ -70,11 +69,11 @@ class _SocialTabScreenState extends State<SocialTabScreen>
             indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color:
-                    const Color(0xff4A330D).withOpacity(0.70) // Indicator color
+                    const Color(0xff4A330D).withOpacity(0.70)
                 ),
             labelColor: AppColors.whitecolor,
             labelStyle: const TextStyle(
-                fontSize: 18, fontWeight: FontWeight.w800, letterSpacing: 1.25),
+                fontSize: 20, fontWeight: FontWeight.w800, letterSpacing: 1.25),
             unselectedLabelStyle: const TextStyle(
                 fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 0.85),
             unselectedLabelColor: AppColors.whitecolor,
@@ -224,14 +223,12 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                                                           TextOverflow.ellipsis,
                                                       softWrap: false,
                                                       style: TextStyle(
-                                                        
-                                                        color: AppColors
-                                                            .whitecolor,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        fontSize: 20,
-                                                        letterSpacing: 1.1
-                                                      ),
+                                                          color: AppColors
+                                                              .whitecolor,
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                          fontSize: 20,
+                                                          ),
                                                     ),
                                                   ),
                                                 ),
@@ -322,7 +319,7 @@ class _SocialTabScreenState extends State<SocialTabScreen>
                                                         color: AppColors
                                                             .whitecolor,
                                                         fontWeight:
-                                                            FontWeight.w700,
+                                                            FontWeight.w300,
                                                         fontSize: 17,
                                                       ),
                                                     ),

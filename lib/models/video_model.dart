@@ -1,8 +1,7 @@
-import 'dart:convert';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
+
+
+import 'package:squeak/Local%20Storage/global_variable.dart';
 
 class VideoModel {
   int? id;
@@ -22,6 +21,7 @@ class VideoModel {
   String? updated_at;
   bool? userLikedVideo;
   String?user_profile;
+  String?user_name;
   
 
 
@@ -46,12 +46,14 @@ class VideoModel {
       this.updated_at,
       this.userLikedVideo,
       this.user_profile,
+      this.user_name,
   
       this.video_id});
 
   factory VideoModel.fromJson(Map<String, dynamic> json) {
     return VideoModel(
-     id: json['id'] as int?,
+    id: json['id'] as int?,
+    user_name: json["name"],
     user_id: json['user_id'] as int?,
     user_profile: json["user_profile"] as String? ?? " ",
     file_path: json['file_path'] as String? ?? '',

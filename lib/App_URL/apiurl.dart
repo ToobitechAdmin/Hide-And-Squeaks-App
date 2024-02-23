@@ -1,6 +1,7 @@
+
+
 class AppUrl {
-  static String audioPath =
-      'https://digimaestros.com/dev/Hide-Squeaks/storage/';
+  static String audioPath ='https://digimaestros.com/dev/Hide-Squeaks/storage/';
   static String base = "https://digimaestros.com/dev/Hide-Squeaks/api/";
   static String imageUrl = "https://digimaestros.com/dev/Hide-Squeaks/";
   static String videoURL = "https://digimaestros.com/dev/Hide-Squeaks/";
@@ -32,11 +33,6 @@ class AppUrl {
   static String GetRecordings="${base}recorder";
 
 
-
-
-  
- 
-  
   
 
 }

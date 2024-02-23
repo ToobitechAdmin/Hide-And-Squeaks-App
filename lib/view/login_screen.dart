@@ -5,12 +5,8 @@ import 'package:squeak/components/customTextField.dart';
 import 'package:squeak/components/custom_auth.dart';
 import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
-import 'package:squeak/components/custom_appbar.dart';
-
 import 'package:squeak/view/forgot_screen.dart';
-
 import 'package:squeak/view/register_screen.dart';
-
 import '../components/colors.dart';
 
 class LoginScreen extends StatefulWidget {

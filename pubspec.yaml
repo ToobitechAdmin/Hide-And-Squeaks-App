@@ -111,7 +111,7 @@ flutter:
   fonts:
     - family: Poppins
       fonts:
-        - asset: assets/fonts/Poppins/Poppins-Light.ttf
+        - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

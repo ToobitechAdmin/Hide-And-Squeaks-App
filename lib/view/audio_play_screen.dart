@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/customTextField.dart';
-
 import 'package:squeak/components/custom_appbar.dart';
 import 'package:squeak/controller/record_controller.dart';
 import 'package:squeak/models/record_model.dart';
-
 import '../App_URL/apiurl.dart';
 import '../components/app_assets.dart';
 import '../components/colors.dart';
@@ -14,9 +12,7 @@ import '../components/custom_snakbar.dart';
 import '../controller/audio_controller.dart';
 import '../models/audio_model.dart';
 import 'dart:async';
-
 import 'package:flutter_sound/flutter_sound.dart';
-
 import 'package:intl/intl.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path_provider/path_provider.dart';
@@ -255,22 +251,20 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
       await _recordingPlayer.openPlayer();
       await _recordingPlayer.startPlayer(fromURI: path);
       _recordingPlayer.onProgress!.listen((e) {
-        if (e != null) {
-          final currentPosition = e.position.inSeconds;
-          final duration = e.duration.inSeconds;
+        final currentPosition = e.position.inSeconds;
+        final duration = e.duration.inSeconds;
+        setState(() {
+          recordTimer = DateFormat('mm:ss', 'en_US')
+              .format(DateTime(0, 0, 0, 0, 0, currentPosition));
+        });
+        if (currentPosition >= duration) {
+          _recordingPlayer.stopPlayer();
           setState(() {
-            recordTimer = DateFormat('mm:ss', 'en_US')
-                .format(DateTime(0, 0, 0, 0, 0, currentPosition));
+            isPlaying = false;
+            recordTimer = '00:00';
           });
-          if (currentPosition >= duration) {
-            _recordingPlayer.stopPlayer();
-            setState(() {
-              isPlaying = false;
-              recordTimer = '00:00';
-            });
-          }
         }
-      });
+            });
     } catch (e) {
       print('Error playing recording: $e');
       setState(() {

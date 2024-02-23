@@ -26,7 +26,7 @@ class CustomMenuBtn extends StatelessWidget {
                 fontSize: 18,
                 height: 1,
                 color: AppColors.whitecolor,
-                fontWeight: FontWeight.w800),
+                fontWeight: FontWeight.w700),
           )
         ],
       ),

@@ -257,6 +257,9 @@ class VideoController extends GetxController {
         print("data:$responseData");
         
         String profileImagePath = responseData['data']['video']['user']['profile'];
+        String user_name=responseData['data']['video']['user']['name'];
+        print(user_name);
+        
         print(profileImagePath);
         // print("user_profile: ${responseData["data"]["video"]["user"]["profile"]}");
 
@@ -288,7 +291,8 @@ class VideoController extends GetxController {
             totalComments: responseData["data"]["total_comments"],
             totalViews: responseData["data"]["total_views"],
             userLikedVideo: responseData["data"]["userLikedVideo"],
-            user_profile: AppUrl.imageUrl+profileImagePath.toString()
+            user_profile: AppUrl.imageUrl+profileImagePath.toString(),
+            user_name: user_name
            
             );
         Get.to(VideoPlayerScreen(view: videoViewData, comments: comments));
