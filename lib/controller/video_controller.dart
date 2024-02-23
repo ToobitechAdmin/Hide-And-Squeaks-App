@@ -95,7 +95,7 @@ class VideoController extends GetxController {
 
         {
           print(" ${responseData['message']}");
-          Get.to(SocialScreen());
+          Get.off(SocialScreen());
         }
       } else {
         print("Response: ${responseData["message"]}");

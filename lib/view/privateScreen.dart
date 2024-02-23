@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,6 +24,7 @@ class PrivateScreen extends StatefulWidget {
 class _PrivateScreenState extends State<PrivateScreen> {
   late ChewieController _chewieController;
   late VideoPlayerController _videoPlayerController;
+  var isLoading=true;
 
   @override
   void initState() {
@@ -30,6 +33,12 @@ class _PrivateScreenState extends State<PrivateScreen> {
     _videoPlayerController =
         // ignore: deprecated_member_use
         VideoPlayerController.network(AppUrl.videoURL + widget.link.toString());
+         Timer(Duration(seconds: 10), ()  {
+    
+    setState(() {
+      isLoading=false;
+    });
+  });
 
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
@@ -78,7 +87,10 @@ class _PrivateScreenState extends State<PrivateScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
+              isLoading? Container(
+           height: Get.height * 0.75,
+                    width: Get.width * 1,
+          child: Center(child: CircularProgressIndicator(color: AppColors.primaryColor,),))  : Container(
                   height: Get.height * 0.75,
                   width: Get.width * 1,
                   child: Chewie(controller: _chewieController)),

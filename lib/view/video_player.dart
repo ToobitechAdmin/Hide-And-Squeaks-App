@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +19,7 @@ class VideoPlayerScreen extends StatefulWidget {
   final VideoModel view;
   final List<Comment> comments;
 
-  VideoPlayerScreen({required this.view, required this.comments});
+  const VideoPlayerScreen({super.key, required this.view, required this.comments});
 
   @override
   _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
@@ -39,15 +41,29 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   late ChewieController _chewieController;
   late VideoPlayerController videoPlayerController;
+  var isLoading=true;
 
   @override
-  void initState() {
+  void initState (){
     super.initState();
     controller.ViewData(widget.view.id!);
-
     videoPlayerController = VideoPlayerController.network(
-      widget.view.file_path.toString(),
-    );
+      
+  widget.view.file_path.toString(),);
+  Timer(Duration(seconds: 10), ()  {
+    
+    setState(() {
+      isLoading=false;
+    });
+  });
+// )..initialize().catchError((error) {
+//   // Handle video initialization error
+//   print("Video initialization error: $error");
+// });
+
+//     // videoPlayerController = VideoPlayerController.networkUrl(
+//  Uri(path:  widget.view.file_path.toString()),
+//     // );
 
     _chewieController = ChewieController(
       videoPlayerController: videoPlayerController,
@@ -84,333 +100,336 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
-        child: Container(
-          height: Get.height * 1,
-          width: Get.width * 1,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(AppAssets.backgroundmain),
-                  fit: BoxFit.fill)),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  height: Get.height * 0.5,
-                  width: Get.width * 1,
-                  child: Chewie(
-                    controller: _chewieController,
+        child: SingleChildScrollView(
+          child: Container(
+            height: Get.height * 1,
+            width: Get.width * 1,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(AppAssets.backgroundmain),
+                    fit: BoxFit.fill)),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+        isLoading? Container(
+           height: Get.height * 0.5,
+                    width: Get.width * 1,
+          child: Center(child: CircularProgressIndicator(color: AppColors.primaryColor,),))  :Container(
+                    height: Get.height * 0.5,
+                    width: Get.width * 1,
+                    child: Chewie(
+                      controller: _chewieController,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: Get.height * 0.02,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Share.share(widget.view.file_path.toString());
-                            },
-                            child: Container(
-                              height: Get.height * 0.037,
-                              width: Get.width * 0.22,
-                              decoration: BoxDecoration(
-                                  color: AppColors.primaryColor,
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Center(
-                                child: Text(
-                                  "Share",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: AppColors.whitecolor,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ),
-                            ),
-                          ),
-                          TextFormField(
-                            controller: commentController,
-                            textAlign: TextAlign.start,
-                            cursorColor: AppColors.whitecolor,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                            ),
-                            decoration: InputDecoration(
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  if (commentController.text.isNotEmpty) {
-                                    print(widget.view.id!);
-                                    controller.postComment(
-                                        commentController.text,
-                                        widget.view.id!);
-                                    // controller.ViewData(widget.view.id!);
-                                    widget.view.totalComments =
-                                        (widget.view.totalComments ?? 0) + 1;
-
-                                    Comment newComment = Comment(
-                                        comment: commentController.text,
-                                        userId: widget.view.id,
-                                        createdAt: DateTime.now().toString(),
-                                        user: User(
-                                            id: widget.view.id!,
-                                            name: appStorage
-                                                .read("name")
-                                                .toString(),
-                                            profile: appStorage
-                                                .read("profile")
-                                                .toString()));
-
-                                    setState(() {
-                                      widget.comments.insert(0, newComment);
-                                    });
-                                    commentController.clear();
-                                  } else {
-                                    showInSnackBar("Enter Comment",
-                                        color: AppColors.errorcolor);
-                                  }
-                                },
-                                child: Icon(
-                                  Icons.add_comment,
-                                  color: AppColors.whitecolor,
-                                  size: 25,
-                                ),
-                              ),
-                              hintText: "Comment ...",
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                borderSide: const BorderSide(
-                                    color: Colors.white, width: 2.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                borderSide: const BorderSide(
-                                    color: Colors.white, width: 2.0),
-                              ),
-                              hintStyle: TextStyle(
-                                fontSize: 12,
-                                color: AppColors.whitecolor.withOpacity(0.8),
-                                fontWeight: FontWeight.w400,
-                              ),
-                              constraints: BoxConstraints.tightFor(
-                                height: Get.height * 0.04,
-                                width: Get.width * 0.56,
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              controller.postLike(widget.view.id!);
-
-                              addLikes() {
-                                if (widget.view.userLikedVideo == true) {
-                                  setState(() {
-                                    widget.view.userLikedVideo = false;
-                                  });
-
-                                  return widget.view.totalLikes =
-                                      (widget.view.totalLikes ?? 0) - 1;
-                                } else {
-                                  setState(() {
-                                    widget.view.userLikedVideo = true;
-                                  });
-
-                                  return widget.view.totalLikes =
-                                      (widget.view.totalLikes ?? 0) + 1;
-                                }
-                              }
-
-                              addLikes();
-                              if (widget.view.totalLikes! < 0) {
-                                widget.view.totalLikes = 0;
-                              }
-                            },
-                            child: Icon(
-                              Icons.favorite_outlined,
-                              color: widget.view.userLikedVideo!
-                                  ? AppColors.favouritecolor
-                                  : AppColors.whitecolor,
-                              size: 30,
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.005,
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      color: AppColors.whitecolor, width: 1))),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: 2,
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: Get.width * 0.57,
-                                  height: Get.height * 0.05,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        height: Get.height * 0.05,
-                                        width: Get.width * 0.1,
-                                        decoration: BoxDecoration(
-                                            color: AppColors.textfieldcolor,
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                                image: widget.view
-                                                            .user_profile !=
-                                                        null
-                                                    ? Image.network(widget
-                                                            .view.user_profile
-                                                            .toString())
-                                                        .image
-                                                    : AssetImage(
-                                                        AppAssets.back2),
-                                                fit: BoxFit.fill)),
-                                      ),
-                                      // CircleAvatar(
-                                      //   backgroundColor: Colors.transparent,
-                                      //   radius: 25,
-                                      //   backgroundImage: widget.view.user_profile != null? Image.network(widget.view.user_profile.toString()).image:AssetImage(AppAssets.back2) ,
-                                      //   // child: Icon(
-                                      //   //   Icons.person,
-                                      //   //   color: AppColors.whitecolor,
-                                      //   //   size: 30,
-                                      //   // ),
-                                      // ),
-                                      SizedBox(
-                                        width: Get.height * 0.015,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            widget.view.user_name!,
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                color: AppColors.whitecolor,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                          Text(
-                                            "Published $newdate",
-                                            style: TextStyle(
-                                                fontSize: 10,
-                                                color: AppColors.whitecolor.withOpacity(0.8),
-                                                fontWeight: FontWeight.normal),
-                                          ),
-                                        ],
-                                      )
-                                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: Get.height * 0.02,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Share.share(widget.view.file_path.toString());
+                              },
+                              child: Container(
+                                height: Get.height * 0.037,
+                                width: Get.width * 0.22,
+                                decoration: BoxDecoration(
+                                    color: AppColors.primaryColor,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Center(
+                                  child: Text(
+                                    "Share",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: AppColors.whitecolor,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 ),
-                                Container(
-                                  height: Get.height * 0.058,
-                                  width: Get.width * 0.35,
-                                  child: Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              widget.view.totalComments
+                              ),
+                            ),
+                            TextFormField(
+                              controller: commentController,
+                              textAlign: TextAlign.start,
+                              cursorColor: AppColors.whitecolor,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
+                              decoration: InputDecoration(
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    if (commentController.text.isNotEmpty) {
+                                      print(widget.view.id!);
+                                      controller.postComment(
+                                          commentController.text,
+                                          widget.view.id!);
+                                      // controller.ViewData(widget.view.id!);
+                                      widget.view.totalComments =
+                                          (widget.view.totalComments ?? 0) + 1;
+          
+                                      Comment newComment = Comment(
+                                          comment: commentController.text,
+                                          userId: widget.view.id,
+                                          createdAt: DateTime.now().toString(),
+                                          user: User(
+                                              id: widget.view.id!,
+                                              name: appStorage
+                                                  .read("name")
                                                   .toString(),
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: AppColors.whitecolor),
-                                            ),
-                                            SizedBox(
-                                              width: Get.width * 0.01,
-                                            ),
-                                            Icon(
-                                              Icons.mode_comment_rounded,
-                                              color: AppColors.whitecolor,
-                                              size: 20,
-                                            )
-                                          ],
+                                              profile: appStorage
+                                                  .read("profile")
+                                                  .toString()));
+          
+                                      setState(() {
+                                        widget.comments.insert(0, newComment);
+                                      });
+                                      commentController.clear();
+                                    } else {
+                                      showInSnackBar("Enter Comment",
+                                          color: AppColors.errorcolor);
+                                    }
+                                  },
+                                  child: Icon(
+                                    Icons.add_comment,
+                                    color: AppColors.whitecolor,
+                                    size: 25,
+                                  ),
+                                ),
+                                hintText: "Comment ...",
+                                contentPadding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  borderSide: const BorderSide(
+                                      color: Colors.white, width: 2.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  borderSide: const BorderSide(
+                                      color: Colors.white, width: 2.0),
+                                ),
+                                hintStyle: TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.whitecolor.withOpacity(0.8),
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                constraints: BoxConstraints.tightFor(
+                                  height: Get.height * 0.04,
+                                  width: Get.width * 0.56,
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                controller.postLike(widget.view.id!);
+          
+                                addLikes() {
+                                  if (widget.view.userLikedVideo == true) {
+                                    setState(() {
+                                      widget.view.userLikedVideo = false;
+                                    });
+          
+                                    return widget.view.totalLikes =
+                                        (widget.view.totalLikes ?? 0) - 1;
+                                  } else {
+                                    setState(() {
+                                      widget.view.userLikedVideo = true;
+                                    });
+          
+                                    return widget.view.totalLikes =
+                                        (widget.view.totalLikes ?? 0) + 1;
+                                  }
+                                }
+          
+                                addLikes();
+                                if (widget.view.totalLikes! < 0) {
+                                  widget.view.totalLikes = 0;
+                                }
+                              },
+                              child: Icon(
+                                Icons.favorite_outlined,
+                                color: widget.view.userLikedVideo!
+                                    ? AppColors.favouritecolor
+                                    : AppColors.whitecolor,
+                                size: 30,
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.005,
+                        ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: AppColors.whitecolor, width: 1))),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                bottom: 2,
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: Get.width * 0.57,
+                                    height: Get.height * 0.05,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: Get.height * 0.05,
+                                          width: Get.width * 0.1,
+                                          decoration: BoxDecoration(
+                                              color: AppColors.textfieldcolor,
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                  image: widget.view
+                                                              .user_profile !=
+                                                          null
+                                                      ? Image.network(widget
+                                                              .view.user_profile
+                                                              .toString())
+                                                          .image
+                                                      : AssetImage(
+                                                          AppAssets.back2),
+                                                  fit: BoxFit.fill)),
                                         ),
-                                        Row(
+                                        // CircleAvatar(
+                                        //   backgroundColor: Colors.transparent,
+                                        //   radius: 25,
+                                        //   backgroundImage: widget.view.user_profile != null? Image.network(widget.view.user_profile.toString()).image:AssetImage(AppAssets.back2) ,
+                                        //   // child: Icon(
+                                        //   //   Icons.person,
+                                        //   //   color: AppColors.whitecolor,
+                                        //   //   size: 30,
+                                        //   // ),
+                                        // ),
+                                        SizedBox(
+                                          width: Get.height * 0.015,
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              widget.view.totalLikes.toString(),
+                                              widget.view.user_name!,
                                               style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: AppColors.whitecolor),
+                                                  fontSize: 17,
+                                                  color: AppColors.whitecolor,
+                                                  fontWeight: FontWeight.w500),
                                             ),
-                                            SizedBox(
-                                              width: Get.width * 0.01,
-                                            ),
-                                            Icon(
-                                              Icons.favorite,
-                                              color: AppColors.favouritecolor,
-                                              size: 20,
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
                                             Text(
-                                              widget.view.totalViews.toString(),
+                                              "Published $newdate",
                                               style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: AppColors.whitecolor),
+                                                  fontSize: 10,
+                                                  color: AppColors.whitecolor.withOpacity(0.8),
+                                                  fontWeight: FontWeight.normal),
                                             ),
-                                            SizedBox(
-                                              width: Get.width * 0.01,
-                                            ),
-                                            Icon(
-                                              Icons.person,
-                                              color: AppColors.primaryColor,
-                                              size: 20,
-                                            )
                                           ],
-                                        ),
+                                        )
                                       ],
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Container(
+                                    height: Get.height * 0.058,
+                                    width: Get.width * 0.35,
+                                    child: Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                widget.view.totalComments
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: AppColors.whitecolor),
+                                              ),
+                                              SizedBox(
+                                                width: Get.width * 0.01,
+                                              ),
+                                              Icon(
+                                                Icons.mode_comment_rounded,
+                                                color: AppColors.whitecolor,
+                                                size: 20,
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                widget.view.totalLikes.toString(),
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: AppColors.whitecolor),
+                                              ),
+                                              SizedBox(
+                                                width: Get.width * 0.01,
+                                              ),
+                                              Icon(
+                                                Icons.favorite,
+                                                color: AppColors.favouritecolor,
+                                                size: 20,
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                widget.view.totalViews.toString(),
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: AppColors.whitecolor),
+                                              ),
+                                              SizedBox(
+                                                width: Get.width * 0.01,
+                                              ),
+                                              Icon(
+                                                Icons.person,
+                                                color: AppColors.primaryColor,
+                                                size: 20,
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: Get.height * 0.01),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "Comments",
-                          style: TextStyle(
-                              fontSize: 15, color: AppColors.whitecolor),
+                        SizedBox(height: Get.height * 0.01),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "Comments",
+                            style: TextStyle(
+                                fontSize: 15, color: AppColors.whitecolor),
+                          ),
                         ),
-                      ),
-                      SizedBox(height: Get.height * 0.01),
-                      Container(
-                        height: Get.height * 0.285,
-                        width: Get.width * 0.95,
-                        decoration: const BoxDecoration(
-                          color: Colors.transparent,
-                        ),
-                        child: Expanded(
+                        SizedBox(height: Get.height * 0.01),
+                        Container(
+                          height: Get.height * 0.285,
+                          width: Get.width * 0.95,
+                          decoration: const BoxDecoration(
+                            color: Colors.transparent,
+                          ),
                           child: ListView.builder(
                               itemCount: widget.comments.length,
                               itemBuilder: (context, int index) {
@@ -418,10 +437,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                 String formateddays = formatRelativeTime(
                                     usercomment.createdAt!, DateTime.now());
                                 print(formateddays);
-
+                                    
                                 return Container(
                                   height: Get.height * 0.065,
-                                  width: Get.width * 0.95,
+                                  width: double.infinity,
                                   decoration: BoxDecoration(
                                       border: Border(
                                           bottom: BorderSide(
@@ -507,12 +526,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   ),
                                 );
                               }),
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
