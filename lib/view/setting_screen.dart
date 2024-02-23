@@ -9,7 +9,6 @@ import 'package:squeak/view/login_screen.dart';
 import 'package:squeak/view/menu_screen.dart';
 import 'package:squeak/view/profile_screen.dart';
 
-
 import '../components/colors.dart';
 import 'package:app_settings/app_settings.dart';
 
@@ -22,12 +21,11 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   AuthController controller = Get.put(AuthController());
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: Colors.black,
+      backgroundColor: Colors.black,
       body: Container(
         height: Get.height * 1,
         width: Get.width * 1,
@@ -225,8 +223,8 @@ class _SettingScreenState extends State<SettingScreen> {
         ),
       ),
     );
-
   }
+
   void showSignOut(
     BuildContext context,
   ) {
@@ -235,13 +233,14 @@ class _SettingScreenState extends State<SettingScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.black,
-           shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    side: BorderSide(color:AppColors.whitecolor,width: 1), // Border color
-                  ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(
+                color: AppColors.whitecolor, width: 1), // Border color
+          ),
           title: Text(
             "Do you want to sign out?",
-            style: TextStyle(fontSize: 20,color: AppColors.whitecolor),
+            style: TextStyle(fontSize: 20, color: AppColors.whitecolor),
           ),
           actions: [
             Padding(
