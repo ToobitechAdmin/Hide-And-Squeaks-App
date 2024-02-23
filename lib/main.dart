@@ -19,9 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       scaffoldMessengerKey: snackbarKey,
-       theme: ThemeData(
+      theme: ThemeData(
         fontFamily: 'Poppins',
-        
       ),
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
