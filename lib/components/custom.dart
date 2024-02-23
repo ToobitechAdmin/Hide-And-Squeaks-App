@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/view/homescreen.dart';
-// import 'package:squeak/models/dumymodel5.dart';
-import 'package:squeak/view/purchase.dart';
 import 'package:squeak/view/menu.dart';
 import 'colors.dart';
 
@@ -357,8 +355,7 @@ class CustomTextField extends StatefulWidget {
   final String hinttext;
   final TextEditingController controller;
   final String? Function(String?)? validator;
-  final bool
-      showSuffixIcon; 
+  final bool showSuffixIcon;
 
   CustomTextField({
     required this.hinttext,
@@ -417,9 +414,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 },
               )
             : null,
-            // Show suffix icon only if showSuffixIcon is true
+        // Show suffix icon only if showSuffixIcon is true
       ),
-
     );
   }
 }

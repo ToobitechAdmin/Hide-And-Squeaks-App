@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squeak/Local%20Storage/global_variable.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom.dart';
 import 'package:gradient_slider/gradient_slider.dart';
 import 'package:squeak/controller/profile_controller.dart';
-
 import '../App_URL/apiurl.dart';
 import '../components/colors.dart';
 import '../components/custom_playbutton.dart';
 import 'package:perfect_volume_control/perfect_volume_control.dart';
 import '../components/snakbar.dart';
 import '../controller/audio_controller.dart';
-
-import 'video_thum.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -41,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.black,
       body: Container(
         height: Get.height * 1,
         width: Get.width * 1,
