@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "195903977126-mi1ltgnni0e59uugi7vmqffeotihql2t.apps.googleusercontent.com",
+          "client_id": "195903977126-po0smhri0t2qf3s9b2ksn4pjp6g3aloi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.toobitech.squeak",
-            "certificate_hash": "b91e42b1088583c08513f7c40dc25e790c586ef2"
+            "certificate_hash": "0116f59419ef8ee1581d08f1a1ad97d5a1d56ed6"
           }
         },
         {
