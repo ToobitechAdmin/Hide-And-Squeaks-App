@@ -206,8 +206,7 @@ class AuthController extends GetxController {
       String firstName, String lastName, String email, String password) async {
     showDialogue();
     print(email);
-    showDialogue();
-
+   
     try {
       final response = await http.post(Uri.parse(AppUrl.registerURL), headers: {
         'Accept': 'application/json',
@@ -217,7 +216,7 @@ class AuthController extends GetxController {
         "email": email,
         "password": password,
       });
-      Get.back();
+    
       final Map<String, dynamic> responseData = json.decode(response.body);
 
       if (response.statusCode == 200) {

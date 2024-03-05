@@ -33,12 +33,7 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
   bool isCurrent = false;
 
   recordController controllerRecord = Get.put(recordController());
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
- 
-
-  
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late FlutterSoundRecorder _recordingSession;
   late FlutterSoundPlayer _recordingPlayer;
 

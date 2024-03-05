@@ -4,7 +4,6 @@ import 'package:squeak/components/customTextField.dart';
 import 'package:squeak/components/custom_auth.dart';
 import 'package:squeak/controller/auth_controller.dart';
 import 'package:squeak/components/app_assets.dart';
-
 import '../components/colors.dart';
 import '../components/custom_snakbar.dart';
 

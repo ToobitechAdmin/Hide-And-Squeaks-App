@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:squeak/components/app_assets.dart';
 import 'package:squeak/components/custom_appbar.dart';
 import 'package:squeak/view/social_screen.dart';
-
 import '../components/colors.dart';
 
 class SocialScreen extends StatefulWidget {

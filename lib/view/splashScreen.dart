@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
           context,
           MaterialPageRoute(builder: (context) => LoginScreen()),
           (route) => false);
-      // return Get.to(LoginScreen());
+      
     }
   }
 

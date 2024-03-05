@@ -8,6 +8,8 @@ import 'package:squeak/view/privateScreen.dart';
 import '../components/colors.dart';
 
 class SocialTabScreen extends StatefulWidget {
+  const SocialTabScreen({super.key});
+
   @override
   _SocialTabScreenState createState() => _SocialTabScreenState();
 }

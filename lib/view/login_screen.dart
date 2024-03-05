@@ -45,11 +45,11 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           )),
           child: Padding(
-            padding: EdgeInsets.only(left: 20, right: 20),
+            padding: const EdgeInsets.only(left: 20, right: 20),
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  CustomContainer(),
+                  const CustomContainer(),
                   SizedBox(height: Get.height * 0.075),
                   Text(
                     "Sign In",
@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.to(ForgotScreen());
+                            Get.to(const ForgotScreen());
                           },
                           child: Text(
                             "Forgot password?",
@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: Get.height * 0.085),
                   GestureDetector(
                     onTap: () {
-                      Get.to(RegisterScreen());
+                      Get.to(const RegisterScreen());
                     },
                     child: Container(
                       height: Get.height * 0.022,
