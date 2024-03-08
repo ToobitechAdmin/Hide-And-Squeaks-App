@@ -46,5 +46,5 @@ class AppAssets {
   static var menuback = "assets/images/menuback.png";
   static var eye = "assets/images/eye.png";
   static var defaultimg ="assets/images/default.jpg";
-  static var splashScreen="assets/images/Mobile2.gif";
+  static var splashScreen="assets/images/Mobile3.gif";
 }
