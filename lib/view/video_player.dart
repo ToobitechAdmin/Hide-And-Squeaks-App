@@ -49,7 +49,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     controller.ViewData(widget.view.id!);
     videoPlayerController = VideoPlayerController.network(
       
-  widget.view.file_path.toString(),);
+  widget.view.file_path.toString());
   Timer(Duration(seconds: 10), ()  {
     
     setState(() {

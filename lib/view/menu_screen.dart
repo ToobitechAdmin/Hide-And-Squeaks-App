@@ -38,12 +38,12 @@ class _MenuScreenState extends State<MenuScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CustomAppBar(),
+              const CustomAppBar(),
               SizedBox(
                 height: Get.height * 0.1,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 10, right: 10),
+                padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -52,21 +52,21 @@ class _MenuScreenState extends State<MenuScreen> {
                       children: [
                         GestureDetector(
                             onTap: () {
-                              Get.to(AudioPlayScreen());
+                              Get.to(const AudioPlayScreen());
                             },
                             child: CustomMenuBtn(
                                 library: "Sound\nLibrary",
                                 settingimage: AppAssets.settings1)),
                         GestureDetector(
                             onTap: () {
-                              Get.to(UploadScreen());
+                              Get.to(const UploadScreen());
                             },
                             child: CustomMenuBtn(
                                 library: "Video\nUpload",
                                 settingimage: AppAssets.settings2)),
                                 GestureDetector(
                         onTap: () {
-                          Get.to(SettingScreen());
+                          Get.to(const SettingScreen());
                         },
                         child: CustomMenuBtn(
                             library: "Settings",
@@ -88,21 +88,21 @@ class _MenuScreenState extends State<MenuScreen> {
                       children: [
                         GestureDetector(
                             onTap: () {
-                              Get.to(ProfileScreen());
+                              Get.to(const ProfileScreen());
                             },
                             child: CustomMenuBtn(
                                 library: "Profile\nSetup",
                                 settingimage: AppAssets.settings4)),
                         GestureDetector(
                             onTap: () {
-                              Get.to(SocialScreen());
+                              Get.to(const SocialScreen());
                             },
                             child: CustomMenuBtn(
                                 library: "Social\nFeed",
                                 settingimage: AppAssets.settings5)),
                         GestureDetector(
                             onTap: () {
-                              Get.to(TextScreen());
+                              Get.to(const TextScreen());
                             },
                             child: CustomMenuBtn(
                                 library: "Safety\nInformation",

@@ -19,7 +19,7 @@ class _UploadScreenState extends State<UploadScreen> {
 
   bool isChecked = false;
   bool isChecked2 = false;
-  String privacyOption = " ";
+  String privacyOption = "";
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();

@@ -1,16 +1,12 @@
 
-import 'dart:async';
-
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:squeak/view/audio_play_screen.dart';
-
 import 'app_assets.dart';
 import 'colors.dart';
 import 'package:app_settings/app_settings.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+
 
 // ignore: must_be_immutable
 class CustonPlayButton extends StatefulWidget {

@@ -22,7 +22,6 @@ class _ForgotScreenState extends State<ForgotScreen> {
   final _emailValidator = RegExp(
     r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
   );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +34,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
             image: AssetImage(AppAssets.backgroundimage1),
             fit: BoxFit.fill,
             colorFilter: ColorFilter.mode(
-              AppColors.filtercolor, // Adjust opacity as needed
+              AppColors.filtercolor, 
               BlendMode.srcOver,
             ),
           )),

@@ -71,13 +71,13 @@ class AuthController extends GetxController {
             return registerUser(
                 userFirstName, userLastName, userEmail, randomPassword);
           }
-        }
+        }   
         isUserRegistered();
       }
     } catch (e) {
       Get.back();
       showInSnackBar("Error While Authentcation${e}",
-          color: AppColors.errorcolor);
+          color: AppColors.errorcolor);           
       print(e.toString());
     }
   }
@@ -195,6 +195,8 @@ class AuthController extends GetxController {
         print("Response: ${response.body}");
       }
     } catch (error) {
+       GoogleSignOut();
+        facebookSignOut();
       Get.back();
       print("SignIn Error: $error");
       showInSnackBar(error.toString(), color: AppColors.errorcolor);
@@ -233,9 +235,13 @@ class AuthController extends GetxController {
         showInSnackBar(
             "Error ${response.statusCode} ${responseData['message']}",
             color: AppColors.errorcolor);
+            GoogleSignOut();
+        facebookSignOut();
         Get.back();
       }
     } catch (error) {
+      GoogleSignOut();
+        facebookSignOut();
       print("Error: $error");
       showInSnackBar(error.toString(), color: AppColors.errorcolor);
       Get.back();
