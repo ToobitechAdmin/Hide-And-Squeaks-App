@@ -27,13 +27,14 @@ class CustomContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 55),
+      padding: EdgeInsets.only(top: 43),
       child: Container(
-        height: Get.height * 0.117,
-        width: Get.width * 0.39,
+        height: Get.height * 0.137,
+        width: Get.width * 0.45,
         decoration: BoxDecoration(
+          shape:BoxShape.circle,
             image: DecorationImage(
-                image: AssetImage(AppAssets.signin), fit: BoxFit.fill)),
+                image: AssetImage(AppAssets.signin), fit: BoxFit.cover)),
       ),
     );
   }

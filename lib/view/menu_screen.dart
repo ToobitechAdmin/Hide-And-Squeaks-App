@@ -40,7 +40,7 @@ class _MenuScreenState extends State<MenuScreen> {
             children: [
               const CustomAppBar(),
               SizedBox(
-                height: Get.height * 0.1,
+                height: Get.height * 0.05,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),

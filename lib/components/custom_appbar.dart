@@ -8,12 +8,13 @@ import 'package:squeak/view/menu_screen.dart';
 import 'colors.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key});
+  final bool show;
+  const CustomAppBar({super.key,this.show=false});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 25, right: 25, top: 55),
+      padding: EdgeInsets.only(left: 25, right: 25, top: 48),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -29,13 +30,23 @@ class CustomAppBar extends StatelessWidget {
                       image: AssetImage(AppAssets.heart), fit: BoxFit.fill)),
             ),
           ),
-          Container(
-            height: Get.height * 0.085,
-            width: Get.width * 0.29,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(AppAssets.signin), fit: BoxFit.fill)),
+          show?Text("") :CircleAvatar(
+            backgroundColor: Colors.transparent,
+            radius:55,
+            backgroundImage:AssetImage(AppAssets.signin),
+          
+
           ),
+          // Container(
+          //   height: Get.height * 0.09,
+          //   width: Get.width * 0.3,
+          //   decoration: BoxDecoration(
+          //     shape:BoxShape.circle,
+              
+          //       image: DecorationImage(
+                  
+          //           image: AssetImage(AppAssets.signin), fit: BoxFit.fill)),
+          // ),
           GestureDetector(
             onTap: () {
               Get.offAll(MenuScreen());

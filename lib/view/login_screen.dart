@@ -20,13 +20,16 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  final textController=TextEditingController();
   AuthController controller = Get.put(AuthController());
-
   bool isChecked = false;
+  
 
   final _emailValidator = RegExp(
     r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
   );
+
+  
 
   @override
   Widget build(BuildContext context) {

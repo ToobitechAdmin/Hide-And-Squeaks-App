@@ -5,7 +5,6 @@ class AppUrl {
   static String base = "https://digimaestros.com/dev/Hide-Squeaks/api/";
   static String imageUrl = "https://digimaestros.com/dev/Hide-Squeaks/";
   static String videoURL = "https://digimaestros.com/dev/Hide-Squeaks/";
-
   static String purchaseTreats = "${base}purchase-treats";
   static String signInURL = "${base}login";
   static String getAudio = "${base}audio";
@@ -31,8 +30,4 @@ class AppUrl {
   static String postRecording="${base}recorder/add";
   static String DeleteRecording="${base}recorder/delete";
   static String GetRecordings="${base}recorder";
-
-
-  
-
 }

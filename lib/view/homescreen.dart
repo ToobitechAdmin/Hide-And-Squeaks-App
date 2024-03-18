@@ -57,9 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CustomAppBar(),
-              SizedBox(height: Get.height * 0.025),
-
+               SizedBox(height: Get.height * 0.0135),
+              CustomAppBar(show:true),
+              SizedBox(height: Get.height * 0.008),
               Container(
                   height: Get.height * 0.34,
                   width: Get.width * 0.85,
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: EdgeInsets.only(top: 15.25, left: 1.7),
                       child: Obx(
                         () => CircleAvatar(
-                          radius: 119.99,
+                          radius: 116,
                           backgroundImage:
                               newcontroller.userDataList.value.profile != null
                                   ? Image.network(AppUrl.imageUrl +

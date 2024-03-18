@@ -1,7 +1,6 @@
 class AppAssets {
-  //images
   static String backgroundimage1 = "assets/images/backgroundimage1.png";
-  static var signin = "assets/images/signin2.png";
+  static var signin = "assets/images/signin3.png";
   static var links = "assets/images/links.png";
   static var play = "assets/images/play.png";
   static var backgroundmain = "assets/images/backgroundmain.png";
@@ -15,7 +14,7 @@ class AppAssets {
   static var google = "assets/images/google.png";
   static var dollarback = "assets/images/dollarback.JPG";
   static var textback = "assets/images/backgroundtext.jpg";
-  static var dog = "assets/images/dog.png";
+  static var dog = "assets/images/dog2.png";
   static var watch = "assets/images/watch.png";
   static var slider = "assets/images/slider.png";
   static var settings1 = "assets/images/settings1.png";
