@@ -50,7 +50,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     videoPlayerController = VideoPlayerController.network(
       
   widget.view.file_path.toString());
-  Timer(Duration(seconds: 10), ()  {
+  Timer(Duration(seconds: 5), ()  {
     
     setState(() {
       isLoading=false;

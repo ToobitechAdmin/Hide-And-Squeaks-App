@@ -23,7 +23,7 @@ void showInSnackBar(String value,
     dismissDirection: DismissDirection.up,
     backgroundColor: color ?? Colors.green,
     behavior: SnackBarBehavior.floating,
-    duration: Duration(milliseconds: duration ?? 2000),
+    duration: Duration(milliseconds: duration ?? 3000),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(5),
     ),

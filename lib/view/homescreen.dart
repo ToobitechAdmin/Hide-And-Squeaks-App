@@ -65,25 +65,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: Get.width * 0.85,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage(AppAssets.dog), fit: BoxFit.fill)),
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 15.25, left: 1.7),
-                      child: Obx(
-                        () => CircleAvatar(
-                          radius: 116,
-                          backgroundImage:
-                              newcontroller.userDataList.value.profile != null
-                                  ? Image.network(AppUrl.imageUrl +
-                                          newcontroller
-                                              .userDataList.value.profile!)
-                                      .image
-                                  : null,
-                          backgroundColor: Colors.transparent,
-                        ),
-                      ),
-                    ),
-                  )),
+                          image: AssetImage(AppAssets.dog), fit: BoxFit.fill))
+                  // child: Center(
+                  //   child: Padding(
+                  //     padding: EdgeInsets.only(top: 15.25, left: 1.7),
+                  //     child: Obx(
+                  //       () => CircleAvatar(
+                  //         radius: 116,
+                  //         backgroundImage:
+                  //             newcontroller.userDataList.value.profile != null
+                  //                 ? Image.network(AppUrl.imageUrl +
+                  //                         newcontroller
+                  //                             .userDataList.value.profile!)
+                  //                     .image
+                  //                 : null,
+                  //         backgroundColor: Colors.transparent,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // )
+                  ),
               SizedBox(height: Get.height * 0.022),
               Text(
                 "Volume",
@@ -144,6 +145,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       } else {
                         controller.playAudio(
                             AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString());
+                            showInSnackBar(
+            "Audio Player playing ${controller.audioSoundList[currentAudioIndex.value].title}...",
+            color: AppColors.errorcolor);
                       }
                     },
                     previousTap: () {
@@ -158,6 +162,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           controller.playAudio(
                             AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString(),
                           );
+                           showInSnackBar(
+            "Audio Player playing ${controller.audioSoundList[currentAudioIndex.value].title}...",
+            color: AppColors.errorcolor);
                           print(
                               AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString());
                         } else {
@@ -168,6 +175,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           controller.playAudio(
                             AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString(),
                           );
+                           showInSnackBar(
+            "Audio Player playing ${controller.audioSoundList[currentAudioIndex.value].title}...",
+            color: AppColors.errorcolor);
                         }
                       } else {
                         showInSnackBar('Audio not available',
@@ -185,6 +195,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           controller.playAudio(
                             AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString(),
                           );
+                           showInSnackBar(
+            "Audio Player playing ${controller.audioSoundList[currentAudioIndex.value].title}...",
+            color: AppColors.errorcolor);
                         } else {
                           print('Next Two');
                           // If we're at the end of the list, loop back to the beginning
@@ -192,6 +205,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           controller.playAudio(
                             AppUrl.audioPath + controller.audioSoundList[currentAudioIndex.value].filePath.toString(),
                           );
+                           showInSnackBar(
+            "Audio Player playing ${controller.audioSoundList[currentAudioIndex.value].title}...",
+            color: AppColors.errorcolor);
                         }
                       } else {
                         showInSnackBar('audio not available',

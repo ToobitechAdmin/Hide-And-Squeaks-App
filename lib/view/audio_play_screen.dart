@@ -245,6 +245,10 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                               controller.audioSoundList[currentAudioIndex.value]
                                   .filePath
                                   .toString());
+                                   showInSnackBar(
+            "Audio Player playing ${controller.audioSoundList[currentAudioIndex.value].title}...",
+            color: AppColors.errorcolor);
+                                  
                         }
                       },
                       previousTap: () {
@@ -263,6 +267,9 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                       .filePath
                                       .toString(),
                             );
+                             showInSnackBar(
+            "Audio Player playing ${controller.audioSoundList[currentAudioIndex.value].title}...",
+            color: AppColors.errorcolor);
                             print(AppUrl.audioPath +
                                 controller
                                     .audioSoundList[currentAudioIndex.value]
@@ -280,6 +287,9 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                       .filePath
                                       .toString(),
                             );
+                             showInSnackBar(
+            "Audio Player playing ${controller.audioSoundList[currentAudioIndex.value].title}...",
+            color: AppColors.errorcolor);
                           }
                         } else {
                           showInSnackBar('Audio not available',
@@ -301,6 +311,9 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                       .filePath
                                       .toString(),
                             );
+                             showInSnackBar(
+            "Audio Player playing ${controller.audioSoundList[currentAudioIndex.value].title}...",
+            color: AppColors.errorcolor);
                           } else {
                             print('Next Two');
                             // If we're at the end of the list, loop back to the beginning
@@ -312,6 +325,9 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                                       .filePath
                                       .toString(),
                             );
+                             showInSnackBar(
+            "Audio Player playing ${controller.audioSoundList[currentAudioIndex.value].title}...",
+            color: AppColors.errorcolor);
                           }
                         } else {
                           showInSnackBar('audio not available',

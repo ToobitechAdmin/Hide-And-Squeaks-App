@@ -33,7 +33,7 @@ class _PrivateScreenState extends State<PrivateScreen> {
     _videoPlayerController =
         // ignore: deprecated_member_use
         VideoPlayerController.network(AppUrl.videoURL + widget.link.toString());
-         Timer(Duration(seconds: 10), ()  {
+         Timer(Duration(seconds: 5), ()  {
     
     setState(() {
       isLoading=false;
