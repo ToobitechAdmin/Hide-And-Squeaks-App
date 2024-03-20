@@ -45,5 +45,22 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+    <array> 
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>com.googleusercontent.apps.195903977126-hbh87gcc87ohs68qhdmk79fubiel1975</string>
+            </array>
+        </dict>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>fb1446795982715680</string>
+            </array>
+        </dict>
+    </array>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Microphone access is required for recording audio.</string>
 </dict>
 </plist>

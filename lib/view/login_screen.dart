@@ -11,11 +11,9 @@ import '../components/colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
-
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController passwordController = TextEditingController();
@@ -23,14 +21,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final textController=TextEditingController();
   AuthController controller = Get.put(AuthController());
   bool isChecked = false;
-  
-
   final _emailValidator = RegExp(
     r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
   );
-
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
