@@ -62,5 +62,9 @@
     </array>
     <key>NSMicrophoneUsageDescription</key>
     <string>Microphone access is required for recording audio.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Your app needs access to your photos to allow you to upload images and videos.</string>
+	<key>NSAppleMusicUsageDescription</key>
+    <string>This app needs access to music and other media for playback.</string>
 </dict>
 </plist>
