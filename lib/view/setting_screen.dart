@@ -47,13 +47,8 @@ class _SettingScreenState extends State<SettingScreen> {
                     child: Container(
                       height: Get.height * 0.069,
                       width: Get.width * 0.15,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          image: DecorationImage(
-                              image: AssetImage(AppAssets.heart),
-                              fit: BoxFit.fill)),
-                    ),
-                  ),
+                     child:Icon(Icons.home,color:AppColors.primaryColor,size:55)
+                  )),
                   GestureDetector(
                     onTap: () {
                       Get.to(MenuScreen());

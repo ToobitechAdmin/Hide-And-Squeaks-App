@@ -1,7 +1,7 @@
 
 
 class AppUrl {
-  static String audioPath ='https://digimaestros.com/dev/Hide-Squeaks/storage/';
+  static String audioPath ='https://digimaestros.com/dev/Hide-Squeaks/';
   static String base = "https://digimaestros.com/dev/Hide-Squeaks/api/";
   static String imageUrl = "https://digimaestros.com/dev/Hide-Squeaks/";
   static String videoURL = "https://digimaestros.com/dev/Hide-Squeaks/";
@@ -29,5 +29,6 @@ class AppUrl {
   static String policyUrl="${base}paragraph";
   static String postRecording="${base}recorder/add";
   static String DeleteRecording="${base}recorder/delete";
+  
   static String GetRecordings="${base}recorder";
 }

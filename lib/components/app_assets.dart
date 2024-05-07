@@ -23,7 +23,7 @@ class AppAssets {
   static var settings4 = "assets/images/settings4a.png";
   static var settings5 = "assets/images/settings5a.png";
   static var settings6 = "assets/images/settings6a.png";
-  static var settings7 = "assets/images/settings7a.png";
+  static var settings7 = "assets/images/settings new.png";
   static var plublish = "assets/images/publish2.png";
   static var social = "assets/images/socialdog.png";
   static var gridimg = "assets/images/grid.png";

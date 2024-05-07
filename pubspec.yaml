@@ -68,6 +68,8 @@ dependencies:
   flutter_blue_plus: ^1.31.15
   connectivity_plus: ^5.0.2
   mailer: ^6.1.0
+  flutter_sound_record: ^3.3.2
+
 
  
 

@@ -15,6 +15,8 @@ import '../Local Storage/global_variable.dart';
 import '../components/custom_snakbar.dart';
 import '../global/alertbox.dart';
 
+
+
 class VideoController extends GetxController {
   var isLoading = false.obs;
   var viewDataLaoding = false.obs;
@@ -31,6 +33,27 @@ class VideoController extends GetxController {
       generateThumbnail();
     }
   }
+  
+// Future<void> compressVideo(File videoFile) async {
+//   // Subscribe to the compression progress
+//   VideoCompress.compressProgress$.subscribe((progress) {
+//     print('Compression Progress: $progress%');
+//   });
+
+//   final MediaInfo? compressedVideo = await VideoCompress.compressVideo(
+//     videoFile.path,
+//     quality: VideoQuality.MediumQuality,  // You can change the quality as needed
+//     deleteOrigin: false, // Set to true if you want to delete the original video
+//   );
+
+//   // Unsubscribe when done
+//   VideoCompress.compressProgress$.unsubscribe();
+
+//   if (compressedVideo != null) {
+//     File(compressedVideo.path); // This is your compressed video file
+//     print('Compression completed, path: ${compressedVideo.path}');
+//   }
+// }
 
   generateThumbnail() async {
     if (videofile.value != null) {
