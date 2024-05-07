@@ -51,7 +51,6 @@ class AuthController extends GetxController {
         User? currentUser = FirebaseAuth.instance.currentUser;
         String userEmail = currentUser?.email ?? '';
         String userDisplayName = currentUser?.displayName ?? '';
-
         List<String> nameParts = userDisplayName.split(' ');
         String userFirstName = nameParts[0];
         String userLastName = nameParts.length > 1 ? nameParts[1] : '';
